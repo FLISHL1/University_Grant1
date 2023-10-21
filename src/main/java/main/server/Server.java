@@ -9,7 +9,7 @@ public class Server {
 
     private Server() {
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://" + Config.URL, Config.LOGIN, Config.PASSWORD);
+            connection = DriverManager.getConnection("jdbc:mysql://" + Config.URL + "/" + Config.DATABASE, Config.LOGIN, Config.PASSWORD);
         } catch (SQLException e) {
             System.out.println("Data Base not connected \n Error!");
             System.out.println(e);
@@ -26,5 +26,8 @@ public class Server {
 
     public static Server getInstance () {
         return SignServer.SIGNSERVER;
+    }
+    public Connection getConnection(){
+        return connection;
     }
 }

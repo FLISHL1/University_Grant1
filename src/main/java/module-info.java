@@ -9,6 +9,10 @@ module com.project {
     requires jbcrypt;
     requires simplecaptcha;
     requires java.desktop;
-    opens main to javafx.fxml;
-    exports main;
+    requires javafx.swing;
+
+
+    opens main.controller to javafx.fxml;
+    exports main.controller;
+
 }

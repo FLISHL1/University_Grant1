@@ -7,6 +7,7 @@ import cn.apiclub.captcha.text.producer.DefaultTextProducer;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 
@@ -17,7 +18,10 @@ public class GenerateCapcha {
 
         return captcha.getAnswer();
     }
-
+    public static Object[] create(){
+        Captcha captcha = createCaptcha(170, 100);
+        return new Object[]{captcha.getAnswer(), getImage(captcha)};
+    }
     private static Captcha createCaptcha(int width, int height) {
 
         return new Captcha.Builder(width, height)
@@ -38,5 +42,9 @@ public class GenerateCapcha {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static BufferedImage getImage(Captcha captcha){
+        return captcha.getImage();
     }
 }
