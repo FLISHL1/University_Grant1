@@ -19,7 +19,7 @@ public class GenerateCapcha {
         return captcha.getAnswer();
     }
     public static Object[] create(){
-        Captcha captcha = createCaptcha(220, 100);
+        Captcha captcha = createCaptcha(200, 60);
         return new Object[]{captcha.getAnswer(), getImage(captcha)};
     }
     private static Captcha createCaptcha(int width, int height) {

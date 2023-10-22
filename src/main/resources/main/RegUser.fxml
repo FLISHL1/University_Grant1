@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #99ffff;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Login">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #99ffff;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.RegUser">
     <children>
         <AnchorPane layoutX="60.0" prefHeight="800.0" prefWidth="1220.0" style="-fx-background-color: #ffffff;" AnchorPane.rightAnchor="0.0">
          <children>
@@ -53,7 +53,7 @@
                   <Font name="Comic Sans MS" size="20.0" />
                </font>
             </TextField>
-            <RadioButton fx:id="gender" layoutX="315.0" layoutY="272.0" mnemonicParsing="false" selected="true" text="Мужской">
+            <RadioButton fx:id="genderMen" layoutX="315.0" layoutY="272.0" mnemonicParsing="false" selected="true" text="Мужской">
                <toggleGroup>
                   <ToggleGroup fx:id="gender1" />
                </toggleGroup>
@@ -61,8 +61,8 @@
                   <Font name="Comic Sans MS" size="15.0" />
                </font>
             </RadioButton>
-            <DatePicker fx:id="birth_date" layoutX="294.0" layoutY="355.0" prefHeight="42.0" prefWidth="255.0" />
-            <CheckBox fx:id="logachCHMO" layoutX="538.0" layoutY="500.0" mnemonicParsing="false" text="Видимый пароль">
+            <DatePicker fx:id="birth_date" layoutX="294.0" layoutY="355.0" prefHeight="42.0" prefWidth="255.0"/>
+            <CheckBox fx:id="visiblePassword" layoutX="538.0" layoutY="500.0" mnemonicParsing="false" text="Видимый пароль">
                <font>
                   <Font name="Comic Sans MS" size="15.0" />
                </font></CheckBox>
@@ -74,7 +74,7 @@
                <font>
                   <Font name="Comic Sans MS" size="15.0" />
                </font></Text>
-            <RadioButton fx:id="gender" layoutX="438.0" layoutY="272.0" mnemonicParsing="false" text="Женский" toggleGroup="$gender1">
+            <RadioButton fx:id="genderWoman" layoutX="438.0" layoutY="272.0" mnemonicParsing="false" text="Женский" toggleGroup="$gender1">
                <font>
                   <Font name="Comic Sans MS" size="15.0" />
                </font>
@@ -97,12 +97,12 @@
                 <Image url="@logo%20(2).png" />
             </image>
         </ImageView>
-        <ImageView fx:id="account" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="account" onMouseClicked="#login" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@icon%20_profile%20circle_.png" />
             </image>
         </ImageView>
-      <ImageView fx:id="main" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="main" onMouseClicked="#home" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Vector-1.png" />
          </image>

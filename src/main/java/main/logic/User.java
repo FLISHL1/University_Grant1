@@ -28,7 +28,6 @@ public abstract class User {
                 sex = user.getString("gender");
                 idNumber = user.getString("id");
                 password = user.getString("password");
-
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

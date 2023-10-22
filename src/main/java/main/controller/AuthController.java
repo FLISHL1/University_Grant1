@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import main.animation.Shape;
@@ -93,7 +94,8 @@ public class AuthController extends Application implements Initializable {
     }
 
     @FXML
-    private void registration(ActionEvent actionEvent) {
+    private void registration(MouseEvent actionEvent) {
+        RegUser.loadScene((Stage) login.getScene().getWindow(), "Registration");
     }
 
 
@@ -136,5 +138,22 @@ public class AuthController extends Application implements Initializable {
             reloadCaptcha();
 //            AlertShow.showAlert("info", "Внимание", "Логин должен содержать только цифры!\nЛибо же каптча ввдена не верно");
         }
+    }
+
+    public void home(MouseEvent mouseEvent) {
+        MainWinNoAuthController.loadScene((Stage) login.getScene().getWindow(), "Home");
+    }
+
+    public static void loadScene(Stage stage, String title){
+        FXMLLoader loader = new FXMLLoader(AuthController.class.getResource("/main/Login.fxml"));
+        loader.setControllerFactory(param -> new AuthController());
+        Scene scene = null;
+        try {
+            scene = new Scene(loader.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        stage.setTitle(title);
+        stage.setScene(scene);
     }
 }
