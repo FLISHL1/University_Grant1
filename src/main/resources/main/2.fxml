@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #99ffff;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Login">
+    <children>
+        <AnchorPane layoutX="60.0" prefHeight="800.0" prefWidth="1220.0" style="-fx-background-color: #ffffff;" AnchorPane.rightAnchor="0.0">
+            <children>
+                <Text fx:id="name_event" layoutX="539.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Название мероприятния">
+                    <font>
+                        <Font name="Comic Sans MS" size="22.0" />
+                    </font>
+                </Text>
+            <ImageView fx:id="logotype" blendMode="DARKEN" fitHeight="300.0" fitWidth="300.0" layoutX="120.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true" style="-fx-blend-mode: #dsfghg;">
+               <image>
+                  <Image url="@logo" />
+               </image>
+            </ImageView>
+            <Text fx:id="date" layoutX="245.0" layoutY="618.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дата">
+               <font>
+                  <Font name="Comic Sans MS" size="22.0" />
+               </font>
+            </Text>
+            <Text fx:id="days" layoutX="243.0" layoutY="678.0" strokeType="OUTSIDE" strokeWidth="0.0" text="День">
+               <font>
+                  <Font name="Comic Sans MS" size="22.0" />
+               </font>
+            </Text>
+            <Text fx:id="city" layoutX="238.0" layoutY="550.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Город">
+               <font>
+                  <Font name="Comic Sans MS" size="22.0" />
+               </font>
+            </Text>
+            <Text fx:id="description" layoutX="702.0" layoutY="201.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Описание мероприятия" textAlignment="JUSTIFY">
+               <font>
+                  <Font name="Comic Sans MS" size="22.0" />
+               </font>
+            </Text>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f5f5" height="301.0" layoutX="120.0" layoutY="175.0" stroke="BLACK" strokeType="INSIDE" style="-fx-background-radius: 15;" width="301.0" />
+            </children>
+        </AnchorPane>
+        <ImageView fx:id="logo" fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@logo%20(2).png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="account" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@icon%20_profile%20circle_.png" />
+            </image>
+        </ImageView>
+      <ImageView fx:id="main" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Vector-1.png" />
+         </image>
+      </ImageView>
+    </children>
+</AnchorPane>

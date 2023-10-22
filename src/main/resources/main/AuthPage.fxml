@@ -10,7 +10,7 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="273.0" prefWidth="304.0" xmlns="http://javafx.com/javafx/19-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.AuthController">
    <children>
-      <TextField fx:id="insLogin" prefHeight="29.0" prefWidth="204.0" promptText="Login">
+      <TextField fx:id="login" prefHeight="29.0" prefWidth="204.0" promptText="Login">
          <VBox.margin>
             <Insets left="25.0" right="25.0" top="50.0" />
          </VBox.margin>
@@ -18,7 +18,7 @@
             <Font name="Lato Semibold" size="18.0" />
          </font>
       </TextField>
-      <PasswordField fx:id="insPassword" prefHeight="29.0" prefWidth="204.0" promptText="Password">
+      <PasswordField fx:id="password" prefHeight="29.0" prefWidth="204.0" promptText="Password">
          <VBox.margin>
             <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
          </VBox.margin>
@@ -28,7 +28,7 @@
       </PasswordField>
       <HBox alignment="TOP_CENTER" prefHeight="39.0" prefWidth="304.0">
          <children>
-            <Button fx:id="butLogin" onAction="#login" prefHeight="28.0" prefWidth="79.0" text="Login">
+            <Button fx:id="enter" onAction="#login" prefHeight="28.0" prefWidth="79.0" text="Login">
                <padding>
                   <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
                </padding>

@@ -2,38 +2,71 @@ package main.controller;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import main.animation.Shape;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.embed.swing.JFXPanel;
 import main.capcha.GenerateCapcha;
 import main.logic.User;
 import main.logic.UserSelection;
+import net.synedra.validatorfx.Validator;
 
-public class AuthController extends Application {
+public class AuthController extends Application implements Initializable {
     @FXML
-    private Button butLogin;
+    private ImageView captcha;
     @FXML
-    private TextField insLogin;
+    private Button enter;
     @FXML
-    private TextField insPassword;
+    private TextField login;
     @FXML
-    private TextField insCaptcha;
+    private TextField password;
+    @FXML
+    private TextField fieldSim;
 
-    private String captcha;
+    private String answerCaptcha;
     private int trying;
+    Validator validator = new Validator();
+    Shape shapePassword;
+    Shape shapeUsername;
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        shapePassword = new Shape(login);
+        shapeUsername = new Shape(password);
+        reloadCaptcha();
+        validator.createCheck()
+                .dependsOn("username", login.textProperty())
+                .withMethod(c -> {
+                    String userName = c.get("username");
+                    if (!userName.matches("[0-9]+|")){
+                        c.error("Могут быть только цифры");
+                    }
+                    if (userName.isEmpty()){
+                        c.warn("Поле не может быть пустым");
+                    }
+                }).decorates(login)
+                .immediate();
 
+    }
     @Override
     public void start(Stage stage) {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/AuthPage.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/Login.fxml"));
         loader.setControllerFactory(param -> new AuthController());
         Scene scene = null;
         try {
@@ -48,6 +81,7 @@ public class AuthController extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
     public void render(){
         new JFXPanel();
         Platform.runLater(new Runnable() {
@@ -62,42 +96,45 @@ public class AuthController extends Application {
     private void registration(ActionEvent actionEvent) {
     }
 
-    @FXML
-    private void cancel(ActionEvent actionEvent) {
-        System.exit(0);
-    }
-
 
     @FXML
     private void reloadCaptcha(){
         Object[] lost = GenerateCapcha.create();
-        captcha = (String) lost[1];
-        BufferedImage image = (BufferedImage) lost[2];
+        answerCaptcha = (String) lost[0];
+        BufferedImage image = (BufferedImage) lost[1];
+        Image imageFX = SwingFXUtils.toFXImage(image, null);
+        captcha.setImage(imageFX);
     }
 
     private boolean checkCaptcha(){
-        if (trying <= 3){
-            return true;
-        } else {
-            if (trying == 3){
-//          reloadCaptcha();
-            }
-            return insCaptcha.getText().equals(captcha);
-        }
+        return fieldSim.getText().equals(answerCaptcha);
+    }
+    @FXML
+    private void styleLogin(Event event){
+        enter.setStyle("-fx-background-color: rgb(153, 255, 255); -fx-background-radius: 15");
+    }
+    @FXML
+    private void styleLogin1(Event event){
+        enter.setStyle("-fx-background-color: rgb(0, 0, 204); -fx-background-radius: 15");
+
     }
 
     @FXML
     private void login(ActionEvent actionEvent) {
         User user;
-        if (insLogin.getText().matches("[0-9]+")){
-            if (!insPassword.getText().equals("") && checkCaptcha()){
-                user = UserSelection.checkAuth(insLogin.getText(), insPassword.getText());
+        System.out.println();
+        if (validator.getValidationResult().getMessages().isEmpty() && checkCaptcha()){
+            if (!password.getText().equals("") && checkCaptcha()){
+                user = UserSelection.checkAuth(login.getText(), password.getText());
                 if (user == null){
                     trying++;
                 }
             }
         } else {
-            AlertShow.showAlert("info", "Внимание", "Логин должен содержать только цифры!");
+            shapePassword.playAnimation();
+            shapeUsername.playAnimation();
+            reloadCaptcha();
+//            AlertShow.showAlert("info", "Внимание", "Логин должен содержать только цифры!\nЛибо же каптча ввдена не верно");
         }
     }
 }
