@@ -10,9 +10,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #99ffff;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.MainWinNoAuthController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #99ffff;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Login">
     <children>
-        <AnchorPane fx:id="mainPain" layoutX="60.0" prefHeight="800.0" prefWidth="1220.0" style="-fx-background-color: #ffffff;" AnchorPane.rightAnchor="0.0">
+        <AnchorPane layoutX="60.0" prefHeight="800.0" prefWidth="1220.0" style="-fx-background-color: #ffffff;" AnchorPane.rightAnchor="0.0">
             <children>
             <TextField fx:id="search" layoutX="362.0" layoutY="23.0" prefHeight="31.0" prefWidth="498.0" promptText="Поиск" style="-fx-background-color: #99ffff; -fx-background-radius: 15;">
                <font>
@@ -24,8 +24,15 @@
                   <Image url="@icon%20_search%20normal%201_.png" />
                </image>
             </ImageView>
-<!--            <TableView  fx:id="eventTable" layoutX="153.0" layoutY="144.0" prefHeight="555.0" prefWidth="915.0">-->
-<!--            </TableView>-->
+            <TableView layoutX="153.0" layoutY="144.0" prefHeight="555.0" prefWidth="915.0">
+              <columns>
+                <TableColumn fx:id="id" prefWidth="72.0" text="номер" />
+                  <TableColumn fx:id="logotype" prefWidth="109.0" text="логотип" />
+                <TableColumn fx:id="event_name" prefWidth="447.0" text="событие" />
+                  <TableColumn fx:id="event" minWidth="0.0" prefWidth="186.0" text="направление" />
+                  <TableColumn fx:id="event_date" prefWidth="100.0" text="дата" />
+              </columns>
+            </TableView>
             <Text layoutX="539.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Мероприятия">
                <font>
                   <Font name="Comic Sans MS" size="22.0" />
@@ -44,9 +51,14 @@
             <Image url="@logo%20(2).png" />
          </image>
       </ImageView>
-      <ImageView fx:id="account" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="141.0" onMouseClicked="#login" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="account" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@icon%20_profile%20circle_.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="main" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Vector-1.png" />
          </image>
       </ImageView>
     </children>

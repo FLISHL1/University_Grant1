@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #99ffff;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Login">
+    <children>
+        <AnchorPane fx:id="add" layoutX="60.0" prefHeight="800.0" prefWidth="1220.0" style="-fx-background-color: #ffffff;" AnchorPane.rightAnchor="0.0">
+            <children>
+                <Text fx:id="name_event" layoutX="413.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Добрый">
+                    <font>
+                        <Font name="Comic Sans MS" size="22.0" />
+                    </font>
+                </Text>
+            <ImageView fx:id="logotype" blendMode="DARKEN" fitHeight="40.0" fitWidth="40.0" layoutX="354.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" style="-fx-blend-mode: #dsfghg;">
+               <image>
+                  <Image url="@logo" />
+               </image>
+            </ImageView>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f5f5" height="41.0" layoutX="354.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" style="-fx-background-radius: 15;" width="41.0" />
+            <Text fx:id="date" layoutX="505.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="день !">
+               <font>
+                  <Font name="Comic Sans MS" size="22.0" />
+               </font>
+            </Text>
+            <Text fx:id="тфьу" layoutX="579.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дорогой, Иван Васильевич">
+               <font>
+                  <Font name="Comic Sans MS" size="22.0" />
+               </font>
+            </Text>
+            <TableView layoutX="146.0" layoutY="139.0" prefHeight="555.0" prefWidth="915.0">
+               <columns>
+                  <TableColumn fx:id="id" prefWidth="72.0" text="номер" />
+                  <TableColumn fx:id="logotype1" prefWidth="109.0" text="логотип" />
+                  <TableColumn fx:id="event_name" prefWidth="447.0" text="событие" />
+                  <TableColumn fx:id="event" minWidth="0.0" prefWidth="186.0" text="направление" />
+                  <TableColumn fx:id="event_date" prefWidth="100.0" text="дата" />
+               </columns>
+            </TableView>
+            <Text layoutX="532.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Мероприятия">
+               <font>
+                  <Font name="Comic Sans MS" size="22.0" />
+               </font>
+            </Text>
+            <TextField fx:id="search1" layoutX="882.0" layoutY="87.0" prefHeight="31.0" prefWidth="179.0" promptText="Поиск" style="-fx-background-color: #99ffff; -fx-background-radius: 15;">
+               <font>
+                  <Font name="Comic Sans MS" size="14.0" />
+               </font>
+            </TextField>
+            <ImageView fitHeight="25.0" fitWidth="20.0" layoutX="1033.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icon%20_search%20normal%201_.png" />
+               </image>
+            </ImageView>
+            <DatePicker layoutX="146.0" layoutY="90.0" prefHeight="25.0" prefWidth="188.0" />
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="1018.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@add.png" />
+               </image>
+            </ImageView>
+            </children>
+        </AnchorPane>
+        <ImageView fx:id="logo" fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@logo%20(2).png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="account" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@icon%20_profile%20circle_.png" />
+            </image>
+        </ImageView>
+      <ImageView fx:id="main" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Vector-1.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="participants" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="377.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@profile-2user.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="jury" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="470.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@briefcase.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="moderators" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="575.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@crown.png" />
+         </image>
+      </ImageView>
+    </children>
+</AnchorPane>

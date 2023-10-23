@@ -14,5 +14,7 @@ module com.project {
 
     opens main.controller to javafx.fxml;
     exports main.controller;
+    exports main.logic;
+    opens main.logic to javafx.fxml;
 
 }
