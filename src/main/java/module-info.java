@@ -16,5 +16,9 @@ module com.project {
     exports main.controller;
     exports main.logic;
     opens main.logic to javafx.fxml;
+    exports main.logic.User;
+    opens main.logic.User to javafx.fxml;
+    exports main.attentionWindow;
+    opens main.attentionWindow to javafx.fxml;
 
 }

@@ -2,6 +2,8 @@ package main.logic;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import main.server.SqlSender;
 
 import java.sql.ResultSet;
@@ -14,30 +16,34 @@ public class Event {
     public SimpleStringProperty date;
     public SimpleStringProperty days;
     public SimpleStringProperty city;
-    public String logo;
+    public ImageView logo;
     public SimpleStringProperty direction;
 
 
 
     public Event(ResultSet eventDB){
-        id = new SimpleIntegerProperty();
-        name = new SimpleStringProperty();
-        date = new SimpleStringProperty();
-        days = new SimpleStringProperty();
-        city = new SimpleStringProperty();
-        direction = new SimpleStringProperty();
-        try {
-            id.set(eventDB.getInt("id"));
-            name.set(eventDB.getString("name"));
-            date.set(eventDB.getString("date"));
-            days.set(eventDB.getString("days"));
-            city.set(eventDB.getString("city"));
-            logo = eventDB.getString("logo");
-            direction.set(eventDB.getString("direction"));
 
+        try {
+            id = new SimpleIntegerProperty(eventDB.getInt("id"));
+            name = new SimpleStringProperty(eventDB.getString("name"));
+            date = new SimpleStringProperty(eventDB.getString("date"));
+            days = new SimpleStringProperty(eventDB.getString("days"));
+            city = new SimpleStringProperty(eventDB.getString("city"));
+            direction = new SimpleStringProperty(eventDB.getString("direction"));
+            System.out.println("Working Directory = " + System.getProperty("user.dir"));
+            logo = new ImageView(new Image("file:src/main/resources/main/photo/" + eventDB.getString("logo")));
+            logo.setPreserveRatio(true);
+            System.out.println(logo.getImage().getUrl());
+            logo.setFitWidth(150);
+            logo.setFitHeight(150);
+//            logo = eventDB.getString("logo");
         } catch (SQLException e){
             throw new RuntimeException(e);
         }
+    }
+    public Event(){
+
+
     }
 
     public Integer getId() {
@@ -63,6 +69,8 @@ public class Event {
     public String getDirection() {
         return direction.get();
     }
+
+    public ImageView getLogo(){ return logo;}
 
     public static ArrayList<Event> getAllEvents(){
         ResultSet resultSet = SqlSender.getAllEvent();

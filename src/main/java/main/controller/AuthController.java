@@ -24,8 +24,8 @@ import java.util.ResourceBundle;
 
 import javafx.embed.swing.JFXPanel;
 import main.capcha.GenerateCapcha;
-import main.logic.User;
-import main.logic.UserSelection;
+import main.logic.User.User;
+import main.logic.User.UserSelection;
 import net.synedra.validatorfx.Validator;
 
 public class AuthController extends Application implements Initializable {
@@ -127,7 +127,7 @@ public class AuthController extends Application implements Initializable {
         System.out.println();
         if (validator.getValidationResult().getMessages().isEmpty() && checkCaptcha()){
             if (!password.getText().equals("") && checkCaptcha()){
-                user = UserSelection.checkAuth(login.getText(), password.getText());
+                user = User.checkAuth(login.getText(), password.getText());
                 if (user == null){
                     trying++;
                 }

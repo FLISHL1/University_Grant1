@@ -1,4 +1,4 @@
-package main.controller;
+package main.attentionWindow;
 
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;

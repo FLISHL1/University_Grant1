@@ -1,4 +1,4 @@
-package main.logic;
+package main.logic.User;
 
 import main.passwordHash.PasswordHashing;
 import main.server.Server;
@@ -34,5 +34,17 @@ public abstract class User {
 
     }
 
+    public static User getUser(String idUser){
+        return UserSelection.getUser(idUser);
+    }
 
+    public static User checkAuth(String idUser, String password){
+        User user = User.getUser(idUser);
+        System.out.println(password);
+        if (user != null && PasswordHashing.checkPass(password, user.password)){
+            return user;
+        } else {
+            return null;
+        }
+    }
 }
