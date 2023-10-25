@@ -11,29 +11,28 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Event {
-    public SimpleIntegerProperty id;
-    public SimpleStringProperty name;
-    public SimpleStringProperty date;
-    public SimpleStringProperty days;
-    public SimpleStringProperty city;
+    public Integer id;
     public ImageView logo;
-    public SimpleStringProperty direction;
+
+    public String  name;
+    public String date;
+    public String days;
+    public String city;
+    public String direction;
 
 
 
     public Event(ResultSet eventDB){
 
         try {
-            id = new SimpleIntegerProperty(eventDB.getInt("id"));
-            name = new SimpleStringProperty(eventDB.getString("name"));
-            date = new SimpleStringProperty(eventDB.getString("date"));
-            days = new SimpleStringProperty(eventDB.getString("days"));
-            city = new SimpleStringProperty(eventDB.getString("city"));
-            direction = new SimpleStringProperty(eventDB.getString("direction"));
-            System.out.println("Working Directory = " + System.getProperty("user.dir"));
+            id = eventDB.getInt("id");
+            name = eventDB.getString("name");
+            date = eventDB.getString("date");
+            days = eventDB.getString("days");
+            city = eventDB.getString("city");
+            direction = eventDB.getString("direction");
             logo = new ImageView(new Image("file:src/main/resources/main/photo/" + eventDB.getString("logo")));
             logo.setPreserveRatio(true);
-            System.out.println(logo.getImage().getUrl());
             logo.setFitWidth(150);
             logo.setFitHeight(150);
 //            logo = eventDB.getString("logo");
@@ -47,27 +46,27 @@ public class Event {
     }
 
     public Integer getId() {
-        return id.get();
+        return id;
     }
 
     public String getName() {
-        return name.get();
+        return name;
     }
 
     public String getDays() {
-        return days.get();
+        return days;
     }
 
     public String getCity() {
-        return city.get();
+        return city;
     }
 
     public String getDate() {
-        return date.get();
+        return date;
     }
 
     public String getDirection() {
-        return direction.get();
+        return direction;
     }
 
     public ImageView getLogo(){ return logo;}

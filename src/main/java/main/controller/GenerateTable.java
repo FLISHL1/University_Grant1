@@ -14,24 +14,25 @@ import java.util.ArrayList;
 public class GenerateTable<T> {
 
     private TableView<T> table;
+    private String tableStyle = ("-fx-selection-bar: red;" +
+                                 "-fx-selection-bar-non-focused: salmon;");
+
+    private String columnStyle = ("-fx-alignment: CENTER; " +
+            "-fx-background-color: rgba(255, 255, 255, 0.5);" +
+            "-fx-border-color: gray;");
     public GenerateTable(ArrayList<T> list){
         table = new TableView<T>();
-        table.setStyle("-fx-selection-bar: red;" +
-                "-fx-selection-bar-non-focused: salmon;");
+        table.setStyle(tableStyle);
         for (Field f: list.get(0).getClass().getDeclaredFields()){
             if (f.getName().equals("logo")) {
                 TableColumn<T, ImageView> column = new TableColumn<>(f.getName());
-                column.setStyle("-fx-alignment: CENTER; " +
-                        "-fx-background-color: rgba(255, 255, 255, 0.5);" +
-                        "-fx-border-color: gray;");
+                column.setStyle(columnStyle);
 
                 column.setCellValueFactory(new PropertyValueFactory<T, ImageView>(f.getName()));
                 table.getColumns().add(column);
             } else {
                 TableColumn<T, String> column = new TableColumn<>(f.getName());
-                column.setStyle("-fx-alignment: CENTER; " +
-                        "-fx-background-color: rgba(255, 255, 255, 0.5);" +
-                        "-fx-border-color: gray;");
+                column.setStyle(columnStyle);
                 column.setCellValueFactory(new PropertyValueFactory<T, String>(f.getName()));
                 table.getColumns().add(column);
             }
@@ -77,5 +78,9 @@ public class GenerateTable<T> {
     }
     public void delColumn(TableColumn<T, ?> column){
         table.getColumns().remove(column);
+    }
+
+    public void delColumn(String nameCol){
+        table.getColumns().remove(getColumn(nameCol));
     }
 }

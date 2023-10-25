@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class MainWinNoAuthController extends Application implements Initializable {
-    public ChoiceBox choiceBox;
+
     public AnchorPane mainPain;
 
     @FXML
@@ -31,6 +31,7 @@ public class MainWinNoAuthController extends Application implements Initializabl
     public void start(Stage stage) {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/MainPage.fxml"));
+        loader.setController(new MainWinNoAuthController());
         loader.setControllerFactory(param -> new MainWinNoAuthController());
         Scene scene = null;
         try {
@@ -64,9 +65,12 @@ public class MainWinNoAuthController extends Application implements Initializabl
                 .setLayoutY(144)
                 .setPrefHeight(555)
                 .setPrefWidth(1140);
+        table.delColumn("days");
+        table.delColumn("id");
+        table.delColumn("city");
+        table.getColumn("name").setText("Название");
 
-//        table.getColumn("name").setText("");
-//        table.delColumn(table.getColumn("logo"));
+
 
 
 
@@ -75,11 +79,12 @@ public class MainWinNoAuthController extends Application implements Initializabl
 
     @FXML
     private void login(MouseEvent event){
-        AuthController.loadScene((Stage) choiceBox.getScene().getWindow(), "Login");
+        AuthController.loadScene((Stage) mainPain.getScene().getWindow(), "Login");
     }
 
     public static void loadScene(Stage stage, String title){
         FXMLLoader loader = new FXMLLoader(MainWinNoAuthController.class.getResource("/main/MainPage.fxml"));
+        loader.setController(new MainWinNoAuthController());
         loader.setControllerFactory(param -> new MainWinNoAuthController());
         Scene scene = null;
         try {

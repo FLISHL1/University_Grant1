@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #99ffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.RegUser">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #99ffff;"  xmlns:fx="http://javafx.com/fxml/1" >
     <children>
         <AnchorPane layoutX="60.0" prefHeight="800.0" prefWidth="1220.0" style="-fx-background-color: #ffffff;" AnchorPane.rightAnchor="0.0">
          <children>
@@ -94,17 +94,17 @@
         </AnchorPane>
         <ImageView fx:id="logo" fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@logo%20(2).png" />
+                <Image url="@image/logo%20(2).png" />
             </image>
         </ImageView>
         <ImageView fx:id="account" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="141.0" onMouseClicked="#login" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@icon%20_profile%20circle_.png" />
+                <Image url="@image/icon%20_profile%20circle_.png" />
             </image>
         </ImageView>
       <ImageView fx:id="main" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="280.0" onMouseClicked="#home" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Vector-1.png" />
+            <Image url="@image/Vector-1.png" />
          </image>
       </ImageView>
     </children>

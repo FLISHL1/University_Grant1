@@ -68,6 +68,7 @@ public class AuthController extends Application implements Initializable {
     public void start(Stage stage) {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/Login.fxml"));
+        loader.setController(new AuthController());
         loader.setControllerFactory(param -> new AuthController());
         Scene scene = null;
         try {
@@ -124,7 +125,6 @@ public class AuthController extends Application implements Initializable {
     @FXML
     private void login(ActionEvent actionEvent) {
         User user;
-        System.out.println();
         if (validator.getValidationResult().getMessages().isEmpty() && checkCaptcha()){
             if (!password.getText().equals("") && checkCaptcha()){
                 user = User.checkAuth(login.getText(), password.getText());
@@ -146,6 +146,7 @@ public class AuthController extends Application implements Initializable {
 
     public static void loadScene(Stage stage, String title){
         FXMLLoader loader = new FXMLLoader(AuthController.class.getResource("/main/Login.fxml"));
+        loader.setController(new AuthController());
         loader.setControllerFactory(param -> new AuthController());
         Scene scene = null;
         try {

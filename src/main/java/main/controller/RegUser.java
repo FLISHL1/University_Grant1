@@ -23,6 +23,7 @@ public class RegUser extends Application implements Initializable {
     public void start(Stage stage) {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/RegUser.fxml"));
+        loader.setController(new RegUser());
         loader.setControllerFactory(param -> new RegUser());
         Scene scene = null;
         try {
@@ -55,6 +56,7 @@ public class RegUser extends Application implements Initializable {
 
     public static void loadScene(Stage stage, String title){
         FXMLLoader loader = new FXMLLoader(AuthController.class.getResource("/main/RegUser.fxml"));
+        loader.setController(new RegUser());
         loader.setControllerFactory(param -> new RegUser());
         Scene scene = null;
         try {

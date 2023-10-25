@@ -50,7 +50,7 @@
                   <Font name="Comic Sans MS" size="22.0" />
                </font>
             </Text>
-            <TextField fx:id="search1" layoutX="882.0" layoutY="87.0" prefHeight="31.0" prefWidth="179.0" promptText="Поиск" style="-fx-background-color: #99ffff; -fx-background-radius: 15;">
+            <TextField fx:id="search1" layoutX="848.0" layoutY="87.0" prefHeight="31.0" prefWidth="215.0" promptText="Поиск по направлению" style="-fx-background-color: #99ffff; -fx-background-radius: 15;">
                <font>
                   <Font name="Comic Sans MS" size="14.0" />
                </font>
@@ -60,10 +60,10 @@
                   <Image url="@icon%20_search%20normal%201_.png" />
                </image>
             </ImageView>
-            <DatePicker layoutX="146.0" layoutY="90.0" prefHeight="25.0" prefWidth="188.0" />
+            <DatePicker layoutX="146.0" layoutY="90.0" prefHeight="25.0" prefWidth="215.0" promptText="выберите дату" />
             <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="1018.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@add.png" />
+                  <Image url="@image/add.png" />
                </image>
             </ImageView>
             </children>
@@ -80,22 +80,22 @@
         </ImageView>
       <ImageView fx:id="main" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Vector-1.png" />
+            <Image url="@image/Vector-1.png" />
          </image>
       </ImageView>
       <ImageView fx:id="participants" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="377.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@profile-2user.png" />
+            <Image url="@image/profile-2user.png" />
          </image>
       </ImageView>
       <ImageView fx:id="jury" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="470.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@briefcase.png" />
+            <Image url="@image/briefcase.png" />
          </image>
       </ImageView>
       <ImageView fx:id="moderators" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="575.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@crown.png" />
+            <Image url="@image/crown.png" />
          </image>
       </ImageView>
     </children>
