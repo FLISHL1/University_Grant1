@@ -74,7 +74,12 @@
         </ImageView>
       <ImageView fx:id="main" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@image/Vector-1.png" />
+            <Image url="@Vector-1.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="registrtion" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="575.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@profile-add.png" />
          </image>
       </ImageView>
     </children>

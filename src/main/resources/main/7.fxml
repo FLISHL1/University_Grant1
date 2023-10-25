@@ -44,7 +44,7 @@
             <DatePicker layoutX="797.0" layoutY="84.0" prefHeight="25.0" prefWidth="188.0" promptText="дата мероприятия" />
             <ImageView fx:id="delete" fitHeight="30.0" fitWidth="30.0" layoutX="119.0" layoutY="452.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@image/minus.png" />
+                  <Image url="@minus.png" />
                </image>
             </ImageView>
             <Text layoutX="202.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Начало">
@@ -144,7 +144,7 @@
             </TextField>
             <ImageView fx:id="add" fitHeight="30.0" fitWidth="30.0" layoutX="119.0" layoutY="515.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@image/add.png" />
+                  <Image url="@add.png" />
                </image>
             </ImageView>
             </children>
@@ -161,22 +161,17 @@
         </ImageView>
       <ImageView fx:id="main" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@image/Vector-1.png" />
+            <Image url="@Vector-1.png" />
          </image>
       </ImageView>
       <ImageView fx:id="participants" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="377.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@image/profile-2user.png" />
+            <Image url="@profile-2user.png" />
          </image>
       </ImageView>
       <ImageView fx:id="jury" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="470.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@image/briefcase.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="moderators" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="575.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@image/crown.png" />
+            <Image url="@briefcase.png" />
          </image>
       </ImageView>
     </children>

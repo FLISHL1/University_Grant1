@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #99ffff;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Login">
+    <children>
+        <AnchorPane fx:id="add" layoutX="60.0" prefHeight="800.0" prefWidth="1220.0" style="-fx-background-color: #ffffff;" AnchorPane.rightAnchor="0.0">
+            <children>
+                <Text fx:id="name_event" layoutX="413.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Добрый">
+                    <font>
+                        <Font name="Comic Sans MS" size="22.0" />
+                    </font>
+                </Text>
+            <ImageView fx:id="logotype" blendMode="DARKEN" fitHeight="40.0" fitWidth="40.0" layoutX="354.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" style="-fx-blend-mode: #dsfghg;">
+               <image>
+                  <Image url="@logo" />
+               </image>
+            </ImageView>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f5f5" height="41.0" layoutX="354.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" style="-fx-background-radius: 15;" width="41.0" />
+            <Text fx:id="date" layoutX="505.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="день !">
+               <font>
+                  <Font name="Comic Sans MS" size="22.0" />
+               </font>
+            </Text>
+            <Text fx:id="тфьу" layoutX="579.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дорогой, Иван Васильевич">
+               <font>
+                  <Font name="Comic Sans MS" size="22.0" />
+               </font>
+            </Text>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="133.0" layoutX="142.0" layoutY="141.0" stroke="BLACK" strokeType="INSIDE" width="240.0" />
+            <Text fx:id="activitiy11" layoutX="194.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Активность 1">
+               <font>
+                  <Font name="Comic Sans MS" size="22.0" />
+               </font>
+            </Text>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="133.0" layoutX="142.0" layoutY="314.0" stroke="BLACK" strokeType="INSIDE" width="240.0" />
+            <Text fx:id="activitiy12" layoutX="195.0" layoutY="383.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Активность 2">
+               <font>
+                  <Font name="Comic Sans MS" size="22.0" />
+               </font>
+            </Text>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="133.0" layoutX="142.0" layoutY="480.0" stroke="BLACK" strokeType="INSIDE" width="240.0" />
+            <Text fx:id="activitiy121" layoutX="194.0" layoutY="549.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Активность 3">
+               <font>
+                  <Font name="Comic Sans MS" size="22.0" />
+               </font>
+            </Text>
+            <ImageView fx:id="next" fitHeight="30.0" fitWidth="30.0" layoutX="247.0" layoutY="650.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@direct-down.png" />
+               </image>
+            </ImageView>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="481.0" layoutX="454.0" layoutY="136.0" stroke="BLACK" strokeType="INSIDE" width="607.0" />
+            <Text fx:id="date1" layoutX="524.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Мои активности">
+               <font>
+                  <Font name="Comic Sans MS" size="22.0" />
+               </font>
+            </Text>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="454.0" layoutY="136.0" stroke="BLACK" strokeType="INSIDE" width="303.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#99ffff" height="30.0" layoutX="757.0" layoutY="136.0" stroke="BLACK" strokeType="INSIDE" width="303.0" />
+            <Text fx:id="activitiy111" layoutX="573.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="участники">
+               <font>
+                  <Font name="Comic Sans MS" size="15.0" />
+               </font>
+            </Text>
+            <Text fx:id="activitiy112" layoutX="879.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ресурсы">
+               <font>
+                  <Font name="Comic Sans MS" size="15.0" />
+               </font>
+            </Text>
+            <Text fx:id="text" layoutX="678.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Название файла">
+               <font>
+                  <Font name="Comic Sans MS" size="20.0" />
+               </font>
+            </Text>
+            <TableView layoutX="530.0" layoutY="239.0" prefHeight="323.0" prefWidth="454.0">
+               <columns>
+                  <TableColumn fx:id="id" prefWidth="75.0" text="id" />
+                  <TableColumn fx:id="name" prefWidth="417.0" text="Имя файла" />
+               </columns>
+            </TableView>
+            <ImageView fx:id="moderators1" fitHeight="30.0" fitWidth="20.0" layoutX="946.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@frame.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="moderators11" fitHeight="30.0" fitWidth="20.0" layoutX="985.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@trash.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="957.0" layoutY="572.0" mnemonicParsing="false" style="-fx-background-color: #0000cc;" text="Доска" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="15.0" />
+               </font>
+            </Button>
+            <ImageView fx:id="moderators12" fitHeight="30.0" fitWidth="20.0" layoutX="495.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@add.png" />
+               </image>
+            </ImageView>
+            </children>
+        </AnchorPane>
+        <ImageView fx:id="logo" fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@logo%20(2).png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="account" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@icon%20_profile%20circle_.png" />
+            </image>
+        </ImageView>
+      <ImageView fx:id="main" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Vector-1.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="activities" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="377.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@star.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="moderators" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="575.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@profile-add.png" />
+         </image>
+      </ImageView>
+    </children>
+</AnchorPane>

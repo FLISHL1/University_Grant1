@@ -59,7 +59,7 @@
             </Text>
             <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="272.0" layoutY="237.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@image/attachment.png" />
+                  <Image url="@attachment.png" />
                </image>
             </ImageView>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="133.0" layoutX="275.0" layoutY="414.0" stroke="BLACK" strokeType="INSIDE" width="240.0" />
@@ -71,7 +71,7 @@
             </Text>
             <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="270.0" layoutY="409.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@image/attachment.png" />
+                  <Image url="@attachment.png" />
                </image>
             </ImageView>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="133.0" layoutX="285.0" layoutY="595.0" stroke="BLACK" strokeType="INSIDE" width="240.0" />
@@ -83,7 +83,7 @@
             </Text>
             <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="280.0" layoutY="590.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@image/attachment.png" />
+                  <Image url="@attachment.png" />
                </image>
             </ImageView>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="133.0" layoutX="679.0" layoutY="240.0" stroke="BLACK" strokeType="INSIDE" width="240.0" />
@@ -95,7 +95,7 @@
             </Text>
             <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="674.0" layoutY="235.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@image/attachment.png" />
+                  <Image url="@attachment.png" />
                </image>
             </ImageView>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="133.0" layoutX="690.0" layoutY="422.0" stroke="BLACK" strokeType="INSIDE" width="240.0" />
@@ -107,7 +107,7 @@
             </Text>
             <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="685.0" layoutY="417.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@image/attachment.png" />
+                  <Image url="@attachment.png" />
                </image>
             </ImageView>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="133.0" layoutX="701.0" layoutY="592.0" stroke="BLACK" strokeType="INSIDE" width="240.0" />
@@ -119,7 +119,7 @@
             </Text>
             <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="696.0" layoutY="587.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@image/attachment.png" />
+                  <Image url="@attachment.png" />
                </image>
             </ImageView>
             </children>
@@ -136,22 +136,17 @@
         </ImageView>
       <ImageView fx:id="main" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@image/Vector-1.png" />
+            <Image url="@Vector-1.png" />
          </image>
       </ImageView>
       <ImageView fx:id="participants" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="377.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@image/profile-2user.png" />
+            <Image url="@profile-2user.png" />
          </image>
       </ImageView>
       <ImageView fx:id="jury" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="470.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@image/briefcase.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="moderators" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="575.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@image/crown.png" />
+            <Image url="@briefcase.png" />
          </image>
       </ImageView>
     </children>
