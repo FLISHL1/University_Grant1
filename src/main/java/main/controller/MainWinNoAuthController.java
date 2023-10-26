@@ -7,8 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -20,13 +19,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class MainWinNoAuthController extends Application implements Initializable {
+public class MainWinNoAuthController extends Application implements Initializable, Controller {
 
     public AnchorPane mainPain;
 
-    @FXML
-    private TableView eventTable;
-
+    private TableView<Event> table;
     @Override
     public void start(Stage stage) {
 
@@ -60,21 +57,36 @@ public class MainWinNoAuthController extends Application implements Initializabl
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ArrayList<Event> events = Event.getAllEvents();
 
-        GenerateTable<Event> table = new GenerateTable<Event>(events)
+        GenerateTable<Event> genTable = new GenerateTable<Event>(events)
                 .setLayoutX(39)
                 .setLayoutY(144)
                 .setPrefHeight(555)
                 .setPrefWidth(1140);
-        table.delColumn("days");
-        table.delColumn("id");
-        table.delColumn("city");
-        table.getColumn("name").setText("Название");
+        genTable.delColumn("days");
+        genTable.delColumn("id");
+        genTable.delColumn("city");
+        genTable.delColumn("idUser");
+        genTable.getColumn("name").setText("Название");
+        genTable.getColumn("logo").setText("Логотип");
+        genTable.getColumn("date").setText("Дата");
+        genTable.getColumn("direction").setText("Направление");
 
+        table = genTable.generateTable();
 
+//        table.addEventHandler(MouseEvent.MOUSE_CLICKED, this::clickedTable);
+        table.setRowFactory(t -> clickedTable());
+        mainPain.getChildren().add(table);
+    }
 
-
-
-        mainPain.getChildren().add(table.generateTable());
+    private TableRow<Event> clickedTable(){
+        TableRow<Event> row = new TableRow<>();
+        row.setOnMouseClicked(event1 -> {
+            if (event1.getClickCount() >= 2 && !row.isEmpty()){
+//                EventInfoController.loadScene((Stage) mainPain.getScene().getWindow(), "EventInfo", table.getSelectionModel().getSelectedItem());
+                new EventInfoController(table.getSelectionModel().getSelectedItem()).render();
+            }
+        });
+        return row;
     }
 
     @FXML

@@ -28,7 +28,7 @@ import main.logic.User.User;
 import main.logic.User.UserSelection;
 import net.synedra.validatorfx.Validator;
 
-public class AuthController extends Application implements Initializable {
+public class AuthController extends Application implements Initializable, Controller {
     @FXML
     private ImageView captcha;
     @FXML

@@ -7,26 +7,25 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #99ffff;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Login">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #99ffff;" xmlns:fx="http://javafx.com/fxml/1" >
     <children>
         <AnchorPane layoutX="60.0" prefHeight="800.0" prefWidth="1220.0" style="-fx-background-color: #ffffff;" AnchorPane.rightAnchor="0.0">
             <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f5f5" height="301.0" layoutX="120.0" layoutY="175.0" stroke="BLACK" strokeType="INSIDE" style="-fx-background-radius: 15;" width="301.0" />
                 <Text fx:id="name_event" layoutX="539.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Название мероприятния">
                     <font>
                         <Font name="Comic Sans MS" size="22.0" />
                     </font>
                 </Text>
-            <ImageView fx:id="logotype" blendMode="DARKEN" fitHeight="300.0" fitWidth="300.0" layoutX="120.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true" style="-fx-blend-mode: #dsfghg;">
-               <image>
-                  <Image url="@logo" />
-               </image>
+            <ImageView fx:id="logo_event" blendMode="DARKEN" fitHeight="300.0" fitWidth="300.0" layoutX="120.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true" style="-fx-blend-mode: #dsfghg;">
+
             </ImageView>
             <Text fx:id="date" layoutX="245.0" layoutY="618.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дата">
                <font>
                   <Font name="Comic Sans MS" size="22.0" />
                </font>
             </Text>
-            <Text fx:id="organixator" layoutX="203.0" layoutY="674.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Организатор">
+            <Text fx:id="organizer" layoutX="203.0" layoutY="674.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Организатор">
                <font>
                   <Font name="Comic Sans MS" size="22.0" />
                </font>
@@ -41,27 +40,26 @@
                   <Font name="Comic Sans MS" size="22.0" />
                </font>
             </Text>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f5f5" height="301.0" layoutX="120.0" layoutY="175.0" stroke="BLACK" strokeType="INSIDE" style="-fx-background-radius: 15;" width="301.0" />
             </children>
         </AnchorPane>
         <ImageView fx:id="logo" fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@logo%20(2).png" />
+                <Image url="@image/logo%20(2).png" />
             </image>
         </ImageView>
-        <ImageView fx:id="account" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView onMouseClicked="#login" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@icon%20_profile%20circle_.png" />
+                <Image url="@image/icon%20_profile%20circle_.png" />
             </image>
         </ImageView>
-      <ImageView fx:id="main" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView onMouseClicked="#home" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Vector-1.png" />
+            <Image url="@image/Vector-1.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="registrtion" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="575.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="registration" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="575.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@profile-add.png" />
+            <Image url="@image/profile-add.png" />
          </image>
       </ImageView>
     </children>

@@ -1,36 +1,39 @@
 package main.logic;
 
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import main.server.SqlSender;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Event {
     public Integer id;
     public ImageView logo;
 
     public String  name;
-    public String date;
+    public Date date;
     public String days;
     public String city;
     public String direction;
+    public String idUser;
 
-
+    public String description;
 
     public Event(ResultSet eventDB){
 
         try {
             id = eventDB.getInt("id");
             name = eventDB.getString("name");
-            date = eventDB.getString("date");
+            date = new Date(eventDB.getDate("date").getTime());
             days = eventDB.getString("days");
             city = eventDB.getString("city");
             direction = eventDB.getString("direction");
+            idUser = eventDB.getString("user");
+            description = eventDB.getString("description");
             logo = new ImageView(new Image("file:src/main/resources/main/photo/" + eventDB.getString("logo")));
             logo.setPreserveRatio(true);
             logo.setFitWidth(150);
@@ -45,6 +48,7 @@ public class Event {
 
     }
 
+    public String getIdUser(){return idUser;}
     public Integer getId() {
         return id;
     }
@@ -62,7 +66,9 @@ public class Event {
     }
 
     public String getDate() {
-        return date;
+        SimpleDateFormat dat = new SimpleDateFormat("yyyy.MM.dd");
+
+        return dat.format(date);
     }
 
     public String getDirection() {

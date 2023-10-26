@@ -7,9 +7,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GenerateTable<T> {
 
@@ -28,6 +30,25 @@ public class GenerateTable<T> {
                 TableColumn<T, ImageView> column = new TableColumn<>(f.getName());
                 column.setStyle(columnStyle);
 
+                column.setCellValueFactory(new PropertyValueFactory<T, ImageView>(f.getName()));
+                table.getColumns().add(column);
+            } else {
+                TableColumn<T, String> column = new TableColumn<>(f.getName());
+                column.setStyle(columnStyle);
+                column.setCellValueFactory(new PropertyValueFactory<T, String>(f.getName()));
+                table.getColumns().add(column);
+            }
+        }
+
+        table.getItems().addAll(FXCollections.observableArrayList(list));
+    }
+    public GenerateTable(ArrayList<T> list, boolean onClick){
+        table = new TableView<T>();
+        table.setStyle(tableStyle);
+        for (Field f: list.get(0).getClass().getDeclaredFields()){
+            if (f.getName().equals("logo")) {
+                TableColumn<T, ImageView> column = new TableColumn<>(f.getName());
+                column.setStyle(columnStyle);
                 column.setCellValueFactory(new PropertyValueFactory<T, ImageView>(f.getName()));
                 table.getColumns().add(column);
             } else {

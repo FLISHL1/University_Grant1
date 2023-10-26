@@ -34,6 +34,31 @@ public class SqlSender {
             throw new RuntimeException(e);
         }
     }
+    public static ResultSet getAllCity(){
+        String query = "SELECT * FROM cities";
+        PreparedStatement prepareCall;
+        try {
+            prepareCall = sqlServer.prepareCall(query);
+            ResultSet result = prepareCall.executeQuery();
+
+            return result;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static ResultSet getAllCountry(){
+        String query = "CALL getAllCountry()";
+        PreparedStatement prepareCall;
+        try {
+            prepareCall = sqlServer.prepareCall(query);
+            ResultSet result = prepareCall.executeQuery();
+
+            return result;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     private static ResultSet valid(ResultSet result) throws SQLException {
         if (result.next()) {
             return result;
