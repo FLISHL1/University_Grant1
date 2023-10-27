@@ -47,7 +47,7 @@ public class EventInfoController extends Application implements Initializable, C
         date.setText(event.getDate());
         city.setText(event.getCity());
 
-        organizer.setText(User.getUser(event.getIdUser()).name);
+        organizer.setText(User.getUser(event.getIdUser()).getName());
     }
 
     @FXML

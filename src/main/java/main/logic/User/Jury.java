@@ -9,4 +9,9 @@ public class Jury extends User {
     public Jury(ResultSet idUser) {
         super(idUser);
     }
+
+    public Jury() {
+        super();
+    }
+
 }

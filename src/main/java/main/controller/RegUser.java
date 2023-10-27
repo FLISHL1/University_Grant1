@@ -13,13 +13,14 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import main.logic.Country;
+import main.logic.User.Participant;
+import main.logic.User.User;
 import net.synedra.validatorfx.Validator;
 
 import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 public class RegUser extends Application implements Initializable, Controller {
     @FXML
     private TextField name;
@@ -45,6 +46,10 @@ public class RegUser extends Application implements Initializable, Controller {
     private RadioButton genderMen;
     @FXML
     private Button singUp;
+    @FXML
+    private TextField idNumber;
+
+    private User newUser;
 
     Validator validator = new Validator();
     @Override
@@ -81,6 +86,8 @@ public class RegUser extends Application implements Initializable, Controller {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<Country> ct = FXCollections.observableArrayList(Country.getAllCountry());
         country.setItems(ct);
+//        newUser = new Participant();
+//        idNumber.setText(newUser.getIdNumber());
         validator.createCheck()
                 .dependsOn("password", password.textProperty())
                 .dependsOn("rePassword", rePassword.textProperty())
@@ -125,7 +132,6 @@ public class RegUser extends Application implements Initializable, Controller {
                     }
                 }).decorates(email)
                 .immediate();
-
         validator.createCheck()
                 .dependsOn("phone", phone.textProperty())
                 .withMethod(c ->{

@@ -8,4 +8,8 @@ public class Organizer extends User {
     public Organizer(ResultSet idUser) {
         super(idUser);
     }
+    public Organizer() {
+        super();
+    }
+
 }
