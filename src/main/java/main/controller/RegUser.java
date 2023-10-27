@@ -154,6 +154,17 @@ public class RegUser extends Application implements Initializable, Controller {
                     }
                 }).decorates(birth_date)
                 .immediate();
+
+        validator.createCheck()
+                .dependsOn("name", name.textProperty())
+                .withMethod(c ->{
+                    String name = c.get("name");
+                    if (name.isEmpty()){
+                        c.warn("Заполните ФИО");
+                    }
+
+                }).decorates(birth_date)
+                .immediate();
     }
 
     @FXML

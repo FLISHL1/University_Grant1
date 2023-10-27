@@ -59,6 +59,19 @@ public class SqlSender {
             throw new RuntimeException(e);
         }
     }
+
+    public static ResultSet createUser(){
+        String query = "SELECT createUser()";
+        PreparedStatement prepareCall;
+        try {
+            prepareCall = sqlServer.prepareCall(query);
+            ResultSet result = prepareCall.executeQuery();
+
+            return result;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     private static ResultSet valid(ResultSet result) throws SQLException {
         if (result.next()) {
             return result;
