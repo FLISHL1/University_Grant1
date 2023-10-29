@@ -1,13 +1,17 @@
 package main.logic.User;
 
-import main.logic.User.User;
+
+import jakarta.persistence.*;
+import main.logic.Event;
 
 import java.sql.ResultSet;
+import java.util.List;
 
+@Entity
+@Table(name = "organizers")
+@PrimaryKeyJoinColumn(name = "id_user")
 public class Organizer extends User {
-    public Organizer(ResultSet idUser) {
-        super(idUser);
-    }
+
     public Organizer() {
         super();
     }

@@ -12,7 +12,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.logic.Event;
-import main.logic.User.User;
 
 import java.io.IOException;
 import java.net.URL;
@@ -47,22 +46,22 @@ public class EventInfoController extends Application implements Initializable, C
         date.setText(event.getDate());
         city.setText(event.getCity());
 
-        organizer.setText(User.getUser(event.getIdUser()).getName());
+        organizer.setText(event.getUser().getName());
     }
 
     @FXML
     private void login(MouseEvent mouseEvent) {
-        AuthController.loadScene((Stage) logo_event.getScene().getWindow(), "Login");
+        new AuthController().loadScene((Stage) logo_event.getScene().getWindow(), "Login");
     }
 
     @FXML
     private void home(MouseEvent mouseEvent) {
-        MainWinNoAuthController.loadScene((Stage) logo_event.getScene().getWindow(), "Home");
+        new MainWinNoAuthController().loadScene((Stage) logo_event.getScene().getWindow(), "Home");
     }
-    public static void loadScene(Stage stage, String title, Event event){
+    public void loadScene(Stage stage, String title){
         FXMLLoader loader = new FXMLLoader(EventInfoController.class.getResource("/main/EventInfo.fxml"));
-        loader.setController(new EventInfoController(event));
-        loader.setControllerFactory(param -> new EventInfoController(event));
+        loader.setController(this);
+        loader.setControllerFactory(param -> this);
         Scene scene = null;
         try {
             scene = new Scene(loader.load());

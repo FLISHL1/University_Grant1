@@ -1,19 +1,18 @@
 package main;
 
 
-import main.capcha.GenerateCapcha;
-import main.controller.MainWinNoAuthController;
-import main.logic.Event;
-import main.logic.User.Participant;
-import main.logic.User.User;
-import main.logic.User.UserSelection;
+import main.controller.WindowOrg;
+import main.logic.dao.OrganizerDAO;
+import main.logic.User.Organizer;
 
-import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-//        new AuthController().render();
-        new MainWinNoAuthController().render();
-
+        OrganizerDAO organizerDAO = new OrganizerDAO();
+        new WindowOrg((Organizer) organizerDAO.getById(100)).render();
+//        new MainWinNoAuthController().render();
+//        System.out.println(User.getUser("00100").getName());
     }
+
+
 }

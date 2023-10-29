@@ -5,7 +5,5 @@ import javafx.stage.Stage;
 public interface Controller {
 
 
-    public static void loadScene(Stage stage, String title) {
-
-    }
+    public void loadScene(Stage stage, String title);
 }

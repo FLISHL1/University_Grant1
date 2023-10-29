@@ -1,18 +1,21 @@
 package main.logic;
 
-import main.server.SqlSender;
+import jakarta.persistence.*;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-
+@Entity
+@Table(name = "cities")
 public class City {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     private String name;
-    private int country;
+    @ManyToOne
+    @JoinColumn(name = "id_country")
+    private Country country;
 
 
-    public City(ResultSet city) {
+/*    public City(ResultSet city) {
 
         try {
             name = city.getString("name");
@@ -22,8 +25,8 @@ public class City {
             throw new RuntimeException(e);
         }
 
-    }
-    public static ArrayList<City> getAllCity(){
+    }*/
+/*    public static ArrayList<City> getAllCity(){
         ResultSet resultSet = SqlSender.getAllCity();
         ArrayList<City> cites = new ArrayList<>();
         try {
@@ -34,7 +37,7 @@ public class City {
             throw new RuntimeException(e);
         }
         return cites;
-    }
+    }*/
     public String getName(){
         return name;
     }

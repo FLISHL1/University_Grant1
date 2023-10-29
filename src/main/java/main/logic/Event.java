@@ -1,29 +1,44 @@
 package main.logic;
 
+import jakarta.persistence.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import main.server.SqlSender;
+import main.logic.User.Organizer;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
+@Entity
+@Table(name = "events")
 public class Event {
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     public Integer id;
-    public ImageView logo;
 
+    @Column(name = "logo")
+    public String logo;
+
+    @Column(name = "event_name")
     public String  name;
+
+    @Column(name = "event_date")
     public Date date;
+    @Column(name = "event_days")
     public String days;
-    public String city;
-    public String direction;
-    public String idUser;
+    @ManyToOne
+    @JoinColumn(name = "city")
+    public City city;
+    @ManyToOne
+    @JoinColumn(name = "direction")
+    public Direction direction;
+
+    @ManyToOne()
+    @JoinColumn(name="id_organizer", nullable=false)
+    public Organizer organizer;
 
     public String description;
 
-    public Event(ResultSet eventDB){
+    /*public Event(ResultSet eventDB){
 
         try {
             id = eventDB.getInt("id");
@@ -42,13 +57,11 @@ public class Event {
         } catch (SQLException e){
             throw new RuntimeException(e);
         }
-    }
+    }*/
     public Event(){
-
-
     }
 
-    public String getIdUser(){return idUser;}
+    public Organizer getUser(){return organizer;}
     public Integer getId() {
         return id;
     }
@@ -62,7 +75,7 @@ public class Event {
     }
 
     public String getCity() {
-        return city;
+        return city.getName();
     }
 
     public String getDate() {
@@ -72,21 +85,15 @@ public class Event {
     }
 
     public String getDirection() {
-        return direction;
+        return direction.name;
     }
 
-    public ImageView getLogo(){ return logo;}
+    public ImageView getLogo()
+    {
+        ImageView image = new ImageView(new Image("file:src/main/resources/main/photo/" + logo));
+        image.setPreserveRatio(true);
+        image.setFitWidth(150);
+        image.setFitHeight(150);
+        return image;}
 
-    public static ArrayList<Event> getAllEvents(){
-        ResultSet resultSet = SqlSender.getAllEvent();
-        ArrayList<Event> events = new ArrayList<>();
-        try {
-            while (resultSet.next()){
-                events.add(new Event(resultSet));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return events;
-    }
 }

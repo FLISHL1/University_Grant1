@@ -26,7 +26,7 @@
                         <Font name="Comic Sans MS" size="22.0" />
                     </font>
                 </Text>
-            <ImageView fx:id="logotype" blendMode="DARKEN" fitHeight="300.0" fitWidth="300.0" layoutX="752.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true" style="-fx-blend-mode: #dsfghg;">
+            <ImageView fx:id="photo" blendMode="DARKEN" fitHeight="300.0" fitWidth="300.0" layoutX="752.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true" style="-fx-blend-mode: #dsfghg;">
                <image>
                   <Image url="@logo" />
                </image>
@@ -42,37 +42,37 @@
                   <Font name="Comic Sans MS" size="22.0" />
                </font>
             </Text>
-            <Text fx:id="name" layoutX="140.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ФИО:    ">
+            <Text layoutX="140.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ФИО:    ">
                <font>
                   <Font name="Comic Sans MS" size="20.0" />
                </font>
             </Text>
-            <Text fx:id="name6" layoutX="140.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Пол:    ">
+            <Text layoutX="140.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Пол:    ">
                <font>
                   <Font name="Comic Sans MS" size="20.0" />
                </font>
             </Text>
-            <Text fx:id="name5" layoutX="139.0" layoutY="343.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дата рождения:    ">
+            <Text layoutX="139.0" layoutY="343.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дата рождения:    ">
                <font>
                   <Font name="Comic Sans MS" size="20.0" />
                </font>
             </Text>
-            <Text fx:id="name4" layoutX="137.0" layoutY="408.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Id Number:    123456789">
+            <Text layoutX="137.0" layoutY="408.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Id Number:    ">
                <font>
                   <Font name="Comic Sans MS" size="20.0" />
                </font>
             </Text>
-            <Text fx:id="name3" layoutX="137.0" layoutY="471.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Страна:    ">
+            <Text layoutX="137.0" layoutY="471.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Страна:    ">
                <font>
                   <Font name="Comic Sans MS" size="20.0" />
                </font>
             </Text>
-            <Text fx:id="name2" layoutX="139.0" layoutY="537.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Телефон:    ">
+            <Text layoutX="139.0" layoutY="537.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Телефон:    ">
                <font>
                   <Font name="Comic Sans MS" size="20.0" />
                </font>
             </Text>
-            <Text fx:id="name1" layoutX="137.0" layoutY="603.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:    ">
+            <Text layoutX="137.0" layoutY="603.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:    ">
                <font>
                   <Font name="Comic Sans MS" size="20.0" />
                </font>
@@ -87,7 +87,7 @@
                   <Font name="Comic Sans MS" size="20.0" />
                </font>
             </TextField>
-            <CheckBox fx:id="logachCHMO" layoutX="825.0" layoutY="629.0" mnemonicParsing="false" text="Видимый пароль">
+            <CheckBox fx:id="visiblePassword" layoutX="825.0" layoutY="629.0" mnemonicParsing="false" text="Видимый пароль">
                <font>
                   <Font name="Comic Sans MS" size="15.0" />
                </font>
@@ -103,9 +103,9 @@
                </font>
             </TextField>
             <ChoiceBox fx:id="country" layoutX="306.0" layoutY="450.0" prefHeight="25.0" prefWidth="200.0" />
-            <DatePicker fx:id="birthday" layoutX="306.0" layoutY="322.0" prefHeight="31.0" prefWidth="200.0" />
+            <DatePicker fx:id="birthDay" layoutX="306.0" layoutY="322.0" prefHeight="31.0" prefWidth="200.0" />
             <ChoiceBox fx:id="gender" layoutX="305.0" layoutY="257.0" prefHeight="25.0" prefWidth="200.0" />
-            <ImageView fx:id="logotype1" blendMode="DARKEN" fitHeight="40.0" fitWidth="40.0" layoutX="354.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" style="-fx-blend-mode: #dsfghg;">
+            <ImageView fx:id="photoMini" blendMode="DARKEN" fitHeight="40.0" fitWidth="40.0" layoutX="354.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" style="-fx-blend-mode: #dsfghg;">
                <image>
                   <Image url="@logo" />
                </image>
@@ -121,6 +121,11 @@
                   <Font name="Comic Sans MS" size="15.0" />
                </font>
             </Text>
+            <Text fx:id="idUser" layoutX="270.0" layoutY="408.0" strokeType="OUTSIDE" strokeWidth="0.0" text="123456789">
+               <font>
+                  <Font name="Comic Sans MS" size="20.0" />
+               </font>
+            </Text>
             </children>
         </AnchorPane>
         <ImageView fx:id="logo" fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
@@ -128,7 +133,7 @@
                 <Image url="@logo%20(2).png" />
             </image>
         </ImageView>
-        <ImageView fx:id="account" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@icon%20_profile%20circle_.png" />
             </image>

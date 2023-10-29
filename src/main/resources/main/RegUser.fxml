@@ -33,7 +33,7 @@
                   <Font size="24.0" />
                </font>
             </Text>
-            <Button fx:id="singUp" layoutX="488.0" layoutY="646.0" mnemonicParsing="false" onAction="#register" prefHeight="46.0" prefWidth="255.0" style="-fx-background-color: #0000cc; -fx-background-radius: 15;" text="Зарегистрироваться" textFill="WHITE">
+            <Button fx:id="btnSignUp" layoutX="488.0" layoutY="646.0" mnemonicParsing="false" onAction="#signUp" prefHeight="46.0" prefWidth="255.0" style="-fx-background-color: #0000cc; -fx-background-radius: 15;" text="Зарегистрироваться" textFill="WHITE">
                <font>
                   <Font name="Comic Sans MS" size="22.0" />
                </font>

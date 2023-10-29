@@ -1,32 +1,27 @@
 package main.logic;
 
-import main.server.SqlSender;
+import jakarta.persistence.*;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-
+@Entity
+@Table(name = "countries")
 public class Country {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "country_name")
     private String name;
+    @Column(name = "english_name")
     private String nameEn;
+    @Column(name = "code")
     private String code;
+    @Column(name = "code2")
     private int codeInt;
 
-    public Country(ResultSet country) {
-
-        try {
-            name = country.getString("name");
-            id = country.getInt("id");
-            nameEn = country.getString("nameEn");
-            code = country.getString("code");
-            codeInt = country.getInt("code2");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public Country() {
 
     }
-    public static ArrayList<Country> getAllCountry(){
+
+/*    public static ArrayList<Country> getAllCountry(){
         ResultSet resultSet = SqlSender.getAllCountry();
         ArrayList<Country> countries = new ArrayList<>();
         try {
@@ -37,7 +32,7 @@ public class Country {
             throw new RuntimeException(e);
         }
         return countries;
-    }
+    }*/
     public String getName(){
         return name;
     }
@@ -45,5 +40,17 @@ public class Country {
     @Override
     public String toString() {
         return name;
+    }
+
+    public int getCodeInt() {
+        return codeInt;
+    }
+
+    public void setCodeInt(int codeInt) {
+        this.codeInt = codeInt;
+    }
+
+    public int getId() {
+        return id;
     }
 }

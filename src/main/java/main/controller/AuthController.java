@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
 import javafx.embed.swing.JFXPanel;
 import main.capcha.GenerateCapcha;
 import main.logic.User.User;
-import main.logic.User.UserSelection;
+import main.logic.dao.UserDAO;
 import net.synedra.validatorfx.Validator;
 
 public class AuthController extends Application implements Initializable, Controller {
@@ -96,7 +96,7 @@ public class AuthController extends Application implements Initializable, Contro
 
     @FXML
     private void registration(MouseEvent actionEvent) {
-        RegUser.loadScene((Stage) login.getScene().getWindow(), "Registration");
+         new RegUser().loadScene((Stage) login.getScene().getWindow(), "Registration");
     }
 
 
@@ -124,12 +124,18 @@ public class AuthController extends Application implements Initializable, Contro
 
     @FXML
     private void login(ActionEvent actionEvent) {
+        UserDAO userDAO = new UserDAO();
         User user;
         if (validator.getValidationResult().getMessages().isEmpty() && checkCaptcha()){
             if (!password.getText().equals("") && checkCaptcha()){
-                user = User.checkAuth(login.getText(), password.getText());
+                user = userDAO.auth(Integer.parseInt(login.getText()), password.getText());
                 if (user == null){
+                    shapePassword.playAnimation();
+//                    Что то вывести
                     trying++;
+                } else {
+
+//                    if (user instanceof Organizer) new WindowOrg((Organizer) user).loadScene((Stage) password.getScene().getWindow(), "Главное окно организатора");
                 }
             }
         } else {
@@ -141,13 +147,13 @@ public class AuthController extends Application implements Initializable, Contro
     }
 
     public void home(MouseEvent mouseEvent) {
-        MainWinNoAuthController.loadScene((Stage) login.getScene().getWindow(), "Home");
+        new MainWinNoAuthController().loadScene((Stage) login.getScene().getWindow(), "Home");
     }
 
-    public static void loadScene(Stage stage, String title){
+    public void loadScene(Stage stage, String title){
         FXMLLoader loader = new FXMLLoader(AuthController.class.getResource("/main/Login.fxml"));
-        loader.setController(new AuthController());
-        loader.setControllerFactory(param -> new AuthController());
+        loader.setController(this);
+        loader.setControllerFactory(param -> this);
         Scene scene = null;
         try {
             scene = new Scene(loader.load());

@@ -1,70 +1,95 @@
 package main.logic.User;
 
-import main.passwordHash.PasswordHashing;
-import main.server.Server;
-import main.server.SqlSender;
+import jakarta.persistence.*;
+import main.logic.Country;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
-public abstract class User {
+@Inheritance(strategy = InheritanceType.JOINED)
+@Entity
+@Table(name = "users")
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer idNumber;
+
     private String name;
 
     private String email;
     private String phone;
-    private Date date_birthDay;
-    private String countryCode;
+    @Column(name = "birth_date")
+    private Date birthDay;
+
+    @ManyToOne
+    @JoinColumn(name="country")
+    private Country country;
+    @Column(name="gender")
     private String sex;
     private String photo;
-    private String idNumber;
     private String password;
 
     public User(ResultSet user) {
 
             try {
                 name = user.getString("name");
+                System.out.println(name);
                 email = user.getString("email");
                 phone = user.getString("phone");
-                countryCode = user.getString("country");
-                date_birthDay = user.getDate("birth_date");
-                photo = user.getString(photo);
+//                countryCode = user.getInt("country");
+                birthDay = user.getDate("birth_date");
+                photo = user.getString("photo");
                 sex = user.getString("gender");
-                idNumber = user.getString("id");
+                idNumber = user.getInt("id");
                 password = user.getString("password");
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
     }
-    public User(){
-        idNumber = createUser();
-    }
+//    public User(){
+//        idNumber = createUser();
+//    }
+    public User(){}
 
-    public String createUser(){
-        ResultSet resultSet = SqlSender.createUser();
-        String idUser;
-
-        try {
-            idUser = resultSet.getString("idUser");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return idUser;
-    }
-
-    public static User getUser(String idUser){
-        return UserSelection.getUser(idUser);
-    }
-
-    public static User checkAuth(String idUser, String password){
-        User user = User.getUser(idUser);
-        System.out.println(password);
-        if (user != null && PasswordHashing.checkPass(password, user.password)){
-            return user;
-        } else {
-            return null;
-        }
-    }
+//    public String createUser(){
+//        ResultSet resultSet = SqlSender.createUser();
+//        String idUser;
+//
+//        try {
+//            idUser = resultSet.getString("idUser");
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//        return idUser;
+//    }
+//    public void updateUser(){
+//        String role = null;
+//        if (this instanceof Jury) role = "jury";
+//        else if (this instanceof Participant) role = "participant";
+//        else if (this instanceof Organizer) role = "organizer";
+//        else if (this instanceof Moderation) role = "moderator";
+//        SqlSender.updateUser(this, role);
+//    }
+//
+//    public void dropUser(){
+//        SqlSender.dropUser(this);
+//    }
+//    public static User getUser(String idUser){
+//        return UserSelection.getUser(idUser);
+//    }
+//
+//    public static User checkAuth(String idUser, String password){
+//        User user = User.getUser(idUser);
+//        System.out.println(PasswordHashing.checkPass(password, user.password));
+//        System.out.println(user.password);
+//        if (user != null && PasswordHashing.checkPass(password, user.password)){
+//            return user;
+//        } else {
+//            return null;
+//        }
+//    }
 
     public String getPassword(){ return password;}
     public void setPassword(String newPassword){ password = newPassword;}
@@ -93,20 +118,23 @@ public abstract class User {
         this.phone = phone;
     }
 
-    public Date getDate_birthDay() {
-        return date_birthDay;
+    public Date getBirthDay() {
+        return birthDay;
     }
 
-    public void setDate_birthDay(Date date_birthDay) {
-        this.date_birthDay = date_birthDay;
+    public void setBirthDay(Date birthDay) {
+        this.birthDay = birthDay;
+    }
+    public Country getCountry() {
+        return country;
     }
 
-    public String getCountryCode() {
-        return countryCode;
+    public Integer getCountryCode() {
+        return country.getId();
     }
 
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
+    public void setCountry(Country country) {
+        this.country = country;
     }
 
     public String getSex() {
@@ -117,11 +145,14 @@ public abstract class User {
         this.sex = sex;
     }
 
-    public String getIdNumber() {
+
+
+    public Integer getId() {
         return idNumber;
     }
 
-    public void setIdNumber(String idNumber) {
+
+    public void setIdNumber(Integer idNumber) {
         this.idNumber = idNumber;
     }
 

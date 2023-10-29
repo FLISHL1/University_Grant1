@@ -12,14 +12,18 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import main.attentionWindow.AlertShow;
 import main.logic.Country;
+import main.logic.dao.CountryDAO;
+import main.logic.dao.ParticipantDAO;
 import main.logic.User.Participant;
-import main.logic.User.User;
+import main.passwordHash.PasswordHashing;
 import net.synedra.validatorfx.Validator;
 
 import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.util.ResourceBundle;
 public class RegUser extends Application implements Initializable, Controller {
     @FXML
@@ -45,13 +49,22 @@ public class RegUser extends Application implements Initializable, Controller {
     @FXML
     private RadioButton genderMen;
     @FXML
-    private Button singUp;
+    private RadioButton genderWoman;
+    @FXML
+    private Button btnSignUp;
     @FXML
     private TextField idNumber;
 
-    private User newUser;
 
-    Validator validator = new Validator();
+    private Participant newUser;
+
+    private ParticipantDAO participantDAO;
+    Validator validator;
+
+    public RegUser(){
+        participantDAO = new ParticipantDAO();
+        validator = new Validator();
+    }
     @Override
     public void start(Stage stage) {
 
@@ -67,7 +80,8 @@ public class RegUser extends Application implements Initializable, Controller {
 
         stage.setTitle("Registration");
         stage.setResizable(false);
-//        primaryStage.setAlwaysOnTop(true);
+//        primaryStage.setAlwaysOnTop(true)
+
         stage.setScene(scene);
         stage.show();
     }
@@ -84,10 +98,12 @@ public class RegUser extends Application implements Initializable, Controller {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<Country> ct = FXCollections.observableArrayList(Country.getAllCountry());
+        CountryDAO countryDAO = new CountryDAO();
+        ObservableList<Country> ct = FXCollections.observableArrayList(countryDAO.getAll());
         country.setItems(ct);
-//        newUser = new Participant();
-//        idNumber.setText(newUser.getIdNumber());
+        newUser = participantDAO.create(new Participant());
+        idNumber.setText(Integer.toString(newUser.getId()));
+
         validator.createCheck()
                 .dependsOn("password", password.textProperty())
                 .dependsOn("rePassword", rePassword.textProperty())
@@ -114,7 +130,7 @@ public class RegUser extends Application implements Initializable, Controller {
                 .dependsOn("password", password.textProperty())
                 .withMethod(c -> {
                     if (password.getText().isEmpty()){
-                        c.warn("Необходимо ввести пароль");
+                        c.error("Необходимо ввести пароль");
                     } else if (!password.getText().matches("(?=.*[0-9])(?=.*\\W)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{6,}")){
                         c.error("Не менее 6 символов \n Заглавные и строчные буквы \n Не менее одного спецсимвола \n Не менее одной цифры");
                     }
@@ -126,7 +142,7 @@ public class RegUser extends Application implements Initializable, Controller {
                 .withMethod(c ->{
                     String email = c.get("email");
                     if (email.isEmpty()){
-                        c.warn("Необходимо ввести электронную почту");
+                        c.error("Необходимо ввести электронную почту");
                     } else if(!email.matches(".+@.+\\..+")){
                         c.error("Не верный формат почты");
                     }
@@ -137,26 +153,26 @@ public class RegUser extends Application implements Initializable, Controller {
                 .withMethod(c ->{
                     String phone = c.get("phone");
                     if (phone.isEmpty()){
-                        c.warn("Необходимо ввести номер телефона (8(999)-999-99-99)");
+                        c.error("Необходимо ввести номер телефона (8(999)-999-99-99)");
                     } else if(!phone.matches("[+]?(8|7)\\([0-9]{3}\\)-[0-9]{3}-[0-9]{2}-[0-9]{2}")) {
                         c.error("Не верный формат номера телефона (8(999)-999-99-99)");
                     }}).decorates(phone)
                 .immediate();
 
         validator.createCheck()
-                .dependsOn("country", country.converterProperty())
+                .dependsOn("country", country.valueProperty())
                 .withMethod(c ->{
                     if(country.getValue() == null){
-                        c.warn("Укажите страну!");
+                        c.error("Укажите страну!");
                     }
                 }).decorates(country)
                 .immediate();
 
         validator.createCheck()
-                .dependsOn("date", birth_date.accessibleTextProperty())
+                .dependsOn("date", birth_date.valueProperty())
                 .withMethod(c ->{
-                    if(birth_date.getEditor().getText().isEmpty()){
-                        c.warn("Укажите дату рождения!");
+                    if(birth_date.getValue() == null){
+                        c.error("Укажите дату рождения!");
                     }
                 }).decorates(birth_date)
                 .immediate();
@@ -166,12 +182,15 @@ public class RegUser extends Application implements Initializable, Controller {
                 .withMethod(c ->{
                     String name = c.get("name");
                     if (name.isEmpty()){
-                        c.warn("Заполните ФИО");
+                        c.error("Заполните ФИО");
                     }
 
-                }).decorates(birth_date)
+                }).decorates(name)
                 .immediate();
     }
+
+
+
 
     @FXML
     private void visiblePassword(ActionEvent event){
@@ -190,33 +209,56 @@ public class RegUser extends Application implements Initializable, Controller {
 
     }
     @FXML
-    private void singUp(ActionEvent event){
-
+    private void signUp(ActionEvent event){
+        if (!validator.containsErrors()){
+            fillUser();
+            participantDAO.update(newUser);
+            login(null);
+        } else {
+            AlertShow.showAlert("info", "Не правильно ввели данные",  validator.createStringBinding().get());
+        }
     }
 
+    private void fillUser(){
+        newUser.setBirthDay(Date.valueOf(birth_date.getValue()));
+        newUser.setName(name.getText());
+        newUser.setCountry((Country) country.getValue());
+        newUser.setPhone(phone.getText());
+        newUser.setEmail(email.getText());
+        newUser.setPassword(PasswordHashing.HashPassword(password.getText()));
+        System.out.println(genderMen.isSelected());
+        newUser.setSex(genderMen.isSelected()?genderMen.getText():genderWoman.getText());
+    }
 
-
-    public static void loadScene(Stage stage, String title){
+    public void loadScene(Stage stage, String title){
         FXMLLoader loader = new FXMLLoader(AuthController.class.getResource("/main/RegUser.fxml"));
-        loader.setController(new RegUser());
-        loader.setControllerFactory(param -> new RegUser());
+        loader.setController(this);
+        loader.setControllerFactory(param -> this);
         Scene scene = null;
         try {
             scene = new Scene(loader.load());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        stage.setOnHidden(e -> {
+            participantDAO.delete(newUser);
+        });
         stage.setTitle(title);
         stage.setScene(scene);
     }
 
     @FXML
     private void login(MouseEvent mouseEvent) {
-        AuthController.loadScene((Stage) singUp.getScene().getWindow(), "Login");
+        if (newUser.getName().isEmpty())
+            participantDAO.delete(newUser);
+        new AuthController().loadScene((Stage) btnSignUp.getScene().getWindow(), "Login");
     }
 
     @FXML
     private void home(MouseEvent mouseEvent) {
-        MainWinNoAuthController.loadScene((Stage) singUp.getScene().getWindow(), "Home");
+        participantDAO.delete(newUser);
+        new MainWinNoAuthController().loadScene((Stage) btnSignUp.getScene().getWindow(), "Home");
     }
+
+
 }
