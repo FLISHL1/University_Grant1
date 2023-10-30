@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 public class Jury extends User {
     private Integer direction;
 
+
     public Jury(ResultSet idUser) {
         super(idUser);
     }
@@ -20,4 +21,14 @@ public class Jury extends User {
         super();
     }
 
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder(this.getName());
+        stringBuilder.append(this.getId());
+        return stringBuilder.toString();
+    }
+
+    public String getDirection() {
+        return direction.toString();
+    }
 }

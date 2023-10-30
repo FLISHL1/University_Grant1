@@ -2,13 +2,18 @@ package main.controller;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -18,8 +23,12 @@ import main.logic.Event;
 import main.logic.dao.EventDAO;
 import main.logic.User.Organizer;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class WindowOrg extends Application implements Initializable, Controller{
@@ -28,6 +37,10 @@ public class WindowOrg extends Application implements Initializable, Controller{
     public Text helloText;
     public ImageView logotype;
     public Text name;
+    @FXML
+    private TextField searchDirection;
+    @FXML
+    private DatePicker searchDate;
     Organizer user;
     private TableView<Event> table;
 
@@ -84,13 +97,42 @@ public class WindowOrg extends Application implements Initializable, Controller{
         String hello = "";
         int hour = new Date().getHours();
         if (hour >= 5 && hour < 12) hello = "Доброе утро!";
-        else if (hour >= 12 && hour < 16) hello = "Добрый день!";
-        else if (hour >= 16 && hour < 24) hello = "Доброе вечер!";
+        else if (hour >= 12 && hour < 17) hello = "Добрый день!";
+        else if (hour >= 17 && hour < 24) hello = "Добрый вечер!";
         else if (hour >= 24 && hour < 5) hello = "Доброй ночи!";
         helloText.setText(hello);
         EventDAO eventDAO = new EventDAO();
         List<Event> events = eventDAO.getAll();
+        FilteredList<Event> filteredList = new FilteredList<>(FXCollections.observableList(events), p -> true);
+        searchDirection.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(event -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
 
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (event.getDirection().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+                return false;
+            });
+        });
+
+        searchDate.valueProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(event -> {
+                if (newValue == null || newValue.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")).isEmpty()) {
+                    return true;
+                }
+
+                String formatDate = newValue.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+
+                if (event.getDate().toLowerCase().contains(formatDate)) {
+                    return true;
+                }
+                return false;
+            });
+        });
         GenerateTable<Event> genTable = new GenerateTable<Event>(new ArrayList<>(events))
                 .setLayoutX(39)
                 .setLayoutY(144)
@@ -106,11 +148,15 @@ public class WindowOrg extends Application implements Initializable, Controller{
         genTable.getColumn("date").setText("Дата");
         genTable.getColumn("direction").setText("Направление");
         table = genTable.generateTable();
-
+        SortedList<Event> sortedData = new SortedList<>(filteredList);
+        sortedData.comparatorProperty().bind(table.comparatorProperty());
+        table.setItems(sortedData);
 //        table.addEventHandler(MouseEvent.MOUSE_CLICKED, this::clickedTable);
         table.setRowFactory(t -> clickedTable());
         mainPain.getChildren().add(table);
     }
+
+
     private TableRow<Event> clickedTable(){
         TableRow<Event> row = new TableRow<>();
         row.setOnMouseClicked(event1 -> {
@@ -123,7 +169,22 @@ public class WindowOrg extends Application implements Initializable, Controller{
     }
 
     @FXML
+    private void createEvent(MouseEvent event){
+        new CreateEventController().loadScene((Stage) mainPain.getScene().getWindow(), "Создать мероприятие");
+
+    }
+    @FXML
+    private void jury(MouseEvent event){
+        new ModeratorsAndJuryController().loadScene((Stage) mainPain.getScene().getWindow(), "Жури\\Модероторы");
+    }
+
+    @FXML
     private void profile(MouseEvent event){
         new ProfileController(user).loadScene((Stage) mainPain.getScene().getWindow(), "Профиль");
+        try {
+            this.stop();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

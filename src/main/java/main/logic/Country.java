@@ -18,21 +18,8 @@ public class Country {
     private int codeInt;
 
     public Country() {
-
     }
 
-/*    public static ArrayList<Country> getAllCountry(){
-        ResultSet resultSet = SqlSender.getAllCountry();
-        ArrayList<Country> countries = new ArrayList<>();
-        try {
-            while (resultSet.next()){
-                countries.add(new Country(resultSet));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return countries;
-    }*/
     public String getName(){
         return name;
     }

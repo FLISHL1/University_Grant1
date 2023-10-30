@@ -32,32 +32,12 @@ public class Event {
     @JoinColumn(name = "direction")
     public Direction direction;
 
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="id_organizer", nullable=false)
     public Organizer organizer;
 
     public String description;
 
-    /*public Event(ResultSet eventDB){
-
-        try {
-            id = eventDB.getInt("id");
-            name = eventDB.getString("name");
-            date = new Date(eventDB.getDate("date").getTime());
-            days = eventDB.getString("days");
-            city = eventDB.getString("city");
-            direction = eventDB.getString("direction");
-            idUser = eventDB.getString("user");
-            description = eventDB.getString("description");
-            logo = new ImageView(new Image("file:src/main/resources/main/photo/" + eventDB.getString("logo")));
-            logo.setPreserveRatio(true);
-            logo.setFitWidth(150);
-            logo.setFitHeight(150);
-//            logo = eventDB.getString("logo");
-        } catch (SQLException e){
-            throw new RuntimeException(e);
-        }
-    }*/
     public Event(){
     }
 
@@ -79,7 +59,7 @@ public class Event {
     }
 
     public String getDate() {
-        SimpleDateFormat dat = new SimpleDateFormat("yyyy.MM.dd");
+        SimpleDateFormat dat = new SimpleDateFormat("dd.MM.yyyy");
 
         return dat.format(date);
     }

@@ -252,12 +252,21 @@ public class RegUser extends Application implements Initializable, Controller {
         if (newUser.getName().isEmpty())
             participantDAO.delete(newUser);
         new AuthController().loadScene((Stage) btnSignUp.getScene().getWindow(), "Login");
+        stoped();
     }
 
+    public void stoped(){
+        try {
+            this.stop();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
     @FXML
     private void home(MouseEvent mouseEvent) {
         participantDAO.delete(newUser);
         new MainWinNoAuthController().loadScene((Stage) btnSignUp.getScene().getWindow(), "Home");
+        stoped();
     }
 
 

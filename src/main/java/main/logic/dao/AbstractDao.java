@@ -34,6 +34,7 @@ public abstract class AbstractDao<T> {
             // Note that the SQL is selecting from "Student" entity not the "student" table
             objects = manager.createQuery("from " + clazz.getName()).list();
 
+
             // Commit the transaction
             transaction.commit();
         } catch (RollbackException ex) {

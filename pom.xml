@@ -35,6 +35,7 @@
       <artifactId>javassist</artifactId>
       <version>3.29.0-GA</version>
     </dependency>
+
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>

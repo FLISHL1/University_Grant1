@@ -1,6 +1,8 @@
 package main.logic.User;
 
 import jakarta.persistence.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import main.logic.Country;
 
 import java.sql.ResultSet;
@@ -14,22 +16,22 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer idNumber;
+    protected Integer idNumber;
 
-    private String name;
+    protected String name;
 
-    private String email;
-    private String phone;
+    protected String email;
+    protected String phone;
     @Column(name = "birth_date")
-    private Date birthDay;
+    protected Date birthDay;
 
     @ManyToOne
     @JoinColumn(name="country")
-    private Country country;
+    protected Country country;
     @Column(name="gender")
-    private String sex;
-    private String photo;
-    private String password;
+    protected String sex;
+    protected String photo;
+    protected String password;
 
     public User(ResultSet user) {
 
@@ -48,48 +50,7 @@ public class User {
                 throw new RuntimeException(e);
             }
     }
-//    public User(){
-//        idNumber = createUser();
-//    }
     public User(){}
-
-//    public String createUser(){
-//        ResultSet resultSet = SqlSender.createUser();
-//        String idUser;
-//
-//        try {
-//            idUser = resultSet.getString("idUser");
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//        return idUser;
-//    }
-//    public void updateUser(){
-//        String role = null;
-//        if (this instanceof Jury) role = "jury";
-//        else if (this instanceof Participant) role = "participant";
-//        else if (this instanceof Organizer) role = "organizer";
-//        else if (this instanceof Moderation) role = "moderator";
-//        SqlSender.updateUser(this, role);
-//    }
-//
-//    public void dropUser(){
-//        SqlSender.dropUser(this);
-//    }
-//    public static User getUser(String idUser){
-//        return UserSelection.getUser(idUser);
-//    }
-//
-//    public static User checkAuth(String idUser, String password){
-//        User user = User.getUser(idUser);
-//        System.out.println(PasswordHashing.checkPass(password, user.password));
-//        System.out.println(user.password);
-//        if (user != null && PasswordHashing.checkPass(password, user.password)){
-//            return user;
-//        } else {
-//            return null;
-//        }
-//    }
 
     public String getPassword(){ return password;}
     public void setPassword(String newPassword){ password = newPassword;}
@@ -155,8 +116,20 @@ public class User {
     public void setIdNumber(Integer idNumber) {
         this.idNumber = idNumber;
     }
-
-    public String getPhoto() {
-        return photo;
+    public String getRole(){
+        String role = null;
+        if (this instanceof Moderation){
+            role = "Moderator";
+        } else if (this instanceof Jury){
+            role = "Jury";
+        }
+        return role;
+    }
+    public ImageView getPhoto() {
+        ImageView image = new ImageView(new Image("file:src/main/resources/main/photo/Users/" + photo));
+        image.setPreserveRatio(true);
+        image.setFitWidth(150);
+        image.setFitHeight(150);
+        return image;
     }
 }

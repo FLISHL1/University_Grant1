@@ -148,8 +148,15 @@ public class AuthController extends Application implements Initializable, Contro
 
     public void home(MouseEvent mouseEvent) {
         new MainWinNoAuthController().loadScene((Stage) login.getScene().getWindow(), "Home");
+        stoped();
     }
-
+    public void stoped(){
+        try {
+            this.stop();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
     public void loadScene(Stage stage, String title){
         FXMLLoader loader = new FXMLLoader(AuthController.class.getResource("/main/Login.fxml"));
         loader.setController(this);

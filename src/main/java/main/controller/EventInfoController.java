@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.logic.Event;
+import main.logic.dao.EventDAO;
 
 import java.io.IOException;
 import java.net.URL;
@@ -45,8 +46,11 @@ public class EventInfoController extends Application implements Initializable, C
         name_event.setText(event.getName());
         date.setText(event.getDate());
         city.setText(event.getCity());
-
+        EventDAO eventDAO = new EventDAO();
+        eventDAO.openSession();
+        event = eventDAO.merge(event);
         organizer.setText(event.getUser().getName());
+        eventDAO.closeSession();
     }
 
     @FXML

@@ -11,7 +11,6 @@ import java.util.List;
 @Table(name = "organizers")
 @PrimaryKeyJoinColumn(name = "id_user")
 public class Organizer extends User {
-
     public Organizer() {
         super();
     }

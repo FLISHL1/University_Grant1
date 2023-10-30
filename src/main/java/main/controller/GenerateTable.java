@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class GenerateTable<T> {
@@ -22,7 +23,7 @@ public class GenerateTable<T> {
     private String columnStyle = ("-fx-alignment: CENTER; " +
             "-fx-background-color: rgba(255, 255, 255, 0.5);" +
             "-fx-border-color: gray;");
-    public GenerateTable(ArrayList<T> list){
+    public GenerateTable(List<T> list){
         table = new TableView<T>();
         table.setStyle(tableStyle);
         for (Field f: list.get(0).getClass().getDeclaredFields()){
