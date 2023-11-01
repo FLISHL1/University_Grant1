@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #99ffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.ModeratorsAndJuryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #99ffff;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.ModeratorsAndJuryController">
     <children>
         <AnchorPane fx:id="mainPain" layoutX="60.0" prefHeight="800.0" prefWidth="1220.0" style="-fx-background-color: #ffffff;" AnchorPane.rightAnchor="0.0">
             <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f5f5" height="41.0" layoutX="354.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" style="-fx-background-radius: 15;" width="41.0" />
-                <Text fx:id="name_event" layoutX="413.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Добрый день!">
+                <Text fx:id="helloText" layoutX="413.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Добрый день!">
                     <font>
                         <Font name="Comic Sans MS" size="22.0" />
                     </font>
@@ -25,7 +21,7 @@
                   <Image url="@image\logo" />
                </image>
             </ImageView>
-            <Text fx:id="name" layoutX="579.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дорогой, Иван Васильевич">
+            <Text fx:id="helloName" layoutX="579.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дорогой, Иван Васильевич">
                <font>
                   <Font name="Comic Sans MS" size="22.0" />
                </font>

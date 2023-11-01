@@ -81,7 +81,7 @@ public class RegUserNew  implements Initializable, Controller {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         icon.setImage(user.getPhoto().getImage());
-        name.setText((user.getSex().contains("муж")?"Дорогой ":"Дорогая ") + user.getName());
+        helloName.setText((user.getSex().contains("муж")?"Дорогой ":"Дорогая ") + user.getName());
         String hello = "";
         int hour = new java.util.Date().getHours();
         if (hour >= 5 && hour < 12) hello = "Доброе утро!";
@@ -244,7 +244,6 @@ public class RegUserNew  implements Initializable, Controller {
     @Override
     public void loadScene(Stage stage, String title) {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/main/RegModJur.fxml.fxml"));
-//        loader.setController(this);
         loader.setControllerFactory(param -> this);
         Scene scene = null;
         try {

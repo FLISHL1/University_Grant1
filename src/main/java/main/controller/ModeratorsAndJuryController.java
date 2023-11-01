@@ -15,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.logic.User.Organizer;
 import main.logic.User.User;
@@ -24,6 +25,7 @@ import main.logic.dao.ModeratorDAO;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -38,7 +40,10 @@ public class ModeratorsAndJuryController implements Controller, Initializable {
     private ImageView icon;
     @FXML
     private TextField searchName;
-
+    @FXML
+    private Text helloText;
+    @FXML
+    private Text helloName;
     private Organizer user;
 
     public ModeratorsAndJuryController(Organizer user){
@@ -58,14 +63,14 @@ public class ModeratorsAndJuryController implements Controller, Initializable {
     }
     private void update(){
         icon.setImage(user.getPhoto().getImage());
-//        helloName.setText((user.getSex().contains("муж")?"Дорогой ":"Дорогая ") + user.getName());
-//        String hello = "";
-//        int hour = new Date().getHours();
-//        if (hour >= 5 && hour < 12) hello = "Доброе утро!";
-//        else if (hour >= 12 && hour < 17) hello = "Добрый день!";
-//        else if (hour >= 17 && hour < 24) hello = "Добрый вечер!";
-//        else if (hour < 5) hello = "Доброй ночи!";
-//        helloText.setText(hello);
+        helloName.setText((user.getSex().contains("муж")?"Дорогой ":"Дорогая ") + user.getName());
+        String hello = "";
+        int hour = new Date().getHours();
+        if (hour >= 5 && hour < 12) hello = "Доброе утро!";
+        else if (hour >= 12 && hour < 17) hello = "Добрый день!";
+        else if (hour >= 17 && hour < 24) hello = "Добрый вечер!";
+        else if (hour < 5) hello = "Доброй ночи!";
+        helloText.setText(hello);
         JuryDAO juryDAO = new JuryDAO();
         ModeratorDAO moderatorDAO = new ModeratorDAO();
         List<User> userList = new ArrayList<>();

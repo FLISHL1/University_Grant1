@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import main.attentionWindow.AlertShow;
 import main.logic.Country;
 import main.logic.User.Organizer;
+import main.logic.User.User;
 import main.logic.dao.CountryDAO;
 import main.logic.dao.ParticipantDAO;
 import main.logic.User.Participant;
@@ -69,25 +70,43 @@ public class RegUser implements Initializable, Controller {
     private Text nameText;
 
     private Participant newUser;
-
+    private User user;
     private ParticipantDAO participantDAO;
     Validator validator;
 
     public RegUser(){
         participantDAO = new ParticipantDAO();
         validator = new Validator();
+        user = null;
     }
 
+    public RegUser(User user){
+        participantDAO = new ParticipantDAO();
+        validator = new Validator();
+        this.user = user;
+    }
 
-
-
+    private void checkUser(){
+        if (user  == null){
+            profile.setOnMouseClicked(this::login);
+            participants.setVisible(false);
+            jury.setVisible(false);
+            helloText.setVisible(false);
+            nameText.setVisible(false);
+        } else{
+            name.setText((user.getSex().contains("муж")?"Дорогой ":"Дорогая ") + user.getName());
+            String hello = "";
+            int hour = new java.util.Date().getHours();
+            if (hour >= 5 && hour < 12) hello = "Доброе утро!";
+            else if (hour >= 12 && hour < 17) hello = "Добрый день!";
+            else if (hour >= 17 && hour < 24) hello = "Добрый вечер!";
+            else if (hour < 5) hello = "Доброй ночи!";
+            helloText.setText(hello);
+        }
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        profile.setOnMouseClicked(this::login);
-        participants.setVisible(false);
-        jury.setVisible(false);
-        helloText.setVisible(false);
-        nameText.setVisible(false);
+        checkUser();
         CountryDAO countryDAO = new CountryDAO();
         ObservableList<Country> ct = FXCollections.observableArrayList(countryDAO.getAll());
         country.setItems(ct);
@@ -235,23 +254,24 @@ public class RegUser implements Initializable, Controller {
 
     @FXML
     private void login(MouseEvent mouseEvent) {
-        if (newUser.getName() == null)
-            participantDAO.delete(newUser);
-        new AuthController().loadScene((Stage) profile.getScene().getWindow(), "Login");
+        if (newUser.getName() == null)  participantDAO.delete(newUser);
+        if (user instanceof Organizer) new ProfileController(user).loadScene((Stage) profile.getScene().getWindow(), "Профиль");
+        else new AuthController().loadScene((Stage) profile.getScene().getWindow(), "Профиль");
     }
 
     @FXML
     private void home(MouseEvent mouseEvent) {
         participantDAO.delete(newUser);
-        new MainWinNoAuthController().loadScene((Stage) profile.getScene().getWindow(), "Home");
+        new MainWinNoAuthController().loadScene((Stage) profile.getScene().getWindow(), "Главное окно");
     }
     @FXML
     private void participants(MouseEvent event){
-
+        if (participants.isVisible()) new UserList(user).loadScene((Stage) profile.getScene().getWindow(), "Список пользователей");
     }
 
     @FXML
     private void jury(MouseEvent event){
+        if (jury.isVisible()) new ModeratorsAndJuryController((Organizer) user).loadScene((Stage) profile.getScene().getWindow(), "Модератор\\Жюри");
     }
 
 }

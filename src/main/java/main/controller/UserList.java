@@ -18,6 +18,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.logic.Event;
+import main.logic.User.Organizer;
 import main.logic.User.Participant;
 import main.logic.User.Participant;
 import main.logic.User.User;
@@ -69,21 +70,6 @@ public class UserList implements Initializable, Controller {
 
     public UserList(User user){
         this.user = user;
-    }
-
-    @FXML
-    void home(MouseEvent event) {
-
-    }
-
-    @FXML
-    void jury(MouseEvent event) {
-
-    }
-
-    @FXML
-    void profile(MouseEvent event) {
-
     }
 
     private String tableStyle = ("-fx-selection-bar: red;" +
@@ -164,5 +150,25 @@ public class UserList implements Initializable, Controller {
         }
         stage.setTitle(title);
         stage.setScene(scene);
+    }
+
+    @FXML
+    private void createUser(MouseEvent event){
+        new RegUser(user).loadScene((Stage) table.getScene().getWindow(), "Регистрация участника");
+    }
+
+    @FXML
+    void home(MouseEvent event) {
+        new WindowOrg((Organizer) user).loadScene((Stage) table.getScene().getWindow(), "Главное окно организатора");
+    }
+
+    @FXML
+    void jury(MouseEvent event) {
+        new ModeratorsAndJuryController((Organizer) user).loadScene((Stage) table.getScene().getWindow(), "Жури\\Модероторы");
+    }
+
+    @FXML
+    void profile(MouseEvent event) {
+        new ProfileController(user).loadScene((Stage) table.getScene().getWindow(), "Профиль");
     }
 }

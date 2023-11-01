@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #99ffff;"  xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #99ffff;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21">
     <children>
         <AnchorPane fx:id="mainPain" layoutX="60.0" prefHeight="800.0" prefWidth="1220.0" style="-fx-background-color: #ffffff;" AnchorPane.rightAnchor="0.0">
             <children>
@@ -19,7 +19,7 @@
                         <Font name="Comic Sans MS" size="22.0" />
                     </font>
                 </Text>
-            <ImageView fx:id="icon" blendMode="DARKEN" fitHeight="40.0" fitWidth="40.0" layoutX="354.0" layoutY="14.0" pickOnBounds="true" >
+            <ImageView fx:id="icon" blendMode="DARKEN" fitHeight="40.0" fitWidth="40.0" layoutX="354.0" layoutY="14.0" pickOnBounds="true">
                <image>
                   <Image url="@image\logo" />
                </image>
@@ -76,12 +76,12 @@
             <Image url="@image\Vector-1.png" />
          </image>
       </ImageView>
-      <ImageView  onMouseClicked="#users" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="377.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="377.0" onMouseClicked="#users" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@image\profile-2user.png" />
          </image>
       </ImageView>
-      <ImageView  fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="470.0" onMouseClicked="#jury" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="470.0" onMouseClicked="#jury" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@image\briefcase.png" />
          </image>
