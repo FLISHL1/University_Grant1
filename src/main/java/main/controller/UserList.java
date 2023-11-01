@@ -15,35 +15,77 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import main.logic.User.Organizer;
+import main.logic.Event;
+import main.logic.User.Participant;
+import main.logic.User.Participant;
 import main.logic.User.User;
 import main.logic.dao.JuryDAO;
 import main.logic.dao.ModeratorDAO;
+import main.logic.dao.ParticipantDAO;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ModeratorsAndJuryController implements Controller, Initializable {
+public class UserList implements Initializable, Controller {
+
+
     @FXML
-    private AnchorPane mainPain;
+    private AnchorPane add;
+
     @FXML
-    private TableView<User> table;
+    private Text helloName;
+
     @FXML
-    private ChoiceBox searchAction;
+    private Text helloText;
+
     @FXML
     private ImageView icon;
+
+    @FXML
+    private ImageView jury;
+
+    @FXML
+    private ImageView main;
+
+    @FXML
+    private ImageView participants;
+
+    @FXML
+    private ChoiceBox<Event> searchEvent;
+
     @FXML
     private TextField searchName;
 
-    private Organizer user;
+    @FXML
+    private TableView<Participant> table;
+        
+    private User user;
 
-    public ModeratorsAndJuryController(Organizer user){
+    public UserList(User user){
         this.user = user;
     }
+
+    @FXML
+    void home(MouseEvent event) {
+
+    }
+
+    @FXML
+    void jury(MouseEvent event) {
+
+    }
+
+    @FXML
+    void profile(MouseEvent event) {
+
+    }
+
     private String tableStyle = ("-fx-selection-bar: red;" +
             "-fx-selection-bar-non-focused: salmon;");
 
@@ -52,26 +94,20 @@ public class ModeratorsAndJuryController implements Controller, Initializable {
             "-fx-border-color: gray;" +
             "-fx-font-size: 14pt;" +
             "-fx-font-family: 'Comic Sans MS';");
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        update();
-    }
-    private void update(){
         icon.setImage(user.getPhoto().getImage());
-//        helloName.setText((user.getSex().contains("муж")?"Дорогой ":"Дорогая ") + user.getName());
-//        String hello = "";
-//        int hour = new Date().getHours();
-//        if (hour >= 5 && hour < 12) hello = "Доброе утро!";
-//        else if (hour >= 12 && hour < 17) hello = "Добрый день!";
-//        else if (hour >= 17 && hour < 24) hello = "Добрый вечер!";
-//        else if (hour < 5) hello = "Доброй ночи!";
-//        helloText.setText(hello);
-        JuryDAO juryDAO = new JuryDAO();
-        ModeratorDAO moderatorDAO = new ModeratorDAO();
-        List<User> userList = new ArrayList<>();
-        userList.addAll(juryDAO.getAll());
-        userList.addAll(moderatorDAO.getAll());
-        FilteredList<User> filteredList = new FilteredList<>(FXCollections.observableList(userList), p -> true);
+        helloName.setText((user.getSex().contains("муж")?"Дорогой ":"Дорогая ") + user.getName());
+        String hello = "";
+        int hour = new Date().getHours();
+        if (hour >= 5 && hour < 12) hello = "Доброе утро!";
+        else if (hour >= 12 && hour < 17) hello = "Добрый день!";
+        else if (hour >= 17 && hour < 24) hello = "Добрый вечер!";
+        else if (hour < 5) hello = "Доброй ночи!";
+        helloText.setText(hello);
+        ParticipantDAO participantDAO = new ParticipantDAO();
+        FilteredList<Participant> filteredList = new FilteredList<>(FXCollections.observableList(participantDAO.getAll()), p -> true);
         searchName.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredList.setPredicate(user -> {
                 if (newValue == null || newValue.isEmpty()) {
@@ -88,35 +124,36 @@ public class ModeratorsAndJuryController implements Controller, Initializable {
         });
 
 
-        SortedList<User> sortedData = new SortedList<>(filteredList);
+        SortedList<Participant> sortedData = new SortedList<>(filteredList);
         sortedData.comparatorProperty().bind(table.comparatorProperty());
         table.setItems(sortedData);
         table.setStyle(tableStyle);
 
-        TableColumn<User, ImageView> logoColumn = new TableColumn<User, ImageView>("Фото");
-        logoColumn.setCellValueFactory(new PropertyValueFactory<User, ImageView>("photo"));
+        TableColumn<Participant, ImageView> logoColumn = new TableColumn<Participant, ImageView>("Фото");
+        logoColumn.setCellValueFactory(new PropertyValueFactory<Participant, ImageView>("photo"));
         logoColumn.setStyle(columnStyle);
         table.getColumns().add(logoColumn);
 
-        TableColumn<User, String> nameColumn = new TableColumn<User, String>("ФИО");
-        nameColumn.setCellValueFactory(new PropertyValueFactory<User, String>("name"));
+        TableColumn<Participant, String> nameColumn = new TableColumn<Participant, String>("ФИО");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<Participant, String>("name"));
         nameColumn.setStyle(columnStyle);
         table.getColumns().add(nameColumn);
 
-        TableColumn<User, String> emailColumn = new TableColumn<User, String>("E-mail");
-        emailColumn.setCellValueFactory(new PropertyValueFactory<User, String>("email"));
+        TableColumn<Participant, String> emailColumn = new TableColumn<Participant, String>("E-mail");
+        emailColumn.setCellValueFactory(new PropertyValueFactory<Participant, String>("email"));
         emailColumn.setStyle(columnStyle);
         table.getColumns().add(emailColumn);
 
 
-        TableColumn<User, String> roleColumn = new TableColumn<User, String>("Роль");
-        roleColumn.setCellValueFactory(new PropertyValueFactory<User, String>("role"));
+        TableColumn<Participant, String> roleColumn = new TableColumn<Participant, String>("Телефон");
+        roleColumn.setCellValueFactory(new PropertyValueFactory<Participant, String>("phone"));
         roleColumn.setStyle(columnStyle);
         table.getColumns().add(roleColumn);
     }
+
     @Override
     public void loadScene(Stage stage, String title) {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/main/ModerJuryVisible.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/main/UserList.fxml"));
 //        loader.setController(this);
         loader.setControllerFactory(param -> this);
         Scene scene = null;
@@ -127,21 +164,5 @@ public class ModeratorsAndJuryController implements Controller, Initializable {
         }
         stage.setTitle(title);
         stage.setScene(scene);
-    }
-
-    public void profile(MouseEvent event) {
-        new ProfileController(user).loadScene((Stage) mainPain.getScene().getWindow(), "Профиль");
-    }
-
-    public void home(MouseEvent event) {
-        new WindowOrg(user).loadScene((Stage) mainPain.getScene().getWindow(), "Главное окно организатора");
-    }
-
-    public void participants(MouseEvent event) {
-        new UserList(user).loadScene((Stage) mainPain.getScene().getWindow(), "Участники");
-    }
-
-    public void createUser(MouseEvent event) {
-        new RegUserNew(user).loadScene((Stage) mainPain.getScene().getWindow(), "Регистрация жури\\модератора");
     }
 }

@@ -41,6 +41,8 @@ public class WindowOrg extends Application implements Initializable, Controller{
     private TextField searchDirection;
     @FXML
     private DatePicker searchDate;
+    @FXML
+    private ImageView icon;
     Organizer user;
     private TableView<Event> table;
 
@@ -49,7 +51,6 @@ public class WindowOrg extends Application implements Initializable, Controller{
     }
     @Override
     public void start(Stage stage) {
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/WindowOrg.fxml"));
         loader.setController(this);
         loader.setControllerFactory(param -> this);
@@ -93,13 +94,16 @@ public class WindowOrg extends Application implements Initializable, Controller{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        icon.setImage(user.getPhoto().getImage());
         name.setText((user.getSex().contains("муж")?"Дорогой ":"Дорогая ") + user.getName());
+
+
         String hello = "";
         int hour = new Date().getHours();
         if (hour >= 5 && hour < 12) hello = "Доброе утро!";
         else if (hour >= 12 && hour < 17) hello = "Добрый день!";
         else if (hour >= 17 && hour < 24) hello = "Добрый вечер!";
-        else if (hour >= 24 && hour < 5) hello = "Доброй ночи!";
+        else if (hour < 5) hello = "Доброй ночи!";
         helloText.setText(hello);
         EventDAO eventDAO = new EventDAO();
         List<Event> events = eventDAO.getAll();
@@ -170,12 +174,16 @@ public class WindowOrg extends Application implements Initializable, Controller{
 
     @FXML
     private void createEvent(MouseEvent event){
-        new CreateEventController().loadScene((Stage) mainPain.getScene().getWindow(), "Создать мероприятие");
+        new CreateEventController(user).loadScene((Stage) mainPain.getScene().getWindow(), "Создать мероприятие");
 
     }
     @FXML
     private void jury(MouseEvent event){
-        new ModeratorsAndJuryController().loadScene((Stage) mainPain.getScene().getWindow(), "Жури\\Модероторы");
+        new ModeratorsAndJuryController(user).loadScene((Stage) mainPain.getScene().getWindow(), "Жури\\Модероторы");
+    }
+    @FXML
+    private void users(MouseEvent event){
+        new UserList(user).loadScene((Stage) mainPain.getScene().getWindow(), "Участники");
     }
 
     @FXML

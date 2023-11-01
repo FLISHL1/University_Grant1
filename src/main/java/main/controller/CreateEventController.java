@@ -13,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import main.logic.User.Jury;
+import main.logic.User.Organizer;
 import main.logic.dao.JuryDAO;
 
 
@@ -24,6 +25,11 @@ import java.util.ResourceBundle;
 public class CreateEventController implements Initializable, Controller {
     @FXML
     private ComboBox<CheckBox> jury1;
+    private Organizer user;
+
+    public CreateEventController(Organizer user){
+        this.user = user;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

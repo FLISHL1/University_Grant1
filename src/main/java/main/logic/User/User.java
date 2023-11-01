@@ -25,7 +25,7 @@ public class User {
     @Column(name = "birth_date")
     protected Date birthDay;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="country")
     protected Country country;
     @Column(name="gender")

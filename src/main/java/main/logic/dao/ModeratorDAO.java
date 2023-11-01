@@ -14,6 +14,7 @@ public class ModeratorDAO extends AbstractDao<Moderation>{
         this.sessionFactory = new Configuration()
                 .addAnnotatedClass(main.logic.User.User.class)
                 .addAnnotatedClass(main.logic.User.Moderation.class)
+                .addAnnotatedClass(main.logic.Direction.class)
                 .addAnnotatedClass(main.logic.Country.class)
                 .buildSessionFactory();
     }

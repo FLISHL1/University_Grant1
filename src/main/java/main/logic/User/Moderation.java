@@ -1,9 +1,8 @@
 package main.logic.User;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.PrimaryKeyJoinColumn;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import main.logic.Direction;
 
 import java.sql.ResultSet;
 
@@ -11,6 +10,9 @@ import java.sql.ResultSet;
 @Table(name = "moderators")
 @PrimaryKeyJoinColumn(name = "id_user")
 public class Moderation extends User {
+    @ManyToOne()
+    @JoinColumn(name = "direction")
+    private Direction direction;
     public Moderation(ResultSet idUser) {
         super(idUser);
     }
@@ -19,4 +21,11 @@ public class Moderation extends User {
         super();
     }
 
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
 }

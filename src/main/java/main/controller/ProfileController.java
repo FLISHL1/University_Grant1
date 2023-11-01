@@ -42,19 +42,25 @@ public class ProfileController implements Initializable, Controller {
     public TextField phone;
     public DatePicker birthDay;
     public ChoiceBox country;
-    public ChoiceBox gender;
-    public ImageView photoMini;
+
+    @FXML
+    private RadioButton genderMen;
+    @FXML
+    private RadioButton genderWoman;
     public Text idUser;
     private User user;
+    UserDAO userDAO;
     private Validator validator = new Validator();
 
 
     public ProfileController(User user) {
         this.user = user;
+        userDAO = new UserDAO();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        photo.setImage(user.getPhoto().getImage());
         nameText.setText((user.getSex().contains("муж") ? "Дорогой " : "Дорогая ") + user.getName());
         String hello = "";
         int hour = new Date().getHours();
@@ -75,14 +81,10 @@ public class ProfileController implements Initializable, Controller {
                 country.setValue(c);
         }
         phone.setText(user.getPhone());
-        ArrayList<String> gend = new ArrayList<>();
-        gend.add("мужской");
-        gend.add("женский");
-        ObservableList<String> g = FXCollections.observableArrayList(gend);
-        gender.setItems(g);
-        for (String a : g) {
-            if (a.equals(user.getSex())) gender.setValue(a);
-        }
+
+        if (user.getSex().contains("м")) genderMen.setSelected(true);
+        else genderWoman.setSelected(true);
+
         birthDay.setValue(Instant.ofEpochMilli(user.getBirthDay().getTime()).atZone(ZoneId.systemDefault()).toLocalDate());
 
         validator.createCheck()
@@ -197,7 +199,6 @@ public class ProfileController implements Initializable, Controller {
     private void save(ActionEvent event) {
         if (!validator.containsErrors()) {
             fillUser();
-            UserDAO userDAO = new UserDAO();
             userDAO.update(user);
 
         } else {
@@ -213,7 +214,8 @@ public class ProfileController implements Initializable, Controller {
         user.setEmail(email.getText());
         if (!password.getText().isEmpty())
             user.setPassword(PasswordHashing.HashPassword(password.getText()));
-        user.setSex((String) gender.getValue());
+        user.setSex(genderMen.isSelected()?genderMen.getText():genderWoman.getText());
+
     }
 
     @FXML
@@ -222,10 +224,13 @@ public class ProfileController implements Initializable, Controller {
     }
 
     @FXML
-    private void participants(MouseEvent event){}
+    private void participants(MouseEvent event){
+        new UserList(user).loadScene((Stage) password.getScene().getWindow(), "Участники");
+
+    }
 
     @FXML
     private void jury(MouseEvent event){
-
+        new ModeratorsAndJuryController((Organizer) user).loadScene((Stage) email.getScene().getWindow(), "Регистрация жури\\модератора");
     }
 }

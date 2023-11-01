@@ -5,7 +5,9 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,16 +15,16 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #99ffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" >
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #99ffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <AnchorPane layoutX="60.0" prefHeight="800.0" prefWidth="1220.0" style="-fx-background-color: #ffffff;" AnchorPane.rightAnchor="0.0">
             <children>
-            <TextField fx:id="name" layoutX="235.0" layoutY="184.0" prefHeight="42.0" prefWidth="467.0" promptText="Иван Васильевич Терешко" style="-fx-background-color: none;">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f5f5" height="301.0" layoutX="751.0" layoutY="134.0" stroke="BLACK" strokeType="INSIDE" style="-fx-background-radius: 15;" width="301.0" />
+            <TextField fx:id="name" layoutX="234.0" layoutY="249.0" prefHeight="42.0" prefWidth="467.0" promptText="Иван Васильевич Терешко" style="-fx-background-color: none;">
                <font>
                   <Font name="Comic Sans MS" size="20.0" />
                </font>
             </TextField>
-            <ChoiceBox fx:id="gender" layoutX="305.0" layoutY="257.0" prefHeight="25.0" prefWidth="200.0" />
             <DatePicker fx:id="birthDay" layoutX="306.0" layoutY="322.0" prefHeight="31.0" prefWidth="200.0" />
             <ChoiceBox fx:id="country" layoutX="306.0" layoutY="450.0" prefHeight="25.0" prefWidth="200.0" />
             <TextField fx:id="phone" layoutX="310.0" layoutY="508.0" prefHeight="42.0" prefWidth="193.0" promptText="+7(___)-___-__-__" style="-fx-background-color: none;">
@@ -55,7 +57,7 @@
                   <Font name="Comic Sans MS" size="15.0" />
                </font>
             </CheckBox>
-                <Text fx:id="helloText" layoutX="413.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Добрый день!">
+                <Text fx:id="helloText" layoutX="372.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Добрый день!">
                     <font>
                         <Font name="Comic Sans MS" size="22.0" />
                     </font>
@@ -65,18 +67,17 @@
                   <Image url="@image/logo" />
                </image>
             </ImageView>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f5f5" height="301.0" layoutX="751.0" layoutY="134.0" stroke="BLACK" strokeType="INSIDE" style="-fx-background-radius: 15;" width="301.0" />
-            <Text fx:id="nameText" layoutX="579.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дорогой, Иван Васильевич">
+            <Text fx:id="nameText" layoutX="538.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дорогой, Иван Васильевич">
                <font>
                   <Font name="Comic Sans MS" size="22.0" />
                </font>
             </Text>
-            <Text layoutX="140.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ФИО:    ">
+            <Text layoutX="139.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ФИО:    ">
                <font>
                   <Font name="Comic Sans MS" size="20.0" />
                </font>
             </Text>
-            <Text layoutX="140.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Пол:    ">
+            <Text layoutX="141.0" layoutY="408.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Пол:    ">
                <font>
                   <Font name="Comic Sans MS" size="20.0" />
                </font>
@@ -86,7 +87,7 @@
                   <Font name="Comic Sans MS" size="20.0" />
                </font>
             </Text>
-            <Text layoutX="137.0" layoutY="408.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Id Number:    ">
+            <Text layoutX="137.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Id Number:    ">
                <font>
                   <Font name="Comic Sans MS" size="20.0" />
                </font>
@@ -106,12 +107,6 @@
                   <Font name="Comic Sans MS" size="20.0" />
                </font>
             </Text>
-            <ImageView fx:id="photoMini" blendMode="DARKEN" fitHeight="40.0" fitWidth="40.0" layoutX="354.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" style="-fx-blend-mode: #dsfghg;">
-               <image>
-                  <Image url="@image/logo" />
-               </image>
-            </ImageView>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f5f5" height="41.0" layoutX="354.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" style="-fx-background-radius: 15;" width="41.0" />
             <ImageView fx:id="edit_photo" fitHeight="30.0" fitWidth="30.0" layoutX="813.0" layoutY="448.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@image/gallery-edit.png" />
@@ -122,7 +117,7 @@
                   <Font name="Comic Sans MS" size="15.0" />
                </font>
             </Text>
-            <Text fx:id="idUser" layoutX="270.0" layoutY="408.0" strokeType="OUTSIDE" strokeWidth="0.0" text="123456789">
+            <Text fx:id="idUser" layoutX="270.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="123456789">
                <font>
                   <Font name="Comic Sans MS" size="20.0" />
                </font>
@@ -132,6 +127,22 @@
                   <Font name="Comic Sans MS" size="20.0" />
                </font>
             </Button>
+            <RadioButton fx:id="genderMen" layoutX="290.0" layoutY="385.0" mnemonicParsing="false" selected="true" text="Мужской">
+               <toggleGroup>
+                  <ToggleGroup fx:id="gender" />
+               </toggleGroup>
+               <font>
+                  <Font name="Comic Sans MS" size="15.0" />
+               </font>
+            </RadioButton>
+            <RadioButton fx:id="genderWoman" layoutX="413.0" layoutY="385.0" mnemonicParsing="false" text="Женский">
+               <toggleGroup>
+                  <ToggleGroup fx:id="gender" />
+               </toggleGroup>
+               <font>
+                  <Font name="Comic Sans MS" size="15.0" />
+               </font>
+            </RadioButton>
             </children>
         </AnchorPane>
         <ImageView fx:id="logo" fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
@@ -139,22 +150,22 @@
                 <Image url="@image/logo%20(2).png" />
             </image>
         </ImageView>
-        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="profile" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@image/icon%20_profile%20circle_.png" />
             </image>
         </ImageView>
-      <ImageView fx:id="main" onMouseClicked="#home" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="main" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="280.0" onMouseClicked="#home" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@image/Vector-1.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="participants" onMouseClicked="#participants" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="377.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="participants" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="377.0" onMouseClicked="#participants" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@image/profile-2user.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="jury" onMouseClicked="#jury" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="470.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="jury" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="470.0" onMouseClicked="#jury" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@image/briefcase.png" />
          </image>

@@ -25,7 +25,7 @@ public class Event {
     public Date date;
     @Column(name = "event_days")
     public String days;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city")
     public City city;
     @ManyToOne

@@ -45,9 +45,10 @@ public class EventInfoController extends Application implements Initializable, C
         logo_event.setImage(event.getLogo().getImage());
         name_event.setText(event.getName());
         date.setText(event.getDate());
-        city.setText(event.getCity());
         EventDAO eventDAO = new EventDAO();
         eventDAO.openSession();
+        eventDAO.merge(event);
+        city.setText(event.getCity());
         event = eventDAO.merge(event);
         organizer.setText(event.getUser().getName());
         eventDAO.closeSession();

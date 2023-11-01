@@ -3,8 +3,8 @@ package main.controller;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,23 +14,40 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import main.attentionWindow.AlertShow;
+import main.logic.Action;
 import main.logic.Country;
-import main.logic.User.Organizer;
-import main.logic.dao.CountryDAO;
-import main.logic.dao.ParticipantDAO;
-import main.logic.User.Participant;
+import main.logic.Direction;
+import main.logic.User.Jury;
+import main.logic.User.Moderation;
+import main.logic.User.User;
+import main.logic.dao.*;
 import main.passwordHash.PasswordHashing;
 import net.synedra.validatorfx.Validator;
 
-import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.util.ResourceBundle;
-public class RegUser implements Initializable, Controller {
+
+public class RegUserNew  implements Initializable, Controller {
+    @FXML
+    private Text helloText;
+    @FXML
+    private Text helloName;
     @FXML
     private TextField name;
+    @FXML
+    private TextField email;
+    @FXML
+    private TextField phone;
+    @FXML
+    private ComboBox<Direction> direction;
+    @FXML
+    private ChoiceBox<Action> action;
+    @FXML
+    private CheckBox checkEvent;
+    @FXML
+    private Text idUser;
     @FXML
     private TextField password;
     @FXML
@@ -38,62 +55,51 @@ public class RegUser implements Initializable, Controller {
     @FXML
     private TextField rePasswordV;
     @FXML
-    private TextField email;
-    @FXML
-    private TextField phone;
-    @FXML
-    private DatePicker birthDay;
-    @FXML
     private CheckBox visiblePassword;
-    @FXML
-    private ImageView edit_photo;
-    @FXML
-    private ChoiceBox country;
     @FXML
     private RadioButton genderMen;
     @FXML
+    private RadioButton roleJury;
+    @FXML
+    private DatePicker birth_date;
+    @FXML
+    private ComboBox<Country> country;
+    @FXML
     private RadioButton genderWoman;
     @FXML
-    private Button btnSignUp;
-    @FXML
-    private Text idUser;
-    @FXML
-    private ImageView participants;
-    @FXML
-    private ImageView jury;
-    @FXML
-    private ImageView profile;
-    @FXML
-    private Text helloText;
-    @FXML
-    private Text nameText;
+    private ImageView icon;
+    private User user;
+    private User newUser;
+    private Validator validator;
+    private Direction directionValue;
+    public RegUserNew(){}
 
-    private Participant newUser;
-
-    private ParticipantDAO participantDAO;
-    Validator validator;
-
-    public RegUser(){
-        participantDAO = new ParticipantDAO();
-        validator = new Validator();
+    public RegUserNew(User user){
+        this.user = user;
     }
-
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        profile.setOnMouseClicked(this::login);
-        participants.setVisible(false);
-        jury.setVisible(false);
-        helloText.setVisible(false);
-        nameText.setVisible(false);
-        CountryDAO countryDAO = new CountryDAO();
-        ObservableList<Country> ct = FXCollections.observableArrayList(countryDAO.getAll());
-        country.setItems(ct);
-        newUser = participantDAO.create(new Participant());
-        idUser.setText(Integer.toString(newUser.getId()));
+        icon.setImage(user.getPhoto().getImage());
+        name.setText((user.getSex().contains("муж")?"Дорогой ":"Дорогая ") + user.getName());
+        String hello = "";
+        int hour = new java.util.Date().getHours();
+        if (hour >= 5 && hour < 12) hello = "Доброе утро!";
+        else if (hour >= 12 && hour < 17) hello = "Добрый день!";
+        else if (hour >= 17 && hour < 24) hello = "Добрый вечер!";
+        else if (hour < 5) hello = "Доброй ночи!";
 
+        helloText.setText(hello);
+        validator = new Validator();
+        UserDAO userDAO = new UserDAO();
+        newUser = userDAO.create(new User());
+        DirectionDAO directionDAO = new DirectionDAO();
+        direction.setItems(FXCollections.observableList(directionDAO.getAll()));
+        CountryDAO countryDAO = new CountryDAO();
+        country.setItems(FXCollections.observableList(countryDAO.getAll()));
+        ActionDAO actionDAO = new ActionDAO();
+        action.setItems(FXCollections.observableList(actionDAO.getAll()));
+        idUser.setText(Integer.toString(newUser.getId()));
         validator.createCheck()
                 .dependsOn("password", password.textProperty())
                 .dependsOn("rePassword", rePassword.textProperty())
@@ -159,12 +165,12 @@ public class RegUser implements Initializable, Controller {
                 .immediate();
 
         validator.createCheck()
-                .dependsOn("date", birthDay.valueProperty())
+                .dependsOn("date", birth_date.valueProperty())
                 .withMethod(c ->{
-                    if(birthDay.getValue() == null){
+                    if(birth_date.getValue() == null){
                         c.error("Укажите дату рождения!");
                     }
-                }).decorates(birthDay)
+                }).decorates(birth_date)
                 .immediate();
 
         validator.createCheck()
@@ -181,44 +187,64 @@ public class RegUser implements Initializable, Controller {
 
 
 
+    public void test(ActionEvent event) {
+        for (Direction direction1: direction.getItems()){
+            if (direction1.name.equals(direction.getEditor().getText())){
+                directionValue = direction1;
+                return;
+            }
+        }
+        directionValue = new Direction(direction.getEditor().getText());
 
+    }
     @FXML
-    private void visiblePassword(ActionEvent event){
-        if (visiblePassword.isSelected()){
+    private void visiblePassword(ActionEvent event) {
+        if (visiblePassword.isSelected()) {
             rePasswordV.setText(rePassword.getText());
             rePasswordV.setVisible(true);
-        } else{
+        } else {
             rePassword.setText(rePasswordV.getText());
             rePasswordV.setVisible(false);
         }
 
     }
+    private User fillUser(User user){
+        user.setBirthDay(Date.valueOf(birth_date.getValue()));
+        user.setName(name.getText());
+        user.setCountry((Country) country.getValue());
+        user.setPhone(phone.getText());
+        user.setEmail(email.getText());
+        user.setPassword(PasswordHashing.HashPassword(password.getText()));
+        user.setSex(genderMen.isSelected()?genderMen.getText():genderWoman.getText());
+        if (user instanceof Jury)
+                ((Jury) user).setDirection(directionValue);
+        else if (user instanceof Moderation)
+            ((Moderation) user).setDirection(directionValue);
 
-    @FXML
-    private void save(ActionEvent event){
-        if (!validator.containsErrors()){
-            fillUser();
-            participantDAO.update(newUser);
-            login(null);
+        return user;
+    }
+
+    public void save(MouseEvent event){
+        Jury newJury;
+        Moderation newModeration;
+        if (roleJury.isSelected()){
+            newJury = new Jury();
+            newJury.setIdNumber(newUser.getId());
+            newJury = (Jury) fillUser(newJury);
+            new JuryDAO().update(newJury);
         } else {
-            AlertShow.showAlert("info", "Не правильно ввели данные",  validator.createStringBinding().get());
+            newModeration = new Moderation();
+            newModeration.setIdNumber(newUser.getId());
+            newModeration = (Moderation) fillUser(newModeration);
+            new ModeratorDAO().update(newModeration);
         }
     }
 
-    private void fillUser(){
-        newUser.setBirthDay(Date.valueOf(birthDay.getValue()));
-        newUser.setName(name.getText());
-        newUser.setCountry((Country) country.getValue());
-        newUser.setPhone(phone.getText());
-        newUser.setEmail(email.getText());
-        newUser.setPassword(PasswordHashing.HashPassword(password.getText()));
-        System.out.println(genderMen.isSelected());
-        newUser.setSex(genderMen.isSelected()?genderMen.getText():genderWoman.getText());
-    }
 
-    public void loadScene(Stage stage, String title){
-        FXMLLoader loader = new FXMLLoader(AuthController.class.getResource("/main/Profile.fxml"));
-        loader.setController(this);
+    @Override
+    public void loadScene(Stage stage, String title) {
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/main/RegModJur.fxml.fxml"));
+//        loader.setController(this);
         loader.setControllerFactory(param -> this);
         Scene scene = null;
         try {
@@ -226,32 +252,7 @@ public class RegUser implements Initializable, Controller {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        stage.setOnHidden(e -> {
-            participantDAO.delete(newUser);
-        });
         stage.setTitle(title);
         stage.setScene(scene);
     }
-
-    @FXML
-    private void login(MouseEvent mouseEvent) {
-        if (newUser.getName() == null)
-            participantDAO.delete(newUser);
-        new AuthController().loadScene((Stage) profile.getScene().getWindow(), "Login");
-    }
-
-    @FXML
-    private void home(MouseEvent mouseEvent) {
-        participantDAO.delete(newUser);
-        new MainWinNoAuthController().loadScene((Stage) profile.getScene().getWindow(), "Home");
-    }
-    @FXML
-    private void participants(MouseEvent event){
-
-    }
-
-    @FXML
-    private void jury(MouseEvent event){
-    }
-
 }
