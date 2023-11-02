@@ -32,6 +32,11 @@ public class Event {
     @JoinColumn(name = "direction")
     public Direction direction;
 
+    @OneToMany
+    @JoinTable(name="jury_activities",
+            joinColumns=  @JoinColumn(name="id_activity", referencedColumnName="id"),
+            inverseJoinColumns= @JoinColumn(name="id_jury", referencedColumnName="id_user") )
+    public Set<Action>
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="id_organizer", nullable=false)
     public Organizer organizer;

@@ -4,9 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -21,15 +18,13 @@ import main.logic.dao.UserDAO;
 import main.passwordHash.PasswordHashing;
 import net.synedra.validatorfx.Validator;
 
-import java.io.IOException;
 import java.net.URL;
 import java.time.Instant;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-public class ProfileController implements Initializable, Controller {
+public class ProfileController extends Controller {
     public TextField email;
     public Text helloText;
     public ImageView photo;
@@ -179,19 +174,8 @@ public class ProfileController implements Initializable, Controller {
 
     }
 
-    @Override
     public void loadScene(Stage stage, String title) {
-        FXMLLoader loader = new FXMLLoader(MainWinNoAuthController.class.getResource("/main/Profile.fxml"));
-        loader.setController(this);
-        loader.setControllerFactory(param -> this);
-        Scene scene = null;
-        try {
-            scene = new Scene(loader.load());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        stage.setTitle(title);
-        stage.setScene(scene);
+        super.loadSceneWithController("Profile.fxml", stage, title);
     }
 
 

@@ -1,70 +1,48 @@
 package main.controller;
 
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
-import main.logic.User.Jury;
+import main.logic.Event;
 import main.logic.User.Organizer;
+import main.logic.dao.EventDAO;
 import main.logic.dao.JuryDAO;
 
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
-public class CreateEventController implements Initializable, Controller {
-    @FXML
-    private ComboBox<CheckBox> jury1;
+public class CreateEventController extends Controller {
+    private EventDAO eventDAO;
     private Organizer user;
+    private Event newEvent;
 
-    public CreateEventController(Organizer user){
+    public CreateEventController(Organizer user) {
         this.user = user;
+        eventDAO = new EventDAO();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        JuryDAO juryDAO = new JuryDAO();
-
-//ayoutX="467.0" layoutY="20.0" prefHeight="0.0" prefWidth="150.0"
 
     }
 
-    @Override
     public void loadScene(Stage stage, String title) {
-        FXMLLoader loader = new FXMLLoader(MainWinNoAuthController.class.getResource("/main/CreateEvent.fxml"));
-        loader.setController(this);
-        loader.setControllerFactory(param -> this);
-        Scene scene = null;
-        try {
-            scene = new Scene(loader.load());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        stage.setTitle(title);
-        stage.setScene(scene);
+        super.loadScene("CreateEvent.fxml", stage, title);
     }
 
     @FXML
-    private void delAction(){
+    private void delAction() {
 
     }
-    private void createFieldAction(){
-        AnchorPane anchorPane = new AnchorPane();
-        TextField textField = new TextField();
-        ChoiceBox<String> timeBox = new ChoiceBox<>();
+
+    private void createFieldAction() {
+
     }
+
     @FXML
-    private void addAction(){
+    private void addAction() {
 
     }
 }

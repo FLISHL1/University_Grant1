@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class MainWinNoAuthController extends Application implements Initializable, Controller {
+public class MainWinNoAuthController extends Application implements Initializable {
 
     public AnchorPane mainPain;
     @FXML
@@ -128,8 +128,8 @@ public class MainWinNoAuthController extends Application implements Initializabl
         TableRow<Event> row = new TableRow<>();
         row.setOnMouseClicked(event1 -> {
             if (event1.getClickCount() >= 2 && !row.isEmpty()){
-//                EventInfoController.loadScene((Stage) mainPain.getScene().getWindow(), "EventInfo", table.getSelectionModel().getSelectedItem());
-                new EventInfoController(table.getSelectionModel().getSelectedItem()).render();
+                new EventInfoController(table.getSelectionModel().getSelectedItem()).loadScene((Stage) mainPain.getScene().getWindow(), "EventInfo");
+//                new EventInfoController(table.getSelectionModel().getSelectedItem()).render();
             }
         });
         return row;

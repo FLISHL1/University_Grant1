@@ -1,14 +1,8 @@
 package main.controller;
 
-import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -24,12 +18,11 @@ import main.logic.dao.*;
 import main.passwordHash.PasswordHashing;
 import net.synedra.validatorfx.Validator;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.util.ResourceBundle;
 
-public class RegUserNew  implements Initializable, Controller {
+public class RegUserNew  extends Controller {
     @FXML
     private Text helloText;
     @FXML
@@ -241,17 +234,7 @@ public class RegUserNew  implements Initializable, Controller {
     }
 
 
-    @Override
     public void loadScene(Stage stage, String title) {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/main/RegModJur.fxml.fxml"));
-        loader.setControllerFactory(param -> this);
-        Scene scene = null;
-        try {
-            scene = new Scene(loader.load());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        stage.setTitle(title);
-        stage.setScene(scene);
+        super.loadScene("RegModJur.fxml", stage, title);
     }
 }

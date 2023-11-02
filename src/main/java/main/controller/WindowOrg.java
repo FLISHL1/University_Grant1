@@ -31,7 +31,7 @@ import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class WindowOrg extends Application implements Initializable, Controller{
+public class WindowOrg extends Application implements Initializable {
 
     public AnchorPane mainPain;
     public Text helloText;
@@ -46,9 +46,10 @@ public class WindowOrg extends Application implements Initializable, Controller{
     Organizer user;
     private TableView<Event> table;
 
-    public WindowOrg(Organizer user){
+    public WindowOrg(Organizer user) {
         this.user = user;
     }
+
     @Override
     public void start(Stage stage) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/WindowOrg.fxml"));
@@ -68,7 +69,7 @@ public class WindowOrg extends Application implements Initializable, Controller{
         stage.show();
     }
 
-    public void render(){
+    public void render() {
         new JFXPanel();
         Platform.runLater(new Runnable() {
             @Override
@@ -77,7 +78,7 @@ public class WindowOrg extends Application implements Initializable, Controller{
             }
         });
     }
-    @Override
+
     public void loadScene(Stage stage, String title) {
         FXMLLoader loader = new FXMLLoader(MainWinNoAuthController.class.getResource("/main/WindowOrg.fxml"));
         loader.setController(this);
@@ -95,7 +96,7 @@ public class WindowOrg extends Application implements Initializable, Controller{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         icon.setImage(user.getPhoto().getImage());
-        name.setText((user.getSex().contains("муж")?"Дорогой ":"Дорогая ") + user.getName());
+        name.setText((user.getSex().contains("муж") ? "Дорогой " : "Дорогая ") + user.getName());
 
 
         String hello = "";
@@ -137,11 +138,7 @@ public class WindowOrg extends Application implements Initializable, Controller{
                 return false;
             });
         });
-        GenerateTable<Event> genTable = new GenerateTable<Event>(new ArrayList<>(events))
-                .setLayoutX(39)
-                .setLayoutY(144)
-                .setPrefHeight(555)
-                .setPrefWidth(1140);
+        GenerateTable<Event> genTable = new GenerateTable<Event>(new ArrayList<>(events)).setLayoutX(39).setLayoutY(144).setPrefHeight(555).setPrefWidth(1140);
         genTable.delColumn("days");
         genTable.delColumn("id");
         genTable.delColumn("city");
@@ -161,33 +158,34 @@ public class WindowOrg extends Application implements Initializable, Controller{
     }
 
 
-    private TableRow<Event> clickedTable(){
+    private TableRow<Event> clickedTable() {
         TableRow<Event> row = new TableRow<>();
         row.setOnMouseClicked(event1 -> {
-            if (event1.getClickCount() >= 2 && !row.isEmpty()){
-//                EventInfoController.loadScene((Stage) mainPain.getScene().getWindow(), "EventInfo", table.getSelectionModel().getSelectedItem());
-                new EventInfoController(table.getSelectionModel().getSelectedItem()).render();
+            if (event1.getClickCount() >= 2 && !row.isEmpty()) {
+                new EventInfoController(table.getSelectionModel().getSelectedItem()).loadScene((Stage) mainPain.getScene().getWindow(), "EventInfo");
             }
         });
         return row;
     }
 
     @FXML
-    private void createEvent(MouseEvent event){
+    private void createEvent(MouseEvent event) {
         new CreateEventController(user).loadScene((Stage) mainPain.getScene().getWindow(), "Создать мероприятие");
 
     }
+
     @FXML
-    private void jury(MouseEvent event){
+    private void jury(MouseEvent event) {
         new ModeratorsAndJuryController(user).loadScene((Stage) mainPain.getScene().getWindow(), "Жури\\Модероторы");
     }
+
     @FXML
-    private void users(MouseEvent event){
+    private void users(MouseEvent event) {
         new UserList(user).loadScene((Stage) mainPain.getScene().getWindow(), "Участники");
     }
 
     @FXML
-    private void profile(MouseEvent event){
+    private void profile(MouseEvent event) {
         new ProfileController(user).loadScene((Stage) mainPain.getScene().getWindow(), "Профиль");
         try {
             this.stop();

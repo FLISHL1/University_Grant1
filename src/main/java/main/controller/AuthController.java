@@ -1,14 +1,9 @@
 package main.controller;
 
-import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -18,17 +13,15 @@ import javafx.stage.Stage;
 
 import main.animation.Shape;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.embed.swing.JFXPanel;
 import main.capcha.GenerateCapcha;
 import main.logic.User.User;
 import main.logic.dao.UserDAO;
 import net.synedra.validatorfx.Validator;
 
-public class AuthController extends Application implements Initializable, Controller {
+public class AuthController extends Controller {
     @FXML
     private ImageView captcha;
     @FXML
@@ -64,36 +57,6 @@ public class AuthController extends Application implements Initializable, Contro
                 .immediate();
 
     }
-    @Override
-    public void start(Stage stage) {
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/Login.fxml"));
-        loader.setController(new AuthController());
-        loader.setControllerFactory(param -> new AuthController());
-        Scene scene = null;
-        try {
-            scene = new Scene(loader.load());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        stage.setTitle("Login");
-        stage.setResizable(false);
-//        primaryStage.setAlwaysOnTop(true);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public void render(){
-        new JFXPanel();
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                    start(new Stage());
-            }
-        });
-    }
-
     @FXML
     private void registration(MouseEvent actionEvent) {
          new RegUser().loadScene((Stage) login.getScene().getWindow(), "Registration");
@@ -148,26 +111,10 @@ public class AuthController extends Application implements Initializable, Contro
 
     public void home(MouseEvent mouseEvent) {
         new MainWinNoAuthController().loadScene((Stage) login.getScene().getWindow(), "Home");
-        stoped();
     }
-    public void stoped(){
-        try {
-            this.stop();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+
     public void loadScene(Stage stage, String title){
-        FXMLLoader loader = new FXMLLoader(AuthController.class.getResource("/main/Login.fxml"));
-        loader.setController(this);
-        loader.setControllerFactory(param -> this);
-        Scene scene = null;
-        try {
-            scene = new Scene(loader.load());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        stage.setTitle(title);
-        stage.setScene(scene);
+        super.loadSceneWithController("Login.fxml", stage, title);
+
     }
 }

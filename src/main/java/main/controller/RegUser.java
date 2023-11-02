@@ -1,14 +1,8 @@
 package main.controller;
 
-import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -25,11 +19,11 @@ import main.passwordHash.PasswordHashing;
 import net.synedra.validatorfx.Validator;
 
 import javafx.event.ActionEvent;
-import java.io.IOException;
+
 import java.net.URL;
 import java.sql.Date;
 import java.util.ResourceBundle;
-public class RegUser implements Initializable, Controller {
+public class RegUser extends Controller {
     @FXML
     private TextField name;
     @FXML
@@ -236,20 +230,7 @@ public class RegUser implements Initializable, Controller {
     }
 
     public void loadScene(Stage stage, String title){
-        FXMLLoader loader = new FXMLLoader(AuthController.class.getResource("/main/Profile.fxml"));
-        loader.setController(this);
-        loader.setControllerFactory(param -> this);
-        Scene scene = null;
-        try {
-            scene = new Scene(loader.load());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        stage.setOnHidden(e -> {
-            participantDAO.delete(newUser);
-        });
-        stage.setTitle(title);
-        stage.setScene(scene);
+        super.loadSceneWithController("Profile.fxml", stage, title);
     }
 
     @FXML

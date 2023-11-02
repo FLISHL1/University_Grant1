@@ -4,9 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -22,14 +19,13 @@ import main.logic.User.User;
 import main.logic.dao.JuryDAO;
 import main.logic.dao.ModeratorDAO;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ModeratorsAndJuryController implements Controller, Initializable {
+public class ModeratorsAndJuryController extends Controller {
     @FXML
     private AnchorPane mainPain;
     @FXML
@@ -119,19 +115,8 @@ public class ModeratorsAndJuryController implements Controller, Initializable {
         roleColumn.setStyle(columnStyle);
         table.getColumns().add(roleColumn);
     }
-    @Override
     public void loadScene(Stage stage, String title) {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/main/ModerJuryVisible.fxml"));
-//        loader.setController(this);
-        loader.setControllerFactory(param -> this);
-        Scene scene = null;
-        try {
-            scene = new Scene(loader.load());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        stage.setTitle(title);
-        stage.setScene(scene);
+        super.loadScene("ModerJuryVisible.fxml", stage, title);
     }
 
     public void profile(MouseEvent event) {
