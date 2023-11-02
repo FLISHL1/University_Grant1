@@ -37,7 +37,7 @@ public class EventInfoController extends Controller {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         logo_event.setImage(event.getLogo().getImage());
         name_event.setText(event.getName());
-        date.setText(event.getDate());
+        date.setText(event.getDateStart());
         EventDAO eventDAO = new EventDAO();
         eventDAO.openSession();
         eventDAO.merge(event);

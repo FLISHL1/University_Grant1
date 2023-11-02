@@ -8,7 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import main.logic.Action;
+import main.logic.Activity;
 import main.logic.Country;
 import main.logic.Direction;
 import main.logic.User.Jury;
@@ -36,7 +36,7 @@ public class RegUserNew  extends Controller {
     @FXML
     private ComboBox<Direction> direction;
     @FXML
-    private ChoiceBox<Action> action;
+    private ChoiceBox<Activity> action;
     @FXML
     private CheckBox checkEvent;
     @FXML

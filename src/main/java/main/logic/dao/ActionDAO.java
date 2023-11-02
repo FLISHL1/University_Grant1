@@ -1,15 +1,15 @@
 package main.logic.dao;
 
 import jakarta.persistence.RollbackException;
-import main.logic.Action;
+import main.logic.Activity;
 import main.logic.Event;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-public class ActionDAO extends AbstractDao<Action>{
+public class ActionDAO extends AbstractDao<Activity>{
     public ActionDAO() {
-        super(Action.class);
+        super(Activity.class);
     }
     public String getNameById(Integer id) {
         // Create a new EntityManager
@@ -38,14 +38,14 @@ public class ActionDAO extends AbstractDao<Action>{
         }
         return name;
     }
-    @Override
+/*    @Override
     public void init() {
         this.sessionFactory = new Configuration()
                 .addAnnotatedClass(main.logic.User.User.class)
                 .addAnnotatedClass(main.logic.User.Jury.class)
                 .addAnnotatedClass(main.logic.Direction.class)
-                .addAnnotatedClass(main.logic.Action.class)
+                .addAnnotatedClass(Activity.class)
                 .addAnnotatedClass(main.logic.Country.class)
                 .buildSessionFactory();
-    }
+    }*/
 }

@@ -52,7 +52,7 @@ public class EventDAO extends AbstractDao<Event>{
     }
 
 
-    @Override
+/*    @Override
     public void init() {
         this.sessionFactory = new Configuration()
                 .addAnnotatedClass(main.logic.User.Organizer.class)
@@ -62,7 +62,7 @@ public class EventDAO extends AbstractDao<Event>{
                 .addAnnotatedClass(main.logic.City.class)
                 .addAnnotatedClass(main.logic.Country.class)
                 .buildSessionFactory();
-    }
+    }*/
 
 
 }

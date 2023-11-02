@@ -6,47 +6,51 @@ import javafx.scene.image.ImageView;
 import main.logic.User.Organizer;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "events")
 public class Event {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    public Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column(name = "logo")
-    public String logo;
+    private String logo;
 
     @Column(name = "event_name")
-    public String  name;
+    private String name;
 
-    @Column(name = "event_date")
-    public Date date;
-    @Column(name = "event_days")
-    public String days;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name = "event_date_start")
+    private Date dateStart;
+    @Column(name = "event_date_end")
+    private Date dateEnd;
+    @ManyToOne()
     @JoinColumn(name = "city")
-    public City city;
+    private City city;
     @ManyToOne
     @JoinColumn(name = "direction")
-    public Direction direction;
+    private Direction direction;
 
-    @OneToMany
-    @JoinTable(name="jury_activities",
-            joinColumns=  @JoinColumn(name="id_activity", referencedColumnName="id"),
-            inverseJoinColumns= @JoinColumn(name="id_jury", referencedColumnName="id_user") )
-    public Set<Action>
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_events")
+    private List<Activity> activity = new ArrayList<>();
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name="id_organizer", nullable=false)
-    public Organizer organizer;
+    @JoinColumn(name = "id_organizer", nullable = false)
+    private Organizer organizer;
 
-    public String description;
+    private String description;
 
-    public Event(){
+    public Event() {
     }
 
-    public Organizer getUser(){return organizer;}
+    public Organizer getUser() {
+        return organizer;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -55,30 +59,31 @@ public class Event {
         return name;
     }
 
-    public String getDays() {
-        return days;
-    }
+
 
     public String getCity() {
         return city.getName();
     }
 
-    public String getDate() {
+    public String getDateStart() {
         SimpleDateFormat dat = new SimpleDateFormat("dd.MM.yyyy");
 
-        return dat.format(date);
+        return dat.format(dateStart);
     }
 
     public String getDirection() {
         return direction.name;
     }
 
-    public ImageView getLogo()
-    {
+    public ImageView getLogo() {
         ImageView image = new ImageView(new Image("file:src/main/resources/main/photo/" + logo));
         image.setPreserveRatio(true);
         image.setFitWidth(150);
         image.setFitHeight(150);
-        return image;}
+        return image;
+    }
 
+    public List<Activity> getActivity() {
+        return activity;
+    }
 }

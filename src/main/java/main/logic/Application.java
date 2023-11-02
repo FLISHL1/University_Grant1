@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name= "application")
+@Table(name = "application")
 public class Application {
     @Id
     @GeneratedValue
@@ -26,5 +26,5 @@ public class Application {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_activity")
-    private Action action;
+    private Activity activity;
 }

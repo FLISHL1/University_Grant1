@@ -9,23 +9,28 @@ public class City {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column()
     private String name;
-    @ManyToOne
-    @JoinColumn(name = "id_country")
-    private Country country;
 
+    public City(String name) {
+        this.name = name;
+    }
 
-/*    public City(ResultSet city) {
+    public City() {
 
-        try {
-            name = city.getString("name");
-            id = city.getInt("id");
-            country = city.getInt("id_country");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    }
 
-    }*/
+    /*    public City(ResultSet city) {
+
+            try {
+                name = city.getString("name");
+                id = city.getInt("id");
+                country = city.getInt("id_country");
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }*/
 /*    public static ArrayList<City> getAllCity(){
         ResultSet resultSet = SqlSender.getAllCity();
         ArrayList<City> cites = new ArrayList<>();

@@ -10,10 +10,10 @@ public class ParticipantDAO extends AbstractDao<Participant>{
         super(Participant.class);
     }
 
-    @Override
+/*    @Override
     public void init() {
         this.sessionFactory = new Configuration()
                 .addAnnotatedClass(main.logic.User.Participant.class)
                 .addAnnotatedClass(main.logic.Country.class)
-                .buildSessionFactory();    }
+                .buildSessionFactory();    }*/
 }

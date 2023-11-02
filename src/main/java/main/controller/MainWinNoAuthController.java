@@ -10,10 +10,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -37,6 +36,15 @@ public class MainWinNoAuthController extends Application implements Initializabl
     private TextField searchDirection;
 
     private TableView<Event> table;
+    private String tableStyle = ("-fx-selection-bar: red;" +
+            "-fx-selection-bar-non-focused: salmon;");
+
+    private String columnStyle = ("-fx-alignment: CENTER; " +
+            "-fx-background-color: rgba(255, 255, 255, 0.5);" +
+            "-fx-border-color: gray;" +
+            "-fx-font-size: 10pt;" +
+            "-fx-font-family: 'Comic Sans MS';");
+
     @Override
     public void start(Stage stage) {
 
@@ -57,7 +65,7 @@ public class MainWinNoAuthController extends Application implements Initializabl
         stage.show();
     }
 
-    public void render(){
+    public void render() {
         new JFXPanel();
         Platform.runLater(new Runnable() {
             @Override
@@ -66,10 +74,10 @@ public class MainWinNoAuthController extends Application implements Initializabl
             }
         });
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         EventDAO eventDAO = new EventDAO();
-        eventDAO.init();
         List<Event> events = eventDAO.getAll();
         FilteredList<Event> filteredList = new FilteredList<>(FXCollections.observableList(events), p -> true);
         searchDirection.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -82,9 +90,9 @@ public class MainWinNoAuthController extends Application implements Initializabl
 
                 if (event.getDirection().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-    }
+                }
                 return false;
-});
+            });
         });
 
         searchDate.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -95,39 +103,46 @@ public class MainWinNoAuthController extends Application implements Initializabl
 
                 String formatDate = newValue.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
 
-                if (event.getDate().toLowerCase().contains(formatDate)) {
+                if (event.getDateStart().toLowerCase().contains(formatDate)) {
                     return true;
                 }
                 return false;
             });
         });
-        GenerateTable<Event> genTable = new GenerateTable<Event>(new ArrayList<>(events))
-                .setLayoutX(39)
-                .setLayoutY(144)
-                .setPrefHeight(555)
-                .setPrefWidth(1140);
-        genTable.delColumn("days");
-        genTable.delColumn("id");
-        genTable.delColumn("city");
-        genTable.delColumn("organizer");
-        genTable.delColumn("description");
-        genTable.getColumn("name").setText("Название");
-        genTable.getColumn("logo").setText("Логотип");
-        genTable.getColumn("date").setText("Дата");
-        genTable.getColumn("direction").setText("Направление");
-        table = genTable.generateTable();
+        table.setStyle(tableStyle);
+
+        TableColumn<Event, ImageView> logoColumn = new TableColumn<Event, ImageView>("Логотип");
+        logoColumn.setCellValueFactory(new PropertyValueFactory<Event, ImageView>("logo"));
+        logoColumn.setStyle(columnStyle);
+        table.getColumns().add(logoColumn);
+
+        TableColumn<Event, String> nameColumn = new TableColumn<Event, String>("Название");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<Event, String>("name"));
+        nameColumn.setStyle(columnStyle);
+        table.getColumns().add(nameColumn);
+
+        TableColumn<Event, String> dateColumn = new TableColumn<Event, String>("Дата");
+        dateColumn.setCellValueFactory(new PropertyValueFactory<Event, String>("dateStart"));
+        dateColumn.setStyle(columnStyle);
+        table.getColumns().add(dateColumn);
+
+        TableColumn<Event, String> directionColumn = new TableColumn<Event, String>("Направление");
+        directionColumn.setCellValueFactory(new PropertyValueFactory<Event, String>("direction"));
+        directionColumn.setStyle(columnStyle);
+        table.getColumns().add(directionColumn);
+
+
         SortedList<Event> sortedData = new SortedList<>(filteredList);
         sortedData.comparatorProperty().bind(table.comparatorProperty());
         table.setItems(sortedData);
 //        table.addEventHandler(MouseEvent.MOUSE_CLICKED, this::clickedTable);
         table.setRowFactory(t -> clickedTable());
-        mainPain.getChildren().add(table);
     }
 
-    private TableRow<Event> clickedTable(){
+    private TableRow<Event> clickedTable() {
         TableRow<Event> row = new TableRow<>();
         row.setOnMouseClicked(event1 -> {
-            if (event1.getClickCount() >= 2 && !row.isEmpty()){
+            if (event1.getClickCount() >= 2 && !row.isEmpty()) {
                 new EventInfoController(table.getSelectionModel().getSelectedItem()).loadScene((Stage) mainPain.getScene().getWindow(), "EventInfo");
 //                new EventInfoController(table.getSelectionModel().getSelectedItem()).render();
             }
@@ -136,18 +151,20 @@ public class MainWinNoAuthController extends Application implements Initializabl
     }
 
     @FXML
-    private void login(MouseEvent event){
-         new AuthController().loadScene((Stage) mainPain.getScene().getWindow(), "Login");
-         stoped();
+    private void login(MouseEvent event) {
+        new AuthController().loadScene((Stage) mainPain.getScene().getWindow(), "Login");
+        stoped();
     }
-    public void stoped(){
+
+    public void stoped() {
         try {
             this.stop();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-    public void loadScene(Stage stage, String title){
+
+    public void loadScene(Stage stage, String title) {
         FXMLLoader loader = new FXMLLoader(MainWinNoAuthController.class.getResource("/main/MainPage.fxml"));
         loader.setController(this);
         loader.setControllerFactory(param -> this);

@@ -8,12 +8,12 @@ public class OrganizerDAO extends AbstractDao<Organizer>{
         super(Organizer.class);
     }
 
-    @Override
+/*    @Override
     public void init() {
         this.sessionFactory = new Configuration()
                 .addAnnotatedClass(main.logic.User.User.class)
                 .addAnnotatedClass(main.logic.User.Organizer.class)
                 .addAnnotatedClass(main.logic.Country.class)
                 .buildSessionFactory();
-    }
+    }*/
 }

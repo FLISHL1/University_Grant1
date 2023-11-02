@@ -9,10 +9,10 @@ public class DirectionDAO extends AbstractDao<Direction>{
         super(Direction.class);
     }
 
-    @Override
+/*    @Override
     public void init() {
         this.sessionFactory = new Configuration()
                 .addAnnotatedClass(main.logic.Direction.class)
                 .buildSessionFactory();
-    }
+    }*/
 }

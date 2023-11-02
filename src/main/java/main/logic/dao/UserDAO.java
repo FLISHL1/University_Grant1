@@ -1,6 +1,7 @@
 package main.logic.dao;
 
 import jakarta.persistence.RollbackException;
+import main.logic.Activity;
 import main.logic.Event;
 import main.logic.User.User;
 import main.passwordHash.PasswordHashing;
@@ -49,7 +50,7 @@ public class UserDAO extends AbstractDao<User>{
         return user;
     }
 
-    @Override
+/*    @Override
     public void init() {
         this.sessionFactory = new Configuration()
                 .addAnnotatedClass(main.logic.User.User.class)
@@ -59,7 +60,7 @@ public class UserDAO extends AbstractDao<User>{
                 .addAnnotatedClass(main.logic.Direction.class)
                 .addAnnotatedClass(main.logic.User.Moderation.class)
                 .addAnnotatedClass(main.logic.Country.class)
-                .addAnnotatedClass(main.logic.Action.class)
+                .addAnnotatedClass(Activity.class)
                 .buildSessionFactory();
-    }
+    }*/
 }

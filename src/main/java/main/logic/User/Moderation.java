@@ -19,6 +19,7 @@ public class Moderation extends User {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_moderator")
     private List<Application> applications;
+
     public Moderation(ResultSet idUser) {
         super(idUser);
     }

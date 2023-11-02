@@ -2,7 +2,7 @@ package main.logic.User;
 
 
 import jakarta.persistence.*;
-import main.logic.Action;
+import main.logic.Activity;
 import main.logic.Direction;
 
 import java.sql.ResultSet;
@@ -18,10 +18,11 @@ public class Jury extends User {
     private Direction direction;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name="jury_activities",
-            joinColumns=  @JoinColumn(name="id_jury", referencedColumnName="id_user"),
-            inverseJoinColumns= @JoinColumn(name="id_activity", referencedColumnName="id") )
-    private Set<Action> actions = new HashSet<Action>();
+    @JoinTable(name = "jury_activities",
+            joinColumns = @JoinColumn(name = "id_jury", referencedColumnName = "id_user"),
+            inverseJoinColumns = @JoinColumn(name = "id_activity", referencedColumnName = "id"))
+    private Set<Activity> activities = new HashSet<Activity>();
+
     public Jury(ResultSet idUser) {
         super(idUser);
     }

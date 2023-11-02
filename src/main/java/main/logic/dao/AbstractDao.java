@@ -1,6 +1,7 @@
 package main.logic.dao;
 import jakarta.persistence.*;
-import main.logic.User.User;
+import main.logic.*;
+import main.logic.User.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -10,16 +11,33 @@ import java.util.List;
 
 public abstract class AbstractDao<T> {
 
-    protected SessionFactory sessionFactory;
+    protected static SessionFactory sessionFactory;
     private final Class<T> clazz;
 
     public AbstractDao(Class<T> clazz){
         this.clazz = clazz;
-        init();
+        sessionFactory = getInstance();
     }
 
-    public abstract void init();
+    private static class SignSession {
+        static SessionFactory sessionFactory = new Configuration()
+                .addAnnotatedClass(User.class)
+                .addAnnotatedClass(Participant.class)
+                .addAnnotatedClass(Organizer.class)
+                .addAnnotatedClass(Jury.class)
+                .addAnnotatedClass(Moderation.class)
+                .addAnnotatedClass(Event.class)
+                .addAnnotatedClass(Activity.class)
+                .addAnnotatedClass(Direction.class)
+                .addAnnotatedClass(Country.class)
+                .addAnnotatedClass(Application.class)
+                .addAnnotatedClass(City.class)
+                .buildSessionFactory();
+    };
 
+    private static SessionFactory getInstance(){
+        return SignSession.sessionFactory;
+    }
     public List<T> getAll() {
         // Create a new EntityManager
         Transaction transaction = null;

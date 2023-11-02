@@ -9,7 +9,7 @@ public class ModeratorDAO extends AbstractDao<Moderation>{
         super(Moderation.class);
     }
 
-    @Override
+/*    @Override
     public void init() {
         this.sessionFactory = new Configuration()
                 .addAnnotatedClass(main.logic.User.User.class)
@@ -17,5 +17,5 @@ public class ModeratorDAO extends AbstractDao<Moderation>{
                 .addAnnotatedClass(main.logic.Direction.class)
                 .addAnnotatedClass(main.logic.Country.class)
                 .buildSessionFactory();
-    }
+    }*/
 }
