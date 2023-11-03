@@ -35,6 +35,7 @@ public class MainWinNoAuthController extends Application implements Initializabl
     @FXML
     private TextField searchDirection;
 
+    @FXML
     private TableView<Event> table;
     private String tableStyle = ("-fx-selection-bar: red;" +
             "-fx-selection-bar-non-focused: salmon;");

@@ -6,6 +6,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.logic.Event;
+import main.logic.User.Organizer;
+import main.logic.User.User;
 import main.logic.dao.EventDAO;
 
 import java.net.URL;
@@ -25,13 +27,18 @@ public class EventInfoController extends Controller {
     @FXML
     private Text description;
 
-
     private Event event;
+    private User user;
 
     public EventInfoController(Event event){
         this.event = event;
     }
 
+    public EventInfoController(Event event, User user)
+    {
+        this.event = event;
+        this.user = user;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -49,12 +56,18 @@ public class EventInfoController extends Controller {
 
     @FXML
     private void login(MouseEvent mouseEvent) {
-        new AuthController().loadScene((Stage) logo_event.getScene().getWindow(), "Login");
+        if (user != null)
+            new AuthController().loadScene((Stage) logo_event.getScene().getWindow(), "Авторизация");
+        else
+            new ProfileController(user).loadScene((Stage) logo_event.getScene().getWindow(), "Профиль");
     }
 
     @FXML
     private void home(MouseEvent mouseEvent) {
-        new MainWinNoAuthController().loadScene((Stage) logo_event.getScene().getWindow(), "Home");
+        if (user != null)
+            new MainWinNoAuthController().loadScene((Stage) logo_event.getScene().getWindow(), "Главное окно");
+        else
+            new WindowOrg((Organizer) user).loadScene((Stage) logo_event.getScene().getWindow(), "Окно организатора");
     }
     public void loadScene(Stage stage, String title){
         super.loadSceneWithController("EventInfo.fxml", stage, title);

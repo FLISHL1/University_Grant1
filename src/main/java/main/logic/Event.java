@@ -70,7 +70,12 @@ public class Event {
 
         return dat.format(dateStart);
     }
-
+    public Date getDateStartToDate() {
+        return dateStart;
+    }
+    public Date getDateEndToDate() {
+        return dateEnd;
+    }
     public String getDirection() {
         return direction.name;
     }

@@ -23,6 +23,8 @@ import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import net.synedra.validatorfx.Validator;
+
 public class CreateEventController extends Controller {
     @FXML
     private Text activities;
@@ -30,6 +32,8 @@ public class CreateEventController extends Controller {
     private ComboBox<City> city;
     @FXML
     private ComboBox<Direction> direction;
+    @FXML
+    private DatePicker startDate;
 
     @FXML
     private DatePicker endDate;
@@ -52,11 +56,9 @@ public class CreateEventController extends Controller {
     @FXML
     private TableView<Activity> table;
 
-    @FXML
-    private DatePicker startDate;
 
     @FXML
-    private ComboBox<String> startTime;
+    private ComboBox<Date> startTime;
 
     @FXML
     private Text time;
@@ -66,6 +68,7 @@ public class CreateEventController extends Controller {
 
     private Direction directionValue;
     private City cityValue;
+    private Validator validator;
     private String tableStyle = ("-fx-selection-bar: red;" +
             "-fx-selection-bar-non-focused: salmon;");
 
@@ -90,6 +93,7 @@ public class CreateEventController extends Controller {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        validator = new Validator();
         icon.setImage(user.getPhoto().getImage());
         helloName.setText((user.getSex().contains("муж") ? "Дорогой " : "Дорогая ") + user.getName());
         String hello = "";
@@ -102,6 +106,7 @@ public class CreateEventController extends Controller {
         table.setItems(FXCollections.observableList(newEvent.getActivity()));
         table.setStyle(tableStyle);
         table.setRowFactory(t -> clickedTable());
+
         TableColumn<Activity, String> nameColumn = new TableColumn<Activity, String>("Название");
         nameColumn.setCellValueFactory(new PropertyValueFactory<Activity, String>("name"));
         nameColumn.setStyle(columnStyle);
@@ -119,8 +124,74 @@ public class CreateEventController extends Controller {
             eventName.setText(newEvent.getName());
 //            ...
         }
+        System.out.println(startDate.getValue());
+
+        validator.createCheck()
+                .dependsOn("dateStart", startDate.valueProperty())
+                .dependsOn("dateEnd", endDate.valueProperty())
+                .withMethod(c -> {
+                    if (startDate.getValue() == null) {
+                        c.error("Поле не должно быть пустым");
+                    } else if (startDate.getValue().isAfter(endDate.getValue())) {
+                        c.error("Дата начала не может быть больше даты конца");
+                    }
+                }).decorates(startDate)
+                .decorates(endDate)
+                .immediate();
+
+        validator.createCheck()
+                .dependsOn("startTime", startTime.valueProperty())
+                .dependsOn("endTime", endTime.valueProperty())
+                .withMethod(c -> {
+                    if (startDate.getValue().isEqual(endDate.getValue()) && endTime.getValue().before(startTime.getValue())) {
+                        c.error("Время конца не может быть раньше времени начала");
+                    }
+                }).decorates(startTime)
+                .decorates(endTime)
+                .immediate();
+
+        validator.createCheck()
+                .dependsOn("startTime", startTime.valueProperty())
+                .withMethod(c -> {
+                    if (startTime.getValue() == null) {
+                        c.error("Заполните время начала мероприятия");
+                    }
+                }).decorates(startTime)
+                .immediate();
+
+        validator.createCheck()
+                .dependsOn("endTime", endTime.valueProperty())
+                .withMethod(c -> {
+                    if (endTime.getValue() == null) {
+                        c.error("Заполните время начала мероприятия");
+                    }
+                }).decorates(endTime)
+                .immediate();
+
+        validator.createCheck()
+                .dependsOn("direction", direction.valueProperty())
+                .withMethod(c -> {
+                    if (direction.getValue() == null) {
+                        c.error("Заполните направление мероприятия");
+                    }
+                }).decorates(direction)
+                .immediate();
+
+        validator.createCheck()
+                .dependsOn("city", city.valueProperty())
+                .withMethod(c -> {
+                    if (city.getValue() == null) {
+                        c.error("Заполните направление мероприятия");
+                    }
+                }).decorates(city)
+                .immediate();
+
+
     }
-    public TableView<Activity> getTable(){ return table;}
+
+    public TableView<Activity> getTable() {
+        return table;
+    }
 
     @FXML
     void canban(ActionEvent event) {

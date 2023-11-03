@@ -43,7 +43,7 @@ public class CreateActivityController extends Controller {
     private TableView<Jury> tableSelected;
 
     @FXML
-    private ChoiceBox<Date> time;
+    private ComboBox<Date> dateTime;
 
     private Organizer user;
 
@@ -113,13 +113,22 @@ public class CreateActivityController extends Controller {
 
         phoneColumn.setStyle(columnStyle);
         tableSelected.getColumns().add(phoneColumn);
+
+
+//        ComboBox Time
+        Date date = new Date(createEventController.);
+        while (!date.equals(createdEvent.getDateEndToDate())){
+            dateTime.getItems().add(date);
+            date.setMinutes(date.getMinutes() + 5);
+        }
+
     }
 
     private TableRow<Jury> clickedTableDelete() {
         TableRow<Jury> row = new TableRow<>();
         row.setOnMouseClicked(click -> {
             if (click.getClickCount() >= 2 && !row.isEmpty()) {
-                    tableSelected.getItems().remove(tableSelected.getSelectionModel().getSelectedItem());
+                tableSelected.getItems().remove(tableSelected.getSelectionModel().getSelectedItem());
             }
         });
         return row;
