@@ -70,7 +70,7 @@
                </font>
             </Button>
             <TableView fx:id="tableSelected" layoutX="664.0" layoutY="310.0" prefHeight="375.0" prefWidth="509.0" />
-            <ComboBox fx:id="datetime" layoutX="367.0" layoutY="126.0" prefWidth="150.0" />
+            <ComboBox fx:id="dateTime" layoutX="367.0" layoutY="126.0" prefWidth="150.0" />
             </children>
         </AnchorPane>
         <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">

@@ -20,6 +20,7 @@ import main.logic.dao.ActivityDAO;
 import main.logic.dao.JuryDAO;
 
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -43,13 +44,11 @@ public class CreateActivityController extends Controller {
     private TableView<Jury> tableSelected;
 
     @FXML
-    private ComboBox<Date> dateTime;
+    private ComboBox<LocalDateTime> dateTime;
 
     private Organizer user;
-
-    private Event createdEvent;
     private Activity newActivity;
-    private CreateEventController createEventController;
+    private Event newEvent;
     private String tableStyle =
             ("-fx-selection-bar: red;" +
                     "-fx-selection-bar-non-focused: salmon;");
@@ -61,11 +60,10 @@ public class CreateActivityController extends Controller {
                     "-fx-font-size: 14pt;" +
                     "-fx-font-family: 'Comic Sans MS';");
 
-    public CreateActivityController(Organizer user, Event event, CreateEventController createEventController) {
+    public CreateActivityController(Organizer user, Event newEvent) {
         this.user = user;
-        this.createdEvent = event;
-        this.createEventController = createEventController;
         this.newActivity = new Activity();
+        this.newEvent = newEvent;
     }
 
     @Override
@@ -116,10 +114,10 @@ public class CreateActivityController extends Controller {
 
 
 //        ComboBox Time
-        Date date = new Date(createEventController.);
-        while (!date.equals(createdEvent.getDateEndToDate())){
+        LocalDateTime date = newEvent.getDateStartToDate();
+        while (!date.equals(newEvent.getDateEndToDate())){
             dateTime.getItems().add(date);
-            date.setMinutes(date.getMinutes() + 5);
+            date = date.plusMinutes(5);
         }
 
     }
@@ -151,7 +149,7 @@ public class CreateActivityController extends Controller {
 
     @FXML
     void back(ActionEvent event) {
-        createEventController.loadScene((Stage) table.getScene().getWindow(), "Создание активности");
+        new CreateEventController(user, newEvent).loadScene((Stage) table.getScene().getWindow(), "Создание активности");
     }
 
     @FXML
@@ -183,9 +181,9 @@ public class CreateActivityController extends Controller {
     void save(ActionEvent event) {
         newActivity.setName(inputName.getText());
 //        newActivity.setStartTime(time.getValue());
-        newActivity.setStartTime(new Date());
+//        newActivity.setStartTime(new Date());
         newActivity.setJuries(tableSelected.getItems());
-        createdEvent.getActivity().add(newActivity);
+//        createdEvent.getActivity().add(newActivity);
         back(event);
     }
 }

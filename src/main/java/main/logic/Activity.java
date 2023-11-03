@@ -3,6 +3,7 @@ package main.logic;
 import jakarta.persistence.*;
 import main.logic.User.Jury;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Entity
@@ -15,7 +16,7 @@ public class Activity {
     @Column(name = "name")
     private String name;
     @Column(name = "start_time")
-    private Date startTime;
+    private LocalDate startTime;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "jury_activities",
@@ -44,7 +45,7 @@ public class Activity {
         return startTime.toString();
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(LocalDate startTime) {
         this.startTime = startTime;
     }
 }

@@ -5,7 +5,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import main.logic.User.Organizer;
 
+import javax.swing.text.DateFormatter;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,9 +28,9 @@ public class Event {
     private String name;
 
     @Column(name = "event_date_start")
-    private Date dateStart;
+    private LocalDateTime dateStart;
     @Column(name = "event_date_end")
-    private Date dateEnd;
+    private LocalDateTime dateEnd;
     @ManyToOne()
     @JoinColumn(name = "city")
     private City city;
@@ -66,15 +70,21 @@ public class Event {
     }
 
     public String getDateStart() {
-        SimpleDateFormat dat = new SimpleDateFormat("dd.MM.yyyy");
 
-        return dat.format(dateStart);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        return dateStart.format(formatter);
     }
-    public Date getDateStartToDate() {
+    public LocalDateTime getDateStartToDate() {
         return dateStart;
     }
-    public Date getDateEndToDate() {
+    public void setDateStart(LocalDateTime date){
+        dateStart = date;
+    }
+    public LocalDateTime getDateEndToDate() {
         return dateEnd;
+    }
+    public void setDateEnd(LocalDateTime date){
+        dateEnd = date;
     }
     public String getDirection() {
         return direction.name;

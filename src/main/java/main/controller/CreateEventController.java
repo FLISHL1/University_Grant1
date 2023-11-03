@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import main.attentionWindow.AlertShow;
 import main.logic.Activity;
 import main.logic.City;
 import main.logic.Direction;
@@ -20,6 +21,8 @@ import main.logic.dao.EventDAO;
 
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -27,19 +30,20 @@ import net.synedra.validatorfx.Validator;
 
 public class CreateEventController extends Controller {
     @FXML
-    private Text activities;
-    @FXML
     private ComboBox<City> city;
     @FXML
     private ComboBox<Direction> direction;
     @FXML
-    private DatePicker startDate;
+    public DatePicker startDate;
 
     @FXML
-    private DatePicker endDate;
+    public DatePicker endDate;
 
     @FXML
-    private ComboBox<Date> endTime;
+    private ComboBox<LocalTime> startTime;
+
+    @FXML
+    private ComboBox<LocalTime> endTime;
 
     @FXML
     private TextField eventName;
@@ -57,11 +61,7 @@ public class CreateEventController extends Controller {
     private TableView<Activity> table;
 
 
-    @FXML
-    private ComboBox<Date> startTime;
 
-    @FXML
-    private Text time;
     private EventDAO eventDAO;
     private Organizer user;
     private Event newEvent;
@@ -69,6 +69,7 @@ public class CreateEventController extends Controller {
     private Direction directionValue;
     private City cityValue;
     private Validator validator;
+    private Validator validatorDateTime;
     private String tableStyle = ("-fx-selection-bar: red;" +
             "-fx-selection-bar-non-focused: salmon;");
 
@@ -94,6 +95,8 @@ public class CreateEventController extends Controller {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         validator = new Validator();
+        validatorDateTime = new Validator();
+
         icon.setImage(user.getPhoto().getImage());
         helloName.setText((user.getSex().contains("муж") ? "Дорогой " : "Дорогая ") + user.getName());
         String hello = "";
@@ -118,39 +121,42 @@ public class CreateEventController extends Controller {
         table.getColumns().add(timeColumn);
 
 
+
         city.setItems(FXCollections.observableList(new CityDAO().getAll()));
         direction.setItems(FXCollections.observableList(new DirectionDAO().getAll()));
         if (newEvent.getId() != null) {
             eventName.setText(newEvent.getName());
 //            ...
         }
-        System.out.println(startDate.getValue());
 
-        validator.createCheck()
+
+        validatorDateTime.createCheck()
                 .dependsOn("dateStart", startDate.valueProperty())
                 .dependsOn("dateEnd", endDate.valueProperty())
                 .withMethod(c -> {
                     if (startDate.getValue() == null) {
                         c.error("Поле не должно быть пустым");
-                    } else if (startDate.getValue().isAfter(endDate.getValue())) {
+                    } else if (endDate.getValue() != null && startDate.getValue().isAfter(endDate.getValue())) {
                         c.error("Дата начала не может быть больше даты конца");
                     }
                 }).decorates(startDate)
                 .decorates(endDate)
                 .immediate();
 
-        validator.createCheck()
+        validatorDateTime.createCheck()
                 .dependsOn("startTime", startTime.valueProperty())
                 .dependsOn("endTime", endTime.valueProperty())
                 .withMethod(c -> {
-                    if (startDate.getValue().isEqual(endDate.getValue()) && endTime.getValue().before(startTime.getValue())) {
-                        c.error("Время конца не может быть раньше времени начала");
+                    if (startDate.getValue() != null && endDate.getValue() != null && endTime.getItems() != null) {
+                        if (startDate.getValue().isEqual(endDate.getValue()) && endTime.getValue().isBefore(startTime.getValue())) {
+                            c.error("Время конца не может быть раньше времени начала");
+                        }
                     }
                 }).decorates(startTime)
                 .decorates(endTime)
                 .immediate();
 
-        validator.createCheck()
+        validatorDateTime.createCheck()
                 .dependsOn("startTime", startTime.valueProperty())
                 .withMethod(c -> {
                     if (startTime.getValue() == null) {
@@ -159,7 +165,7 @@ public class CreateEventController extends Controller {
                 }).decorates(startTime)
                 .immediate();
 
-        validator.createCheck()
+        validatorDateTime.createCheck()
                 .dependsOn("endTime", endTime.valueProperty())
                 .withMethod(c -> {
                     if (endTime.getValue() == null) {
@@ -202,10 +208,23 @@ public class CreateEventController extends Controller {
     void createCSV(ActionEvent event) {
 
     }
+    @FXML
+    void selectStartDate(ActionEvent event) {
+        LocalTime localTime = LocalTime.of(6, 0);
+        while (localTime.getHour() != 23 || localTime.getMinute() <= 50){
+            startTime.getItems().add(localTime);
+            localTime = localTime.plusMinutes(5);
+        }
+
+    }
 
     @FXML
     void selectEndDate(ActionEvent event) {
-
+        LocalTime localTime = LocalTime.of(6, 0);
+        while (localTime.getHour() != 23 || localTime.getMinute() <= 50){
+            endTime.getItems().add(localTime);
+            localTime = localTime.plusMinutes(5);
+        }
     }
 
     private TableRow<Activity> clickedTable() {
@@ -236,7 +255,13 @@ public class CreateEventController extends Controller {
 
     @FXML
     void addAction(MouseEvent event) {
-        new CreateActivityController(user, newEvent, this).loadScene((Stage) startTime.getScene().getWindow(), "Создание активности");
+            if (!validatorDateTime.containsErrors()) {
+                newEvent.setDateStart(startDate.getValue().atTime(startTime.getValue()));
+                newEvent.setDateEnd(endDate.getValue().atTime(endTime.getValue()));
+                new CreateActivityController(user, newEvent).loadScene((Stage) startTime.getScene().getWindow(), "Создание активности");
+            } else {
+                AlertShow.showAlert("info", "Ошибка", validatorDateTime.createStringBinding().get());
+            }
     }
 
     @FXML
@@ -285,7 +310,6 @@ public class CreateEventController extends Controller {
     public void loadScene(Stage stage, String title) {
         super.loadScene("CreateEvent.fxml", stage, title);
     }
-
 
 }
 

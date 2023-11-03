@@ -71,7 +71,7 @@
                   <Font name="Comic Sans MS" size="20.0" />
                </font>
             </Text>
-            <DatePicker fx:id="startDate" layoutX="361.0" layoutY="147.0" />
+            <DatePicker fx:id="startDate" layoutX="361.0" layoutY="147.0" onAction="#selectStartDate"/>
             <DatePicker fx:id="endDate" layoutX="361.0" layoutY="208.0" onAction="#selectEndDate" />
             <TextField fx:id="eventName" layoutX="359.0" layoutY="269.0" prefHeight="25.0" prefWidth="174.0">
                <font>

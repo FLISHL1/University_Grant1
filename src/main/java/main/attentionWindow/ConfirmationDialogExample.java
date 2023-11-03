@@ -25,8 +25,9 @@ public class ConfirmationDialogExample extends Application implements Initializa
 
         ButtonType buttonTypeYes = new ButtonType("Да");
         ButtonType buttonTypeNo = new ButtonType("Нет");
-
         alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+        alert.showAndWait();
+
     }
 
     public Alert getAlert() {
@@ -40,7 +41,6 @@ public class ConfirmationDialogExample extends Application implements Initializa
                 start(new Stage());
             }
         });
-        alert.showAndWait();
 
     }
     public String getLableText() {
