@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #99ffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.WindowModerator">
+    <children>
+        <AnchorPane fx:id="add" layoutX="60.0" prefHeight="800.0" prefWidth="1220.0" style="-fx-background-color: #ffffff;" AnchorPane.rightAnchor="0.0">
+            <children>
+                <Text fx:id="helloText" layoutX="413.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Добрый день!">
+                    <font>
+                        <Font name="Comic Sans MS" size="22.0" />
+                    </font>
+                </Text>
+            <ImageView fx:id="icon" blendMode="DARKEN" fitHeight="40.0" fitWidth="40.0" layoutX="354.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" style="-fx-blend-mode: #dsfghg;">
+               <image>
+                  <Image url="@image\logo" />
+               </image>
+            </ImageView>
+            <Text fx:id="helloName" layoutX="579.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дорогой, Иван Васильевич">
+               <font>
+                  <Font name="Comic Sans MS" size="22.0" />
+               </font>
+            </Text>
+            <TableView fx:id="table" layoutX="146.0" layoutY="139.0" prefHeight="555.0" prefWidth="915.0" />
+            <Text layoutX="548.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Активности">
+               <font>
+                  <Font name="Comic Sans MS" size="22.0" />
+               </font>
+            </Text>
+            <Button layoutX="938.0" layoutY="716.0" mnemonicParsing="false" style="-fx-background-color: #0000cc;" text="Подать заявку" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="15.0" />
+               </font>
+            </Button>
+            <Button layoutX="924.0" layoutY="19.0" mnemonicParsing="false" onAction="#moderatorAcctivity" style="-fx-background-color: #0000cc;" text="Мои активности" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="15.0" />
+               </font>
+            </Button>
+            <ComboBox fx:id="choiceEvent" layoutX="145.0" layoutY="83.0" prefHeight="26.0" prefWidth="287.0" promptText="Поиск по мероприятию" />
+            <ComboBox fx:id="choiceDirection" layoutX="773.0" layoutY="82.0" prefHeight="26.0" prefWidth="287.0" promptText="Поиск по направлению" />
+            </children>
+        </AnchorPane>
+        <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@image\logo%20(2).png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="141.0" onMouseClicked="#profile" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@image\icon%20_profile%20circle_.png" />
+            </image>
+        </ImageView>
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="280.0" onMouseClicked="#home" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@image\Vector-1.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="377.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@image\star.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="575.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@image\profile-add.png" />
+         </image>
+      </ImageView>
+    </children>
+</AnchorPane>

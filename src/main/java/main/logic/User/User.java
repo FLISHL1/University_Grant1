@@ -25,7 +25,7 @@ public class User {
     @Column(name = "birth_date")
     protected Date birthDay;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name="country")
     protected Country country;
     @Column(name="gender")
@@ -131,5 +131,8 @@ public class User {
         image.setFitWidth(150);
         image.setFitHeight(150);
         return image;
+    }
+    public String getPhotoPath() {
+        return photo;
     }
 }

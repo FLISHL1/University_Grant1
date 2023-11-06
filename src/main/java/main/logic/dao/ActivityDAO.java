@@ -18,7 +18,7 @@ public class ActivityDAO extends AbstractDao<Activity>{
         manager.close();
 
     }
-    public Event merge(Event event){
-        return manager.merge(event);
+    public Activity merge(Activity activity){
+        return manager.merge(activity);
     }
 }

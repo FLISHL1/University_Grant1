@@ -17,6 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import main.logic.Direction;
 import main.logic.Event;
 import main.logic.dao.EventDAO;
 import main.logic.User.Organizer;
@@ -121,7 +122,7 @@ public class WindowOrg extends Application implements Initializable {
 
                 String lowerCaseFilter = newValue.toLowerCase();
 
-                if (event.getDirection().toLowerCase().contains(lowerCaseFilter)) {
+                if (event.getDirection().getName().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
                 }
                 return false;
@@ -142,16 +143,7 @@ public class WindowOrg extends Application implements Initializable {
                 return false;
             });
         });
-//        GenerateTable<Event> genTable = new GenerateTable<Event>(new ArrayList<>(events)).setLayoutX(39).setLayoutY(144).setPrefHeight(555).setPrefWidth(1140);
-//        genTable.delColumn("days");
-//        genTable.delColumn("id");
-//        genTable.delColumn("city");
-//        genTable.delColumn("organizer");
-//        genTable.delColumn("description");
-//        genTable.getColumn("name").setText("Название");
-//        genTable.getColumn("logo").setText("Логотип");
-//        genTable.getColumn("dateStart").setText("Дата");
-//        genTable.getColumn("direction").setText("Направление");
+
         table.setStyle(tableStyle);
 
         TableColumn<Event, ImageView> logoColumn = new TableColumn<Event, ImageView>("Логотип");
@@ -169,8 +161,8 @@ public class WindowOrg extends Application implements Initializable {
         dateColumn.setStyle(columnStyle);
         table.getColumns().add(dateColumn);
 
-        TableColumn<Event, String> directionColumn = new TableColumn<Event, String>("Направление");
-        directionColumn.setCellValueFactory(new PropertyValueFactory<Event, String>("direction"));
+        TableColumn<Event, Direction> directionColumn = new TableColumn<Event, Direction>("Направление");
+        directionColumn.setCellValueFactory(new PropertyValueFactory<Event, Direction>("direction"));
         directionColumn.setStyle(columnStyle);
         table.getColumns().add(directionColumn);
 
@@ -187,7 +179,7 @@ public class WindowOrg extends Application implements Initializable {
         TableRow<Event> row = new TableRow<>();
         row.setOnMouseClicked(event1 -> {
             if (event1.getClickCount() >= 2 && !row.isEmpty()) {
-                new EventInfoController(table.getSelectionModel().getSelectedItem()).loadScene((Stage) mainPain.getScene().getWindow(), "EventInfo");
+                new CreateEventController(user, table.getSelectionModel().getSelectedItem()).loadScene((Stage) mainPain.getScene().getWindow(), "EventInfo");
             }
         });
         return row;

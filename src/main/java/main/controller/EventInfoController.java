@@ -48,15 +48,15 @@ public class EventInfoController extends Controller {
         EventDAO eventDAO = new EventDAO();
         eventDAO.openSession();
         eventDAO.merge(event);
-        city.setText(event.getCity());
+        city.setText(event.getCity().getName());
         event = eventDAO.merge(event);
-        organizer.setText(event.getUser().getName());
+        organizer.setText(event.getOrganizer().getName());
         eventDAO.closeSession();
     }
 
     @FXML
     private void login(MouseEvent mouseEvent) {
-        if (user != null)
+        if (user == null)
             new AuthController().loadScene((Stage) logo_event.getScene().getWindow(), "Авторизация");
         else
             new ProfileController(user).loadScene((Stage) logo_event.getScene().getWindow(), "Профиль");
@@ -64,7 +64,7 @@ public class EventInfoController extends Controller {
 
     @FXML
     private void home(MouseEvent mouseEvent) {
-        if (user != null)
+        if (user == null)
             new MainWinNoAuthController().loadScene((Stage) logo_event.getScene().getWindow(), "Главное окно");
         else
             new WindowOrg((Organizer) user).loadScene((Stage) logo_event.getScene().getWindow(), "Окно организатора");

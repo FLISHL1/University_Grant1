@@ -59,8 +59,6 @@ public class RegUserNew  extends Controller {
     private ComboBox<Country> country;
     @FXML
     private RadioButton genderWoman;
-    @FXML
-    private ImageView icon;
     private User user;
     private User newUser;
     private Validator validator;
@@ -73,7 +71,6 @@ public class RegUserNew  extends Controller {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        icon.setImage(user.getPhoto().getImage());
         helloName.setText((user.getSex().contains("муж")?"Дорогой ":"Дорогая ") + user.getName());
         String hello = "";
         int hour = new java.util.Date().getHours();
@@ -90,7 +87,7 @@ public class RegUserNew  extends Controller {
         direction.setItems(FXCollections.observableList(directionDAO.getAll()));
         CountryDAO countryDAO = new CountryDAO();
         country.setItems(FXCollections.observableList(countryDAO.getAll()));
-        ActionDAO actionDAO = new ActionDAO();
+        ActivityDAO actionDAO = new ActivityDAO();
         action.setItems(FXCollections.observableList(actionDAO.getAll()));
         idUser.setText(Integer.toString(newUser.getId()));
         validator.createCheck()
@@ -224,12 +221,13 @@ public class RegUserNew  extends Controller {
             newJury = new Jury();
             newJury.setIdNumber(newUser.getId());
             newJury = (Jury) fillUser(newJury);
-            new JuryDAO().update(newJury);
+            System.out.println(newJury.getId());
+            new JuryDAO().createReg(newJury);
         } else {
             newModeration = new Moderation();
             newModeration.setIdNumber(newUser.getId());
             newModeration = (Moderation) fillUser(newModeration);
-            new ModeratorDAO().update(newModeration);
+            new ModeratorDAO().createReg(newModeration);
         }
     }
 

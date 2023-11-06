@@ -1,5 +1,6 @@
 package main.logic.dao;
 
+import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.RollbackException;
 import main.logic.Event;
 import org.hibernate.Session;
@@ -21,6 +22,9 @@ public class EventDAO extends AbstractDao<Event>{
     }
     public Event merge(Event event){
         return manager.merge(event);
+    }
+    public void refresh(Event event){
+        manager.refresh(event);
     }
 
     @Override
@@ -51,7 +55,29 @@ public class EventDAO extends AbstractDao<Event>{
         return object;
     }
 
+    public Event create(Event event) {
+        // Create a new EntityManager
+        ;
+        EntityTransaction transaction = null;
 
+        try (Session manager = this.sessionFactory.openSession()){
+            // Get a transaction
+            transaction = manager.getTransaction();
+
+            transaction.begin();
+            // Save the student object
+            manager.saveOrUpdate(event);
+            // Commit the transaction
+            transaction.commit();
+        } catch (RollbackException ex) {
+            // Commit failed. Rollback the transaction
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw new RuntimeException(ex);
+        }
+        return event;
+    }
 /*    @Override
     public void init() {
         this.sessionFactory = new Configuration()

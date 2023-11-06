@@ -4,14 +4,11 @@ import jakarta.persistence.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import main.logic.User.Organizer;
+import org.hibernate.annotations.Cascade;
 
-import javax.swing.text.DateFormatter;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -32,17 +29,20 @@ public class Event {
     @Column(name = "event_date_end")
     private LocalDateTime dateEnd;
     @ManyToOne()
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "city")
     private City city;
-    @ManyToOne
+    @ManyToOne()
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JoinColumn(name = "direction")
     private Direction direction;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany( fetch = FetchType.LAZY)
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.REMOVE, org.hibernate.annotations.CascadeType.PERSIST})
     @JoinColumn(name = "id_events")
     private List<Activity> activity = new ArrayList<>();
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_organizer", nullable = false)
     private Organizer organizer;
 
@@ -51,10 +51,12 @@ public class Event {
     public Event() {
     }
 
-    public Organizer getUser() {
+    public Organizer getOrganizer() {
         return organizer;
     }
-
+    public void setOrganizer(Organizer user){
+        this.organizer = user;
+    }
     public Integer getId() {
         return id;
     }
@@ -63,10 +65,16 @@ public class Event {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public City getCity() {
+        return city;
+    }
 
-    public String getCity() {
-        return city.getName();
+    public void setCity(City city) {
+        this.city = city;
     }
 
     public String getDateStart() {
@@ -74,20 +82,29 @@ public class Event {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         return dateStart.format(formatter);
     }
+
     public LocalDateTime getDateStartToDate() {
         return dateStart;
     }
-    public void setDateStart(LocalDateTime date){
+
+    public void setDateStart(LocalDateTime date) {
         dateStart = date;
     }
+
     public LocalDateTime getDateEndToDate() {
         return dateEnd;
     }
-    public void setDateEnd(LocalDateTime date){
+
+    public void setDateEnd(LocalDateTime date) {
         dateEnd = date;
     }
-    public String getDirection() {
-        return direction.name;
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
     }
 
     public ImageView getLogo() {
@@ -100,5 +117,9 @@ public class Event {
 
     public List<Activity> getActivity() {
         return activity;
+    }
+
+    public void setActivity(List<Activity> activity) {
+        this.activity = activity;
     }
 }

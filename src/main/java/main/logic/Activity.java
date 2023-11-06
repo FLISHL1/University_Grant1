@@ -3,26 +3,34 @@ package main.logic;
 import jakarta.persistence.*;
 import main.logic.User.Jury;
 
-import java.time.LocalDate;
+import main.logic.Event;
+import org.hibernate.annotations.Cascade;
+
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
 @Table(name = "activities")
 public class Activity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "name")
     private String name;
     @Column(name = "start_time")
-    private LocalDate startTime;
+    private LocalDateTime startTime;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinTable(name = "jury_activities",
             joinColumns = @JoinColumn(name = "id_activity", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "id_jury", referencedColumnName = "id_user"))
     private List<Jury> juries;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Cascade({org.hibernate.annotations.CascadeType.MERGE, org.hibernate.annotations.CascadeType.PERSIST})
+    @JoinColumn(name = "id_events")
+    private Event event;
 
 
     public Activity(){
@@ -41,11 +49,19 @@ public class Activity {
     public void setJuries(List<Jury> juries){
         this.juries = juries;
     }
-    public String getStartTime() {
-        return startTime.toString();
+    public LocalDateTime getStartTime() {
+        return startTime;
     }
 
-    public void setStartTime(LocalDate startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
     }
 }

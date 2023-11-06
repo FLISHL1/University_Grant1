@@ -13,7 +13,7 @@ import java.util.Set;
 @Table(name = "jury")
 @PrimaryKeyJoinColumn(name = "id_user")
 public class Jury extends User {
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "direction")
     private Direction direction;
 
@@ -40,6 +40,9 @@ public class Jury extends User {
 
     public String getDirection() {
         return direction.toString();
+    }
+    public Direction getDirectionToObj() {
+        return direction;
     }
 
     public void setDirection(Direction direction) {

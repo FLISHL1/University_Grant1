@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import main.logic.Direction;
 import main.logic.Event;
 import main.logic.dao.EventDAO;
 
@@ -89,7 +90,7 @@ public class MainWinNoAuthController extends Application implements Initializabl
 
                 String lowerCaseFilter = newValue.toLowerCase();
 
-                if (event.getDirection().toLowerCase().contains(lowerCaseFilter)) {
+                if (event.getDirection().getName().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
                 }
                 return false;
@@ -127,8 +128,8 @@ public class MainWinNoAuthController extends Application implements Initializabl
         dateColumn.setStyle(columnStyle);
         table.getColumns().add(dateColumn);
 
-        TableColumn<Event, String> directionColumn = new TableColumn<Event, String>("Направление");
-        directionColumn.setCellValueFactory(new PropertyValueFactory<Event, String>("direction"));
+        TableColumn<Event, Direction> directionColumn = new TableColumn<Event, Direction>("Направление");
+        directionColumn.setCellValueFactory(new PropertyValueFactory<Event, Direction>("direction"));
         directionColumn.setStyle(columnStyle);
         table.getColumns().add(directionColumn);
 

@@ -18,6 +18,9 @@ import main.logic.User.Organizer;
 import main.logic.User.Jury;
 import main.logic.dao.ActivityDAO;
 import main.logic.dao.JuryDAO;
+import net.synedra.validatorfx.Validator;
+import org.hibernate.Hibernate;
+import org.hibernate.LazyInitializationException;
 
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -46,9 +49,14 @@ public class CreateActivityController extends Controller {
     @FXML
     private ComboBox<LocalDateTime> dateTime;
 
+    @FXML
+    private Button saveBtn;
+
     private Organizer user;
     private Activity newActivity;
     private Event newEvent;
+    private Validator validator;
+    private ActivityDAO activityDAO;
     private String tableStyle =
             ("-fx-selection-bar: red;" +
                     "-fx-selection-bar-non-focused: salmon;");
@@ -66,6 +74,12 @@ public class CreateActivityController extends Controller {
         this.newEvent = newEvent;
     }
 
+    public CreateActivityController(Organizer user, Event newEvent, Activity activity) {
+        this.user = user;
+        this.newActivity = activity;
+        this.newEvent = newEvent;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         icon.setImage(user.getPhoto().getImage());
@@ -78,6 +92,20 @@ public class CreateActivityController extends Controller {
         else if (hour < 5) hello = "Доброй ночи!";
         helloText.setText(hello);
         JuryDAO juryDAO = new JuryDAO();
+//        update for newActivity
+        if (newActivity.getName() != null) {
+
+            activityDAO = new ActivityDAO();
+            activityDAO.openSession();
+            newActivity = activityDAO.merge(newActivity);
+
+            dateTime.setValue(newActivity.getStartTime());
+            inputName.setText(newActivity.getName());
+            tableSelected.setItems(FXCollections.observableList(newActivity.getJuries()));
+            saveBtn.setText("Изменить активность");
+            activityDAO.closeSession();
+        }
+
 //      table
         table.setItems(FXCollections.observableList(juryDAO.getAll()));
         table.setStyle(tableStyle);
@@ -115,11 +143,30 @@ public class CreateActivityController extends Controller {
 
 //        ComboBox Time
         LocalDateTime date = newEvent.getDateStartToDate();
-        while (!date.equals(newEvent.getDateEndToDate())){
+        while (!date.equals(newEvent.getDateEndToDate())) {
             dateTime.getItems().add(date);
             date = date.plusMinutes(5);
         }
+//       Validator
+        validator = new Validator();
+        validator.createCheck()
+                .dependsOn("name", inputName.textProperty())
+                .withMethod(c -> {
+                    String name = c.get("name");
+                    if (name == null) {
+                        c.error("Заполните название активности");
+                    }
+                }).decorates(inputName)
+                .immediate();
 
+        validator.createCheck()
+                .dependsOn("time", dateTime.valueProperty())
+                .withMethod(c -> {
+                    if (dateTime.getValue() == null) {
+                        c.error("Заполните время начала активности");
+                    }
+                }).decorates(dateTime)
+                .immediate();
     }
 
     private TableRow<Jury> clickedTableDelete() {
@@ -179,11 +226,15 @@ public class CreateActivityController extends Controller {
 
     @FXML
     void save(ActionEvent event) {
+        newEvent.getActivity().add(newActivity);
         newActivity.setName(inputName.getText());
-//        newActivity.setStartTime(time.getValue());
-//        newActivity.setStartTime(new Date());
+        newActivity.setStartTime(dateTime.getValue());
         newActivity.setJuries(tableSelected.getItems());
-//        createdEvent.getActivity().add(newActivity);
+//        if (Hibernate.isInitialized(newActivity)){
+//            newEvent.getActivity().
+//            activityDAO.update(newActivity);
+//        }
+        System.out.println(newActivity.getStartTime());
         back(event);
     }
 }
