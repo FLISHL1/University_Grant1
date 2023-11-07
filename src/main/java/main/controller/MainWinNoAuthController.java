@@ -15,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.logic.Direction;
 import main.logic.Event;
@@ -24,6 +25,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -35,6 +37,8 @@ public class MainWinNoAuthController extends Application implements Initializabl
 
     @FXML
     private TextField searchDirection;
+    @FXML
+    private Text helloText;
 
     @FXML
     private TableView<Event> table;
@@ -79,6 +83,13 @@ public class MainWinNoAuthController extends Application implements Initializabl
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        String hello = "";
+        int hour = new Date().getHours();
+        if (hour >= 5 && hour < 12) hello = "Доброе утро!";
+        else if (hour >= 12 && hour < 17) hello = "Добрый день!";
+        else if (hour >= 17 && hour < 24) hello = "Добрый вечер!";
+        else if (hour < 5) hello = "Доброй ночи!";
+        helloText.setText(hello);
         EventDAO eventDAO = new EventDAO();
         List<Event> events = eventDAO.getAll();
         FilteredList<Event> filteredList = new FilteredList<>(FXCollections.observableList(events), p -> true);

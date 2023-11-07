@@ -74,15 +74,8 @@ public class UserList extends Controller {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        icon.setImage(user.getPhoto().getImage());
-        helloName.setText((user.getSex().contains("муж")?"Дорогой ":"Дорогая ") + user.getName());
-        String hello = "";
-        int hour = new Date().getHours();
-        if (hour >= 5 && hour < 12) hello = "Доброе утро!";
-        else if (hour >= 12 && hour < 17) hello = "Добрый день!";
-        else if (hour >= 17 && hour < 24) hello = "Добрый вечер!";
-        else if (hour < 5) hello = "Доброй ночи!";
-        helloText.setText(hello);
+        init(icon, helloText, helloName, user);
+
         ParticipantDAO participantDAO = new ParticipantDAO();
         FilteredList<Participant> filteredList = new FilteredList<>(FXCollections.observableList(participantDAO.getAll()), p -> true);
         searchName.textProperty().addListener((observable, oldValue, newValue) -> {

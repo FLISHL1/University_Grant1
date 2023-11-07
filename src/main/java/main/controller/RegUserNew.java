@@ -8,11 +8,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import main.attentionWindow.AlertShow;
 import main.logic.Activity;
 import main.logic.Country;
 import main.logic.Direction;
 import main.logic.User.Jury;
 import main.logic.User.Moderation;
+import main.logic.User.Organizer;
 import main.logic.User.User;
 import main.logic.dao.*;
 import main.passwordHash.PasswordHashing;
@@ -71,15 +73,8 @@ public class RegUserNew  extends Controller {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        helloName.setText((user.getSex().contains("муж")?"Дорогой ":"Дорогая ") + user.getName());
-        String hello = "";
-        int hour = new java.util.Date().getHours();
-        if (hour >= 5 && hour < 12) hello = "Доброе утро!";
-        else if (hour >= 12 && hour < 17) hello = "Добрый день!";
-        else if (hour >= 17 && hour < 24) hello = "Добрый вечер!";
-        else if (hour < 5) hello = "Доброй ночи!";
+        init(null, helloText, helloName, user);
 
-        helloText.setText(hello);
         validator = new Validator();
         UserDAO userDAO = new UserDAO();
         newUser = userDAO.create(new User());
@@ -205,7 +200,7 @@ public class RegUserNew  extends Controller {
         user.setPhone(phone.getText());
         user.setEmail(email.getText());
         user.setPassword(PasswordHashing.HashPassword(password.getText()));
-        user.setSex(genderMen.isSelected()?genderMen.getText():genderWoman.getText());
+        user.setSex(genderMen.isSelected()?genderMen.getText().toLowerCase():genderWoman.getText().toLowerCase());
         if (user instanceof Jury)
                 ((Jury) user).setDirection(directionValue);
         else if (user instanceof Moderation)
@@ -215,19 +210,27 @@ public class RegUserNew  extends Controller {
     }
 
     public void save(MouseEvent event){
-        Jury newJury;
-        Moderation newModeration;
-        if (roleJury.isSelected()){
-            newJury = new Jury();
-            newJury.setIdNumber(newUser.getId());
-            newJury = (Jury) fillUser(newJury);
-            System.out.println(newJury.getId());
-            new JuryDAO().createReg(newJury);
+        if (!validator.containsErrors()) {
+            Jury newJury;
+            Moderation newModeration;
+            if (roleJury.isSelected()) {
+                newJury = new Jury();
+                newJury.setIdNumber(newUser.getId());
+                newJury = (Jury) fillUser(newJury);
+                System.out.println(newJury.getId());
+                new JuryDAO().createReg(newJury);
+                AlertShow.showAlert("info", "Информирование", "Жюри успешно создан с id: " + newJury.getId());
+            } else {
+                newModeration = new Moderation();
+                newModeration.setIdNumber(newUser.getId());
+                newModeration = (Moderation) fillUser(newModeration);
+                new ModeratorDAO().createReg(newModeration);
+                AlertShow.showAlert("info", "Информирование", "Жюри успешно создан с id: " + newModeration.getId());
+
+            }
+            new ModeratorsAndJuryController((Organizer) user).loadScene((Stage) name.getScene().getWindow(), "Жюри\\Модераторы");
         } else {
-            newModeration = new Moderation();
-            newModeration.setIdNumber(newUser.getId());
-            newModeration = (Moderation) fillUser(newModeration);
-            new ModeratorDAO().createReg(newModeration);
+            AlertShow.showAlert("warning", "Внимание", validator.createStringBinding().get());
         }
     }
 

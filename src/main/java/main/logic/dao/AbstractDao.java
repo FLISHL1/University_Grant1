@@ -1,5 +1,5 @@
 package main.logic.dao;
-import jakarta.persistence.*;
+import  jakarta.persistence.*;
 import main.logic.*;
 import main.logic.User.*;
 import org.hibernate.Session;

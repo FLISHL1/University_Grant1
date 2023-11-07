@@ -62,12 +62,12 @@
                         <Font name="Comic Sans MS" size="22.0" />
                     </font>
                 </Text>
-            <ImageView fx:id="photo" blendMode="DARKEN" fitHeight="300.0" fitWidth="300.0" layoutX="752.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true" style="-fx-blend-mode: #dsfghg;">
+            <ImageView fx:id="icon" blendMode="DARKEN" fitHeight="300.0" fitWidth="300.0" layoutX="752.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true" style="-fx-blend-mode: #dsfghg;">
                <image>
                   <Image url="@image/logo" />
                </image>
             </ImageView>
-            <Text fx:id="nameText" layoutX="538.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дорогой, Иван Васильевич">
+            <Text fx:id="helloName" layoutX="538.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дорогой, Иван Васильевич">
                <font>
                   <Font name="Comic Sans MS" size="22.0" />
                </font>
@@ -145,7 +145,7 @@
             </RadioButton>
             </children>
         </AnchorPane>
-        <ImageView fx:id="logo" fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@image/logo%20(2).png" />
             </image>

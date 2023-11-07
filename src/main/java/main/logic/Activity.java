@@ -5,6 +5,7 @@ import main.logic.User.Jury;
 
 import main.logic.Event;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -20,6 +21,12 @@ public class Activity {
     private String name;
     @Column(name = "start_time")
     private LocalDateTime startTime;
+    @Column(name = "id_moderator")
+    private Integer idModerator;
+
+    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_activity")
+    private List<Application> applications;
 
     @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinTable(name = "jury_activities",
@@ -63,5 +70,13 @@ public class Activity {
 
     public void setEvent(Event event) {
         this.event = event;
+    }
+
+    public List<Application> getApplications() {
+        return applications;
+    }
+
+    public void setApplications(List<Application> applications) {
+        this.applications = applications;
     }
 }

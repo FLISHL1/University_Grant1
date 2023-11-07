@@ -122,4 +122,9 @@ public class Event {
     public void setActivity(List<Activity> activity) {
         this.activity = activity;
     }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

@@ -1,14 +1,10 @@
 package main.controller;
 
-import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -17,8 +13,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import main.attentionWindow.AlertShow;
+import main.logic.Activity;
+import main.logic.Application;
 import main.logic.Direction;
 import main.logic.Event;
+import main.logic.dao.ActivityDAO;
+import main.logic.dao.ApplicationDAO;
 import main.logic.dao.EventDAO;
 import main.logic.User.Organizer;
 
@@ -27,19 +28,22 @@ import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class WindowOrg extends Application implements Initializable {
+public class WindowOrg extends Controller {
 
     public AnchorPane mainPain;
     public Text helloText;
     public ImageView logotype;
-    public Text name;
+    public Text helloName;
     @FXML
     private TextField searchDirection;
     @FXML
     private DatePicker searchDate;
     @FXML
     private ImageView icon;
-    Organizer user;
+    private Organizer user;
+    private EventDAO eventDAO;
+
+    private ActivityDAO activityDAO;
     @FXML
     private TableView<Event> table;
     private String tableStyle = ("-fx-selection-bar: red;" +
@@ -55,7 +59,7 @@ public class WindowOrg extends Application implements Initializable {
         this.user = user;
     }
 
-    @Override
+    /*@Override
     public void start(Stage stage) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/WindowOrg.fxml"));
         loader.setController(this);
@@ -82,7 +86,7 @@ public class WindowOrg extends Application implements Initializable {
                 start(new Stage());
             }
         });
-    }
+    }*/
 
     public void loadScene(Stage stage, String title) {
         FXMLLoader loader = new FXMLLoader(MainWinNoAuthController.class.getResource("/main/WindowOrg.fxml"));
@@ -100,18 +104,8 @@ public class WindowOrg extends Application implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        icon.setImage(user.getPhoto().getImage());
-        name.setText((user.getSex().contains("муж") ? "Дорогой " : "Дорогая ") + user.getName());
-
-
-        String hello = "";
-        int hour = new Date().getHours();
-        if (hour >= 5 && hour < 12) hello = "Доброе утро!";
-        else if (hour >= 12 && hour < 17) hello = "Добрый день!";
-        else if (hour >= 17 && hour < 24) hello = "Добрый вечер!";
-        else if (hour < 5) hello = "Доброй ночи!";
-        helloText.setText(hello);
-        EventDAO eventDAO = new EventDAO();
+        init(icon, helloText, helloName, user);
+        eventDAO = new EventDAO();
         List<Event> events = eventDAO.getAll();
         FilteredList<Event> filteredList = new FilteredList<>(FXCollections.observableList(events), p -> true);
         searchDirection.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -176,7 +170,26 @@ public class WindowOrg extends Application implements Initializable {
 
 
     private TableRow<Event> clickedTable() {
+        activityDAO = new ActivityDAO();
         TableRow<Event> row = new TableRow<>();
+        Event event = table.getSelectionModel().getSelectedItem();
+        event = eventDAO.merge(event);
+        Activity activity = null;
+        for (Activity activity1: event.getActivity()){
+            activity1 = activityDAO.merge(activity1);
+            if (!activity1.getApplications().isEmpty()){
+                row.setStyle("-fx-background-color: rgba(0, 0, 204, 0.7);");
+                activity = activity1;
+                break;
+            }
+        }
+        if (activity != null){
+            ContextMenu rowMenu = new ContextMenu();
+            MenuItem application = new MenuItem("Подтвердить участие");
+            application.setOnAction(event1 -> {
+                new
+            });
+        }
         row.setOnMouseClicked(event1 -> {
             if (event1.getClickCount() >= 2 && !row.isEmpty()) {
                 new CreateEventController(user, table.getSelectionModel().getSelectedItem()).loadScene((Stage) mainPain.getScene().getWindow(), "EventInfo");
@@ -204,10 +217,5 @@ public class WindowOrg extends Application implements Initializable {
     @FXML
     private void profile(MouseEvent event) {
         new ProfileController(user).loadScene((Stage) mainPain.getScene().getWindow(), "Профиль");
-        try {
-            this.stop();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 }

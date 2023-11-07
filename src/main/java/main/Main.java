@@ -12,10 +12,10 @@ public class Main {
         EventDAO eventDAO = new EventDAO();
         eventDAO.delete(28);
         OrganizerDAO organizerDAO = new OrganizerDAO();
-        new WindowOrg(organizerDAO.getById(100)).render();
+//        new WindowOrg(organizerDAO.getById(100)).render();
 
 
-//        new MainWinNoAuthController().render();
+        new MainWinNoAuthController().render();
 //        System.out.println(User.getUser("00100").getName());
     }
 

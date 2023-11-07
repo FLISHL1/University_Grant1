@@ -11,6 +11,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.attentionWindow.AlertShow;
 import main.logic.Country;
+import main.logic.User.Moderation;
 import main.logic.dao.CountryDAO;
 import main.logic.User.Organizer;
 import main.logic.User.User;
@@ -26,17 +27,22 @@ import java.util.ResourceBundle;
 
 public class ProfileController extends Controller {
     public TextField email;
-    public Text helloText;
-    public ImageView photo;
     public PasswordField rePassword;
     public TextField password;
     public TextField rePasswordV;
     public CheckBox visiblePassword;
-    public Text nameText;
     public TextField name;
     public TextField phone;
     public DatePicker birthDay;
     public ChoiceBox country;
+    @FXML
+    private Text helloName;
+
+    @FXML
+    private Text helloText;
+
+    @FXML
+    private ImageView icon;
 
     @FXML
     private RadioButton genderMen;
@@ -55,16 +61,7 @@ public class ProfileController extends Controller {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        photo.setImage(user.getPhoto().getImage());
-        nameText.setText((user.getSex().contains("муж") ? "Дорогой " : "Дорогая ") + user.getName());
-        String hello = "";
-        int hour = new Date().getHours();
-        System.out.println(hour);
-        if (hour >= 5 && hour < 12) hello = "Доброе утро!";
-        else if (hour >= 12 && hour < 16) hello = "Добрый день!";
-        else if (hour >= 16 && hour < 0) hello = "Доброе вечер!";
-        else if (hour >= 0 && hour < 5) hello = "Доброй ночи!";
-        helloText.setText(hello);
+        init(icon, helloText, helloName, user);
         idUser.setText(Integer.toString(user.getId()));
         name.setText(user.getName());
         email.setText(user.getEmail());
@@ -204,17 +201,22 @@ public class ProfileController extends Controller {
 
     @FXML
     private void home(MouseEvent event){
-        new WindowOrg((Organizer) user).loadScene((Stage) password.getScene().getWindow(), "Главное окно организатора");
+        if (user instanceof Organizer)
+            new WindowOrg((Organizer) user).loadScene((Stage) password.getScene().getWindow(), "Главное окно");
+        else if (user instanceof Moderation)
+            new WindowModerator((Moderation) user).loadScene((Stage) password.getScene().getWindow(), "Главное окно");
     }
 
     @FXML
     private void participants(MouseEvent event){
-        new UserList(user).loadScene((Stage) password.getScene().getWindow(), "Участники");
+        if (user instanceof Organizer)
+            new UserList(user).loadScene((Stage) password.getScene().getWindow(), "Участники");
 
     }
 
     @FXML
     private void jury(MouseEvent event){
-        new ModeratorsAndJuryController((Organizer) user).loadScene((Stage) email.getScene().getWindow(), "Регистрация жури\\модератора");
+        if (user instanceof Organizer)
+            new ModeratorsAndJuryController((Organizer) user).loadScene((Stage) email.getScene().getWindow(), "Регистрация жури\\модератора");
     }
 }

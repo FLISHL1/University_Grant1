@@ -59,14 +59,8 @@ public class ModeratorsAndJuryController extends Controller {
     }
     private void update(){
         icon.setImage(user.getPhoto().getImage());
-        helloName.setText((user.getSex().contains("муж")?"Дорогой ":"Дорогая ") + user.getName());
-        String hello = "";
-        int hour = new Date().getHours();
-        if (hour >= 5 && hour < 12) hello = "Доброе утро!";
-        else if (hour >= 12 && hour < 17) hello = "Добрый день!";
-        else if (hour >= 17 && hour < 24) hello = "Добрый вечер!";
-        else if (hour < 5) hello = "Доброй ночи!";
-        helloText.setText(hello);
+        init(icon, helloText, helloName, user);
+
         JuryDAO juryDAO = new JuryDAO();
         ModeratorDAO moderatorDAO = new ModeratorDAO();
         List<User> userList = new ArrayList<>();

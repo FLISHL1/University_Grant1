@@ -13,7 +13,7 @@
     <children>
         <AnchorPane fx:id="add" layoutX="60.0" prefHeight="800.0" prefWidth="1220.0" style="-fx-background-color: #ffffff;" AnchorPane.rightAnchor="0.0">
             <children>
-                <Text fx:id="helloText" layoutX="413.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Добрый день!">
+                <Text fx:id="helloText" layoutX="261.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Добрый день!">
                     <font>
                         <Font name="Comic Sans MS" size="22.0" />
                     </font>
@@ -23,7 +23,7 @@
                   <Image url="@image\logo" />
                </image>
             </ImageView>
-            <Text fx:id="helloName" layoutX="579.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дорогой, Иван Васильевич">
+            <Text fx:id="helloName" layoutX="427.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дорогой, Иван Васильевич">
                <font>
                   <Font name="Comic Sans MS" size="22.0" />
                </font>
@@ -34,12 +34,12 @@
                   <Font name="Comic Sans MS" size="22.0" />
                </font>
             </Text>
-            <Button layoutX="938.0" layoutY="716.0" mnemonicParsing="false" style="-fx-background-color: #0000cc;" text="Подать заявку" textFill="WHITE">
+            <Button layoutX="938.0" layoutY="716.0" mnemonicParsing="false" onAction="#addApplication" style="-fx-background-color: #0000cc;" text="Подать заявку" textFill="WHITE">
                <font>
                   <Font name="Comic Sans MS" size="15.0" />
                </font>
             </Button>
-            <Button layoutX="924.0" layoutY="19.0" mnemonicParsing="false" onAction="#moderatorAcctivity" style="-fx-background-color: #0000cc;" text="Мои активности" textFill="WHITE">
+            <Button layoutX="1069.0" layoutY="18.0" mnemonicParsing="false" onAction="#moderatorAcctivity" style="-fx-background-color: #0000cc;" text="Мои активности" textFill="WHITE">
                <font>
                   <Font name="Comic Sans MS" size="15.0" />
                </font>

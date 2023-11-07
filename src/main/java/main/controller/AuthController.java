@@ -16,8 +16,13 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import main.attentionWindow.AlertShow;
 import main.capcha.GenerateCapcha;
+import main.logic.User.Moderation;
+import main.logic.User.Organizer;
 import main.logic.User.User;
+import main.logic.dao.ModeratorDAO;
+import main.logic.dao.OrganizerDAO;
 import main.logic.dao.UserDAO;
 import net.synedra.validatorfx.Validator;
 
@@ -97,15 +102,18 @@ public class AuthController extends Controller {
 //                    Что то вывести
                     trying++;
                 } else {
+                    User user_auth = new OrganizerDAO().getById(user.getId());
+                    if (user_auth != null) new WindowOrg((Organizer) user).loadScene((Stage) password.getScene().getWindow(), "Главное окно организатора");
+                    user_auth = new ModeratorDAO().getById(user.getId());
+                    if (user_auth != null) new WindowModerator((Moderation) user).loadScene((Stage) password.getScene().getWindow(), "Главное окно модератора");
 
-//                    if (user instanceof Organizer) new WindowOrg((Organizer) user).loadScene((Stage) password.getScene().getWindow(), "Главное окно организатора");
                 }
             }
         } else {
             shapePassword.playAnimation();
             shapeUsername.playAnimation();
             reloadCaptcha();
-//            AlertShow.showAlert("info", "Внимание", "Логин должен содержать только цифры!\nЛибо же каптча ввдена не верно");
+            AlertShow.showAlert("info", "Внимание", "Логин должен содержать только цифры!\nЛибо же каптча ввдена не верно");
         }
     }
 

@@ -5,6 +5,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -14,11 +15,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import main.attentionWindow.AlertShow;
 import main.logic.Activity;
+import main.logic.Application;
 import main.logic.Direction;
 import main.logic.Event;
 import main.logic.User.Moderation;
 import main.logic.dao.ActivityDAO;
+import main.logic.dao.ApplicationDAO;
+import main.logic.dao.DirectionDAO;
+import main.logic.dao.EventDAO;
 
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -28,9 +34,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class WindowModerator extends Controller {
-
-    @FXML
-    private AnchorPane add;
 
     @FXML
     private ComboBox<Event> choiceEvent;
@@ -57,7 +60,7 @@ public class WindowModerator extends Controller {
     private String columnStyle = ("-fx-alignment: CENTER; " +
             "-fx-background-color: rgba(255, 255, 255, 0.5);" +
             "-fx-border-color: gray;" +
-            "-fx-font-size: 10pt;" +
+            "-fx-font-size: 15pt;" +
             "-fx-font-family: 'Comic Sans MS';");
 
     public WindowModerator(Moderation user) {
@@ -68,6 +71,19 @@ public class WindowModerator extends Controller {
     void moderatorAcctivity(ActionEvent event) {
 
     }
+    @FXML
+    void addApplication(ActionEvent event) {
+        AlertShow alertShow = new AlertShow();
+        alertShow.showAlertConf("Отправить заявку на мероприятие?:\n" + table.getSelectionModel().getSelectedItem().getName());
+        if (alertShow.getConf() == ButtonType.YES) {
+            ApplicationDAO applicationDAO = new ApplicationDAO();
+            Application newApplication = new Application();
+            newApplication.setIdModerator(user);
+            newApplication.setActivity(table.getSelectionModel().getSelectedItem());
+            newApplication.setStatus("new");
+            applicationDAO.create(newApplication);
+        }
+    }
 
     @FXML
     void home(MouseEvent event) {
@@ -76,20 +92,14 @@ public class WindowModerator extends Controller {
 
     @FXML
     void profile(MouseEvent event) {
-
+        new ProfileController(user).loadScene((Stage) table.getScene().getWindow(), "Профиль");
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        icon.setImage(user.getPhoto().getImage());
-        helloName.setText((user.getSex().contains("муж") ? "Дорогой " : "Дорогая ") + user.getName());
-        String hello = "";
-        int hour = new Date().getHours();
-        if (hour >= 5 && hour < 12) hello = "Доброе утро!";
-        else if (hour >= 12 && hour < 17) hello = "Добрый день!";
-        else if (hour >= 17 && hour < 24) hello = "Добрый вечер!";
-        else if (hour < 5) hello = "Доброй ночи!";
-        helloText.setText(hello);
+        init(icon, helloText, helloName, user);
+
+//      tableInit
         List<Activity> activity = new ActivityDAO().getAll();
         FilteredList<Activity> filteredList = new FilteredList<>(FXCollections.observableList(activity), p -> true);
         choiceDirection.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -97,8 +107,10 @@ public class WindowModerator extends Controller {
                 if (newValue == null) {
                     return true;
                 }
-
-                if (activity1.getEvent().getDirection().equals(newValue)) {
+                ActivityDAO activityDAO = new ActivityDAO();
+                activityDAO.openSession();
+                activity1 = activityDAO.merge(activity1);
+                if (activity1.getEvent().getDirection().getId().equals(newValue.getId())) {
                     return true;
                 }
                 return false;
@@ -106,12 +118,12 @@ public class WindowModerator extends Controller {
         });
 
         choiceEvent.valueProperty().addListener((observable, oldValue, newValue) -> {
-            filteredList.setPredicate(event -> {
+            filteredList.setPredicate(activity1 -> {
                 if (newValue == null) {
                     return true;
                 }
 
-                if (event.equals(newValue)) {
+                if (activity1.getEvent().getId().equals(newValue.getId())) {
                     return true;
                 }
                 return false;
@@ -123,6 +135,7 @@ public class WindowModerator extends Controller {
         TableColumn<Activity, String> nameColumn = new TableColumn<Activity, String>("Название");
         nameColumn.setCellValueFactory(new PropertyValueFactory<Activity, String>("name"));
         nameColumn.setStyle(columnStyle);
+        nameColumn.setMinWidth(714);
         table.getColumns().add(nameColumn);
 
         TableColumn<Activity, LocalDateTime> dateColumn = new TableColumn<Activity, LocalDateTime>("Дата и время");
@@ -136,6 +149,14 @@ public class WindowModerator extends Controller {
         table.setItems(sortedData);
 //        table.addEventHandler(MouseEvent.MOUSE_CLICKED, this::clickedTable);
 //        table.setRowFactory(t -> clickedTable());
+//      choiceInit
+
+        choiceDirection.getItems().add(null);
+        choiceDirection.getItems().addAll(FXCollections.observableList(new DirectionDAO().getAll()));
+
+        choiceEvent.getItems().add(null);
+        choiceEvent.getItems().addAll(FXCollections.observableList(new EventDAO().getAll()));
+
     }
 
     public void loadScene(Stage stage, String title) {
