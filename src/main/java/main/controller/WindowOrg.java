@@ -1,5 +1,6 @@
 package main.controller;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -13,13 +14,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import main.attentionWindow.AlertShow;
 import main.logic.Activity;
-import main.logic.Application;
 import main.logic.Direction;
 import main.logic.Event;
 import main.logic.dao.ActivityDAO;
-import main.logic.dao.ApplicationDAO;
 import main.logic.dao.EventDAO;
 import main.logic.User.Organizer;
 
@@ -173,7 +171,8 @@ public class WindowOrg extends Controller {
         activityDAO = new ActivityDAO();
         TableRow<Event> row = new TableRow<>();
         Event event = table.getSelectionModel().getSelectedItem();
-        event = eventDAO.merge(event);
+        eventDAO.openSession();
+        eventDAO.refresh(event);
         Activity activity = null;
         for (Activity activity1: event.getActivity()){
             activity1 = activityDAO.merge(activity1);
@@ -187,15 +186,22 @@ public class WindowOrg extends Controller {
             ContextMenu rowMenu = new ContextMenu();
             MenuItem application = new MenuItem("Подтвердить участие");
             application.setOnAction(event1 -> {
-                new
+                new ApplyActivity(table.getSelectionModel().getSelectedItem()).render();
             });
+            rowMenu.getItems().add(application);
+            row.contextMenuProperty().bind(
+                    Bindings.when(row.emptyProperty())
+                            .then((ContextMenu) null)
+                            .otherwise(rowMenu));
         }
         row.setOnMouseClicked(event1 -> {
             if (event1.getClickCount() >= 2 && !row.isEmpty()) {
                 new CreateEventController(user, table.getSelectionModel().getSelectedItem()).loadScene((Stage) mainPain.getScene().getWindow(), "EventInfo");
             }
         });
+        eventDAO.closeSession();
         return row;
+
     }
 
     @FXML

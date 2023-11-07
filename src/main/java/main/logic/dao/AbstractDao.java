@@ -30,7 +30,7 @@ public abstract class AbstractDao<T> {
                 .addAnnotatedClass(Activity.class)
                 .addAnnotatedClass(Direction.class)
                 .addAnnotatedClass(Country.class)
-                .addAnnotatedClass(Application.class)
+                .addAnnotatedClass(Confirmation.class)
                 .addAnnotatedClass(City.class)
                 .buildSessionFactory();
     };

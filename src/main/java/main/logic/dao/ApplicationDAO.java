@@ -1,9 +1,9 @@
 package main.logic.dao;
 
-import main.logic.Application;
+import main.logic.Confirmation;
 
-public class ApplicationDAO extends AbstractDao<Application>{
+public class ApplicationDAO extends AbstractDao<Confirmation>{
     public ApplicationDAO() {
-        super(Application.class);
+        super(Confirmation.class);
     }
 }

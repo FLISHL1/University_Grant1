@@ -3,17 +3,17 @@ package main.logic;
 
 import jakarta.persistence.*;
 import main.logic.User.Moderation;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name = "application")
-public class Application {
+public class Confirmation {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -29,14 +29,16 @@ public class Application {
 
     @Column()
     private String comment;
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne()
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JoinColumn(name = "id_moderator")
-    private Moderation idModerator;
+    private Moderation moderator;
 
     @Column(name = "id_organizator")
     private Integer idOrganizer;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JoinColumn(name = "id_activity")
     private Activity activity;
 
@@ -57,12 +59,12 @@ public class Application {
         this.idOrganizer = idOrganizer;
     }
 
-    public Moderation getIdModerator() {
-        return idModerator;
+    public Moderation getModerator() {
+        return moderator;
     }
 
-    public void setIdModerator(Moderation idModerator) {
-        this.idModerator = idModerator;
+    public void setModerator(Moderation idModerator) {
+        this.moderator = idModerator;
     }
 
     public LocalDateTime getDateCreate() {

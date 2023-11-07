@@ -12,12 +12,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.attentionWindow.AlertShow;
 import main.logic.Activity;
-import main.logic.Application;
+import main.logic.Confirmation;
 import main.logic.Direction;
 import main.logic.Event;
 import main.logic.User.Moderation;
@@ -28,8 +27,6 @@ import main.logic.dao.EventDAO;
 
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -77,11 +74,11 @@ public class WindowModerator extends Controller {
         alertShow.showAlertConf("Отправить заявку на мероприятие?:\n" + table.getSelectionModel().getSelectedItem().getName());
         if (alertShow.getConf() == ButtonType.YES) {
             ApplicationDAO applicationDAO = new ApplicationDAO();
-            Application newApplication = new Application();
-            newApplication.setIdModerator(user);
-            newApplication.setActivity(table.getSelectionModel().getSelectedItem());
-            newApplication.setStatus("new");
-            applicationDAO.create(newApplication);
+            Confirmation newConfirmation = new Confirmation();
+            newConfirmation.setModerator(user);
+            newConfirmation.setActivity(table.getSelectionModel().getSelectedItem());
+            newConfirmation.setStatus("new");
+            applicationDAO.create(newConfirmation);
         }
     }
 

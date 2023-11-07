@@ -2,11 +2,8 @@ package main.logic.User;
 
 
 import jakarta.persistence.*;
-import main.logic.Application;
-import main.logic.Event;
+import main.logic.Confirmation;
 
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,7 +12,7 @@ import java.util.List;
 public class Organizer extends User {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_organizator")
-    private List<Application> applications;
+    private List<Confirmation> confirmations;
     public Organizer() {
         super();
     }

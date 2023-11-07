@@ -3,9 +3,7 @@ package main.logic;
 import jakarta.persistence.*;
 import main.logic.User.Jury;
 
-import main.logic.Event;
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Fetch;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -26,7 +24,7 @@ public class Activity {
 
     @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_activity")
-    private List<Application> applications;
+    private List<Confirmation> confirmations;
 
     @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinTable(name = "jury_activities",
@@ -72,11 +70,11 @@ public class Activity {
         this.event = event;
     }
 
-    public List<Application> getApplications() {
-        return applications;
+    public List<Confirmation> getApplications() {
+        return confirmations;
     }
 
-    public void setApplications(List<Application> applications) {
-        this.applications = applications;
+    public void setApplications(List<Confirmation> confirmations) {
+        this.confirmations = confirmations;
     }
 }

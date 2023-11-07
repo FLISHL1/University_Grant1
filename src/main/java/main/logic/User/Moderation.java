@@ -2,7 +2,7 @@ package main.logic.User;
 
 
 import jakarta.persistence.*;
-import main.logic.Application;
+import main.logic.Confirmation;
 import main.logic.Direction;
 
 import java.sql.ResultSet;
@@ -18,7 +18,7 @@ public class Moderation extends User {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_moderator")
-    private List<Application> applications;
+    private List<Confirmation> confirmations;
 
     public Moderation(ResultSet idUser) {
         super(idUser);
