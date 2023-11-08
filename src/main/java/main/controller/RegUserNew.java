@@ -233,8 +233,20 @@ public class RegUserNew  extends Controller {
             AlertShow.showAlert("warning", "Внимание", validator.createStringBinding().get());
         }
     }
+    public void profile(MouseEvent event) {
+        new ProfileController(user).loadScene((Stage) password.getScene().getWindow(), "Профиль");
+    }
 
+    public void home(MouseEvent event) {
+        new WindowOrg((Organizer) user).loadScene((Stage) password.getScene().getWindow(), "Главное окно организатора");
+    }
 
+    public void userList(MouseEvent event) {
+        new UserList(user).loadScene((Stage) password.getScene().getWindow(), "Участники");
+    }
+    public void jury(MouseEvent event) {
+        new ModeratorsAndJuryController((Organizer) user).loadScene((Stage) password.getScene().getWindow(), "Жюри\\Модераторы");
+    }
     public void loadScene(Stage stage, String title) {
         super.loadScene("RegModJur.fxml", stage, title);
     }

@@ -23,7 +23,7 @@
                 </Text>
             <ImageView fx:id="icon" blendMode="DARKEN" fitHeight="40.0" fitWidth="40.0" layoutX="354.0" layoutY="14.0" pickOnBounds="true">
                <image>
-                  <Image url="@image\logo" />
+                  <Image url="@image/logo" />
                </image>
             </ImageView>
             <Text fx:id="helloName" layoutX="577.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дорогой, Иван Васильевич">
@@ -38,7 +38,7 @@
             </Text>
             <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="119.0" layoutY="453.0" onMouseClicked="#delAction" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@image\minus.png" />
+                  <Image url="@image/minus.png" />
                </image>
             </ImageView>
             <Text layoutX="202.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Начало">
@@ -89,7 +89,7 @@
             </Button>
             <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="119.0" layoutY="515.0" onMouseClicked="#addAction" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@image\add.png" />
+                  <Image url="@image/add.png" />
                </image>
             </ImageView>
             <Button layoutX="998.0" layoutY="707.0" mnemonicParsing="false" onAction="#save" prefHeight="66.0" prefWidth="112.0" text="Сохранить" />
@@ -101,27 +101,27 @@
         </AnchorPane>
         <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@image\logo%20(2).png" />
+                <Image url="@image/logo%20(2).png" />
             </image>
         </ImageView>
         <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="141.0" onMouseClicked="#profile" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@image\icon%20_profile%20circle_.png" />
+                <Image url="@image/icon%20_profile%20circle_.png" />
             </image>
         </ImageView>
       <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="280.0" onMouseClicked="#home" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@image\Vector-1.png" />
+            <Image url="@image/Vector-1.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="377.0" onMouseClicked="#participants" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@image\profile-2user.png" />
+            <Image url="@image/profile-2user.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="470.0" onMouseClicked="#jury" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@image\briefcase.png" />
+            <Image url="@image/briefcase.png" />
          </image>
       </ImageView>
     </children>

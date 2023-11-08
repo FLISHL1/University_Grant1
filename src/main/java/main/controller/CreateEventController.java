@@ -233,7 +233,7 @@ public class CreateEventController extends Controller {
 
     @FXML
     void canban(ActionEvent event) {
-
+        new KanBanController(user, newEvent).loadScene((Stage) table.getScene().getWindow(), "КанБан доска");
     }
 
     @FXML

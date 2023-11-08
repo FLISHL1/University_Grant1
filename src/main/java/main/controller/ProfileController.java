@@ -35,6 +35,8 @@ public class ProfileController extends Controller {
     public TextField phone;
     public DatePicker birthDay;
     public ChoiceBox country;
+    public ImageView participants;
+    public ImageView jury;
     @FXML
     private Text helloName;
 
@@ -64,6 +66,10 @@ public class ProfileController extends Controller {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         init(icon, helloText, helloName, user);
+        if (user instanceof Moderation){
+            participants.setVisible(false);
+            jury.setVisible(false);
+        }
         btnExit.setVisible(true);
         idUser.setText(Integer.toString(user.getId()));
         name.setText(user.getName());

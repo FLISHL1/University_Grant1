@@ -82,7 +82,7 @@ public class ModeratorActivity extends Controller {
 
     @FXML
     void desk(ActionEvent event) {
-
+//        new KanBanController(user,)
     }
 
     @FXML

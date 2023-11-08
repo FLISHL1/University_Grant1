@@ -1,6 +1,7 @@
 package main.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
@@ -15,15 +16,15 @@ import java.util.ResourceBundle;
 
 public class EventInfoController extends Controller {
     @FXML
-    private Text name_event;
+    private Label nameEvent;
     @FXML
-    private ImageView logo_event;
+    private ImageView logoEvent;
     @FXML
-    private Text date;
+    private Label date;
     @FXML
-    private Text organizer;
+    private Label organizer;
     @FXML
-    private Text city;
+    private Label city;
     @FXML
     private Text description;
 
@@ -42,8 +43,8 @@ public class EventInfoController extends Controller {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        logo_event.setImage(event.getLogo().getImage());
-        name_event.setText(event.getName());
+        logoEvent.setImage(event.getLogo().getImage());
+        nameEvent.setText(event.getName());
         date.setText(event.getDateStart());
         EventDAO eventDAO = new EventDAO();
         eventDAO.openSession();
@@ -57,17 +58,17 @@ public class EventInfoController extends Controller {
     @FXML
     private void login(MouseEvent mouseEvent) {
         if (user == null)
-            new AuthController().loadScene((Stage) logo_event.getScene().getWindow(), "Авторизация");
+            new AuthController().loadScene((Stage) logoEvent.getScene().getWindow(), "Авторизация");
         else
-            new ProfileController(user).loadScene((Stage) logo_event.getScene().getWindow(), "Профиль");
+            new ProfileController(user).loadScene((Stage) logoEvent.getScene().getWindow(), "Профиль");
     }
 
     @FXML
     private void home(MouseEvent mouseEvent) {
         if (user == null)
-            new MainWinNoAuthController().loadScene((Stage) logo_event.getScene().getWindow(), "Главное окно");
+            new MainWinNoAuthController().loadScene((Stage) logoEvent.getScene().getWindow(), "Главное окно");
         else
-            new WindowOrg((Organizer) user).loadScene((Stage) logo_event.getScene().getWindow(), "Окно организатора");
+            new WindowOrg((Organizer) user).loadScene((Stage) logoEvent.getScene().getWindow(), "Окно организатора");
     }
     public void loadScene(Stage stage, String title){
         super.loadSceneWithController("EventInfo.fxml", stage, title);

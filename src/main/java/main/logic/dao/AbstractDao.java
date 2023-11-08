@@ -1,5 +1,7 @@
 package main.logic.dao;
-import  jakarta.persistence.*;
+
+import jakarta.persistence.*;
+import main.attentionWindow.AlertShow;
 import main.logic.*;
 import main.logic.User.*;
 import org.hibernate.Session;
@@ -14,9 +16,10 @@ public abstract class AbstractDao<T> {
     protected static SessionFactory sessionFactory;
     private final Class<T> clazz;
 
-    public AbstractDao(Class<T> clazz){
+    public AbstractDao(Class<T> clazz) {
         this.clazz = clazz;
         sessionFactory = getInstance();
+
     }
 
     private static class SignSession {
@@ -33,11 +36,14 @@ public abstract class AbstractDao<T> {
                 .addAnnotatedClass(Confirmation.class)
                 .addAnnotatedClass(City.class)
                 .buildSessionFactory();
-    };
+    }
 
-    private static SessionFactory getInstance(){
+    ;
+
+    private static SessionFactory getInstance() {
         return SignSession.sessionFactory;
     }
+
     public List<T> getAll() {
         // Create a new EntityManager
         Transaction transaction = null;
@@ -98,7 +104,7 @@ public abstract class AbstractDao<T> {
         ;
         EntityTransaction transaction = null;
 
-        try (Session manager = this.sessionFactory.openSession()){
+        try (Session manager = this.sessionFactory.openSession()) {
             // Get a transaction
             transaction = manager.getTransaction();
 
@@ -145,7 +151,7 @@ public abstract class AbstractDao<T> {
     public void delete(int id) {
         EntityTransaction transaction = null;
 
-        try (Session manager = this.sessionFactory.openSession()){
+        try (Session manager = this.sessionFactory.openSession()) {
             // Get a transaction
             transaction = manager.getTransaction();
             // Begin the transaction
@@ -168,10 +174,11 @@ public abstract class AbstractDao<T> {
             throw new RuntimeException(ex);
         }
     }
+
     public void delete(T object) {
         EntityTransaction transaction = null;
 
-        try (Session manager = this.sessionFactory.openSession()){
+        try (Session manager = this.sessionFactory.openSession()) {
             // Get a transaction
             transaction = manager.getTransaction();
             // Begin the transaction

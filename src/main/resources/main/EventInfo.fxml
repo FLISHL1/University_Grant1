@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -7,34 +8,34 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #99ffff;" xmlns:fx="http://javafx.com/fxml/1" >
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #99ffff;" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <AnchorPane layoutX="60.0" prefHeight="800.0" prefWidth="1220.0" style="-fx-background-color: #ffffff;" AnchorPane.rightAnchor="0.0">
             <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f5f5" height="301.0" layoutX="120.0" layoutY="175.0" stroke="BLACK" strokeType="INSIDE" style="-fx-background-radius: 15;" width="301.0" />
-                <Text fx:id="name_event" layoutX="539.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Название мероприятния">
+                <Label fx:id="nameEvent" layoutX="344.0" layoutY="78.0" prefHeight="62.0" prefWidth="559.0" text="Название мероприятния" textAlignment="CENTER" wrapText="true">
                     <font>
                         <Font name="Comic Sans MS" size="22.0" />
                     </font>
-                </Text>
-            <ImageView fx:id="logo_event" blendMode="DARKEN" fitHeight="300.0" fitWidth="300.0" layoutX="120.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true" style="-fx-blend-mode: #dsfghg;">
+                </Label>
+            <ImageView fx:id="logoEvent" blendMode="DARKEN" fitHeight="300.0" fitWidth="300.0" layoutX="120.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true" style="-fx-blend-mode: #dsfghg;">
 
             </ImageView>
-            <Text fx:id="date" layoutX="245.0" layoutY="618.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дата">
+            <Label fx:id="date" layoutX="178.0" layoutY="617.0" prefHeight="32.0" prefWidth="184.0" text="Дата" textAlignment="CENTER">
                <font>
                   <Font name="Comic Sans MS" size="22.0" />
                </font>
-            </Text>
-            <Text fx:id="organizer" layoutX="203.0" layoutY="674.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Организатор">
+            </Label>
+            <Label fx:id="organizer" layoutX="116.0" layoutY="674.0" prefHeight="69.0" prefWidth="300.0" text="Организатор" wrapText="true">
                <font>
                   <Font name="Comic Sans MS" size="22.0" />
                </font>
-            </Text>
-            <Text fx:id="city" layoutX="238.0" layoutY="550.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Город">
+            </Label>
+            <Label fx:id="city" layoutX="120.0" layoutY="520.0" prefHeight="62.0" prefWidth="300.0" text="Город" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="Comic Sans MS" size="22.0" />
                </font>
-            </Text>
+            </Label>
             <Text fx:id="description" layoutX="702.0" layoutY="201.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Описание мероприятия" textAlignment="JUSTIFY">
                <font>
                   <Font name="Comic Sans MS" size="22.0" />
@@ -47,12 +48,12 @@
                 <Image url="@image/logo%20(2).png" />
             </image>
         </ImageView>
-        <ImageView onMouseClicked="#login" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="141.0" onMouseClicked="#login" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@image/icon%20_profile%20circle_.png" />
             </image>
         </ImageView>
-      <ImageView onMouseClicked="#home" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="280.0" onMouseClicked="#home" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@image/Vector-1.png" />
          </image>

@@ -63,6 +63,19 @@ public class AlertShow {
 
         return this;
     }
+    public AlertShow showAlertErorr(String message){
+        Alert.AlertType typeAlert = Alert.AlertType.ERROR;
+
+        alert = new Alert(typeAlert, message, ButtonType.OK);
+        alert.setContentText(message);
+        DialogPane dialogPane = alert.getDialogPane();
+
+        dialogPane.getStylesheets().add(AlertShow.class.getResource("/main/alert.css").toExternalForm());
+        dialogPane.getStyleClass().add("alert");
+        alert.showAndWait();
+
+        return this;
+    }
 
     public AlertShow showAlertConfApplication(String message){
         Alert.AlertType typeAlert = Alert.AlertType.CONFIRMATION;

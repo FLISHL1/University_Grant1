@@ -108,7 +108,7 @@ public class Event {
     }
 
     public ImageView getLogo() {
-        ImageView image = new ImageView(new Image("file:src/main/resources/main/photo/" + logo));
+        ImageView image = new ImageView(new Image("file:photo/" + logo));
         image.setPreserveRatio(true);
         image.setFitWidth(150);
         image.setFitHeight(150);

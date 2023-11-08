@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -22,7 +22,7 @@
                 </Text>
             <ImageView fx:id="icon" blendMode="DARKEN" fitHeight="40.0" fitWidth="40.0" layoutX="354.0" layoutY="14.0" pickOnBounds="true">
                <image>
-                  <Image url="@image\logo" />
+                  <Image url="@image/logo" />
                </image>
             </ImageView>
             <Text fx:id="helloName" layoutX="579.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дорогой, Иван Васильевич">
@@ -36,12 +36,6 @@
                   <Font name="Comic Sans MS" size="22.0" />
                </font>
             </Text>
-            <ChoiceBox fx:id="searchAction" layoutX="145.0" layoutY="91.0" prefWidth="150.0" />
-            <Text layoutX="168.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="по активности">
-               <font>
-                  <Font name="Comic Sans MS" size="15.0" />
-               </font>
-            </Text>
             <TextField fx:id="searchName" layoutX="846.0" layoutY="88.0" prefHeight="31.0" prefWidth="215.0" promptText="Поиск по ФИО" style="-fx-background-color: #99ffff; -fx-background-radius: 15;">
                <font>
                   <Font name="Comic Sans MS" size="14.0" />
@@ -49,7 +43,7 @@
             </TextField>
             <ImageView fx:id="serch" fitHeight="25.0" fitWidth="20.0" layoutX="1033.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@image\icon%20_search%20normal%201_.png" />
+                  <Image url="@image/icon%20_search%20normal%201_.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="1030.0" layoutY="21.0" onMouseClicked="#createUser" pickOnBounds="true" preserveRatio="true">
@@ -67,31 +61,32 @@
                   <Font name="Comic Sans MS" size="22.0" />
                </font>
             </Text>
+            <ComboBox fx:id="choiceActivity" layoutX="145.0" layoutY="91.0" prefHeight="25.0" prefWidth="199.0" promptText="Поиск по активности" />
             </children>
         </AnchorPane>
         <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@image\logo%20(2).png" />
+                <Image url="@image/logo%20(2).png" />
             </image>
         </ImageView>
         <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="141.0" onMouseClicked="#profile" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@image\icon%20_profile%20circle_.png" />
+                <Image url="@image/icon%20_profile%20circle_.png" />
             </image>
         </ImageView>
       <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="280.0" onMouseClicked="#home" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@image\Vector-1.png" />
+            <Image url="@image/Vector-1.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="377.0" onMouseClicked="#participants" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@image\profile-2user.png" />
+            <Image url="@image/profile-2user.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="470.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@image\briefcase.png" />
+            <Image url="@image/briefcase.png" />
          </image>
       </ImageView>
     </children>

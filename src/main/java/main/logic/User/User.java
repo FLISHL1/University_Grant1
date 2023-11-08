@@ -126,7 +126,7 @@ public class User {
         return role;
     }
     public ImageView getPhoto() {
-        ImageView image = new ImageView(new Image("file:src/main/resources/main/photo/Users/" + photo));
+        ImageView image = new ImageView(new Image("file:photo/Users/" + photo));
         image.setPreserveRatio(true);
         image.setFitWidth(150);
         image.setFitHeight(150);

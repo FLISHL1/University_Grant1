@@ -20,7 +20,7 @@
                 </Text>
             <ImageView fx:id="icon" blendMode="DARKEN" fitHeight="40.0" fitWidth="40.0" layoutX="354.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" style="-fx-blend-mode: #dsfghg;">
                <image>
-                  <Image url="@image\logo" />
+                  <Image url="@image/logo" />
                </image>
             </ImageView>
             <Text fx:id="helloName" layoutX="427.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дорогой, Иван Васильевич">
@@ -50,27 +50,27 @@
         </AnchorPane>
         <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@image\logo%20(2).png" />
+                <Image url="@image/logo%20(2).png" />
             </image>
         </ImageView>
         <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="141.0" onMouseClicked="#profile" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@image\icon%20_profile%20circle_.png" />
+                <Image url="@image/icon%20_profile%20circle_.png" />
             </image>
         </ImageView>
       <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="280.0" onMouseClicked="#home" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@image\Vector-1.png" />
+            <Image url="@image/Vector-1.png" />
          </image>
       </ImageView>
       <ImageView disable="true" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="377.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
-            <Image url="@image\star.png" />
+            <Image url="@image/star.png" />
          </image>
       </ImageView>
       <ImageView disable="true" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="575.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
-            <Image url="@image\profile-add.png" />
+            <Image url="@image/profile-add.png" />
          </image>
       </ImageView>
     </children>

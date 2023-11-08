@@ -57,11 +57,13 @@ public class RegUser extends Controller {
     @FXML
     private ImageView jury;
     @FXML
+    private ImageView icon;
+    @FXML
     private ImageView profile;
     @FXML
     private Text helloText;
     @FXML
-    private Text nameText;
+    private Text helloName;
 
     private Participant newUser;
     private User user;
@@ -86,17 +88,11 @@ public class RegUser extends Controller {
             participants.setVisible(false);
             jury.setVisible(false);
             helloText.setVisible(false);
-            nameText.setVisible(false);
-        } else{
-            name.setText((user.getSex().contains("муж")?"Дорогой ":"Дорогая ") + user.getName());
-            String hello = "";
-            int hour = new java.util.Date().getHours();
-            if (hour >= 5 && hour < 12) hello = "Доброе утро!";
-            else if (hour >= 12 && hour < 17) hello = "Добрый день!";
-            else if (hour >= 17 && hour < 24) hello = "Добрый вечер!";
-            else if (hour < 5) hello = "Доброй ночи!";
-            helloText.setText(hello);
+            helloName.setVisible(false);
+        } else {
+            init(icon, helloText, helloName, user);
         }
+
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -245,8 +241,12 @@ public class RegUser extends Controller {
 
     @FXML
     private void home(MouseEvent mouseEvent) {
-        participantDAO.delete(newUser);
-        new MainWinNoAuthController().loadScene((Stage) profile.getScene().getWindow(), "Главное окно");
+        if (user == null) {
+            participantDAO.delete(newUser);
+            new MainWinNoAuthController().loadScene((Stage) profile.getScene().getWindow(), "Главное окно");
+        } else {
+            new WindowOrg((Organizer) user).loadScene((Stage) password.getScene().getWindow(), "Главное окно");
+        }
     }
     @FXML
     private void participants(MouseEvent event){

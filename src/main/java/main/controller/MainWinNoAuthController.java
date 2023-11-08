@@ -17,6 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import main.attentionWindow.AlertShow;
 import main.logic.Direction;
 import main.logic.Event;
 import main.logic.dao.EventDAO;
@@ -90,7 +91,15 @@ public class MainWinNoAuthController extends Application implements Initializabl
         else if (hour >= 17 && hour < 24) hello = "Добрый вечер!";
         else if (hour < 5) hello = "Доброй ночи!";
         helloText.setText(hello);
-        EventDAO eventDAO = new EventDAO();
+        EventDAO eventDAO = null;
+        try {
+            eventDAO = new EventDAO();
+        } catch (Throwable e) {
+            AlertShow alertShow = new AlertShow();
+            alertShow.showAlertErorr("Подключние к Базе Данных отсутствует");
+            alertShow.getConf();
+            System.exit(1);
+        }
         List<Event> events = eventDAO.getAll();
         FilteredList<Event> filteredList = new FilteredList<>(FXCollections.observableList(events), p -> true);
         searchDirection.textProperty().addListener((observable, oldValue, newValue) -> {

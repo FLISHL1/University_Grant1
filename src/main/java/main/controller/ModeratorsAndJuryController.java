@@ -4,18 +4,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import main.logic.Activity;
+import main.logic.User.Jury;
+import main.logic.User.Moderation;
 import main.logic.User.Organizer;
 import main.logic.User.User;
+import main.logic.dao.ActivityDAO;
 import main.logic.dao.JuryDAO;
 import main.logic.dao.ModeratorDAO;
 
@@ -31,7 +32,7 @@ public class ModeratorsAndJuryController extends Controller {
     @FXML
     private TableView<User> table;
     @FXML
-    private ChoiceBox searchAction;
+    private ComboBox<Activity> choiceActivity;
     @FXML
     private ImageView icon;
     @FXML
@@ -62,6 +63,7 @@ public class ModeratorsAndJuryController extends Controller {
     private void update(){
         init(icon, helloText, helloName, user);
         JuryDAO juryDAO = new JuryDAO();
+        ActivityDAO activityDAO = new ActivityDAO();
         ModeratorDAO moderatorDAO = new ModeratorDAO();
         List<User> userList = new ArrayList<>();
         userList.addAll(juryDAO.getAll());
@@ -78,6 +80,24 @@ public class ModeratorsAndJuryController extends Controller {
 
                 if (user.getName().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
+                }
+                return false;
+            });
+        });
+        choiceActivity.getItems().add(null);
+        choiceActivity.getItems().addAll(activityDAO.getAll());
+        choiceActivity.valueProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(user -> {
+                if (newValue == null) {
+                    return true;
+                }
+                activityDAO.openSession();
+                activityDAO.refresh(newValue);
+                if (newValue.getIdModerator().equals(user.getId())) {
+                    return true;
+                }
+                for (Jury jury: newValue.getJuries()){
+                    if (jury.getId().equals(user.getId())) return true;
                 }
                 return false;
             });
