@@ -217,6 +217,9 @@ public class RegUser extends Controller {
             AlertShow.showAlert("info", "Не правильно ввели данные",  validator.createStringBinding().get());
         }
     }
+    @FXML
+    private void exit(ActionEvent event){
+    }
 
     private void fillUser(){
         newUser.setBirthDay(Date.valueOf(birthDay.getValue()));

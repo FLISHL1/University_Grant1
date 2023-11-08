@@ -43,6 +43,8 @@ public class ProfileController extends Controller {
 
     @FXML
     private ImageView icon;
+    @FXML
+    private Button btnExit;
 
     @FXML
     private RadioButton genderMen;
@@ -62,6 +64,7 @@ public class ProfileController extends Controller {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         init(icon, helloText, helloName, user);
+        btnExit.setVisible(true);
         idUser.setText(Integer.toString(user.getId()));
         name.setText(user.getName());
         email.setText(user.getEmail());
@@ -185,6 +188,10 @@ public class ProfileController extends Controller {
         } else {
             AlertShow.showAlert("info", "Не правильно ввели данные", validator.createStringBinding().get());
         }
+    }
+    @FXML
+    private void exit(ActionEvent event){
+        new MainWinNoAuthController().loadScene((Stage) btnExit.getScene().getWindow(), "Главное окно");
     }
 
     private void fillUser() {

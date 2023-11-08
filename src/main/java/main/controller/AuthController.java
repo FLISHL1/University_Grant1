@@ -5,6 +5,8 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -34,9 +36,13 @@ public class AuthController extends Controller {
     @FXML
     private TextField login;
     @FXML
-    private TextField password;
+    private PasswordField password;
+    @FXML
+    private TextField passwordV;
     @FXML
     private TextField fieldSim;
+    @FXML
+    private CheckBox visiblePassword;
 
     private String answerCaptcha;
     private int trying;
@@ -96,9 +102,13 @@ public class AuthController extends Controller {
         User user;
         if (validator.getValidationResult().getMessages().isEmpty() && checkCaptcha()){
             if (!password.getText().equals("") && checkCaptcha()){
-                user = userDAO.auth(Integer.parseInt(login.getText()), password.getText());
+                if (passwordV.isVisible())
+                    user = userDAO.auth(Integer.parseInt(login.getText()), passwordV.getText());
+                else
+                    user = userDAO.auth(Integer.parseInt(login.getText()), password.getText());
                 if (user == null){
                     shapePassword.playAnimation();
+                    AlertShow.showAlert("info", "Информирование", "Либо логин, либо пароль не правилен");
 //                    Что то вывести
                     trying++;
                 } else {
@@ -116,7 +126,17 @@ public class AuthController extends Controller {
             AlertShow.showAlert("info", "Внимание", "Логин должен содержать только цифры!\nЛибо же каптча ввдена не верно");
         }
     }
+    @FXML
+    private void visiblePassword(ActionEvent event) {
+        if (visiblePassword.isSelected()) {
+            passwordV.setText(password.getText());
+            passwordV.setVisible(true);
+        } else {
+            password.setText(passwordV.getText());
+            passwordV.setVisible(false);
+        }
 
+    }
     public void home(MouseEvent mouseEvent) {
         new MainWinNoAuthController().loadScene((Stage) login.getScene().getWindow(), "Home");
     }

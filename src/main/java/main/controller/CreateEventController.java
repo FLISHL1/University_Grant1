@@ -81,8 +81,8 @@ public class CreateEventController extends Controller {
             "-fx-font-size: 10pt;" +
             "-fx-font-family: 'Comic Sans MS';");
 
-    private LocalDate startDateOld;
-    private LocalDate endDateOld;
+    private String startDateOld;
+    private String endDateOld;
 
     public CreateEventController(Organizer user) {
         this.user = user;
@@ -120,36 +120,27 @@ public class CreateEventController extends Controller {
         city.setItems(FXCollections.observableList(new CityDAO().getAll()));
         direction.setItems(FXCollections.observableList(new DirectionDAO().getAll()));
         if (newEvent.getName() != null) {
-            if(!Hibernate.isInitialized(newEvent.getActivity())) {
-                eventDAO.openSession();
+
+            eventDAO.openSession();
 //                newEvent = eventDAO.merge(newEvent);
+            if (!Hibernate.isInitialized(newEvent.getActivity()))
                 eventDAO.refresh(newEvent);
 
-                table.setItems(FXCollections.observableList(newEvent.getActivity()));
-                eventName.setText(newEvent.getName());
-                startDate.setValue(newEvent.getDateStartToDate().toLocalDate());
-                startTime.setValue(newEvent.getDateStartToDate().toLocalTime());
-                endDate.setValue(newEvent.getDateEndToDate().toLocalDate());
-                endTime.setValue(newEvent.getDateEndToDate().toLocalTime());
-                System.out.println(newEvent.getCity().getName());
-                city.setValue(newEvent.getCity());
-                cityValue = city.getValue();
-                direction.setValue(newEvent.getDirection());
-                directionValue = direction.getValue();
-                eventDAO.closeSession();
-            } else {
-                table.setItems(FXCollections.observableList(newEvent.getActivity()));
-                eventName.setText(newEvent.getName());
-                startDate.setValue(newEvent.getDateStartToDate().toLocalDate());
-                startTime.setValue(newEvent.getDateStartToDate().toLocalTime());
-                endDate.setValue(newEvent.getDateEndToDate().toLocalDate());
-                endTime.setValue(newEvent.getDateEndToDate().toLocalTime());
-                System.out.println(newEvent.getCity().getName());
-                city.setValue(newEvent.getCity());
-                cityValue = city.getValue();
-                direction.setValue(newEvent.getDirection());
-                directionValue = direction.getValue();
-            }
+            table.setItems(FXCollections.observableList(newEvent.getActivity()));
+            eventName.setText(newEvent.getName());
+            startDate.setValue(newEvent.getDateStartToDate().toLocalDate());
+            startTime.setValue(newEvent.getDateStartToDate().toLocalTime());
+            endDate.setValue(newEvent.getDateEndToDate().toLocalDate());
+            endTime.setValue(newEvent.getDateEndToDate().toLocalTime());
+            System.out.println(newEvent.getCity().getName());
+            city.setValue(newEvent.getCity());
+            cityValue = city.getValue();
+            direction.setValue(newEvent.getDirection());
+            directionValue = direction.getValue();
+            eventDAO.closeSession();
+            startDateOld = startDate.getValue().toString();
+            endDateOld = endDate.getValue().toString();
+
 //            ...
         }
 
@@ -250,26 +241,29 @@ public class CreateEventController extends Controller {
 
     }
 
-    private void editDate() {
+    private void editDate(Boolean startD) {
         if (!newEvent.getActivity().isEmpty()) {
+            if (startD && startDate.getValue().toString().equals(startDateOld)) return;
+            if (!startD && endDate.getValue().toString().equals(endDateOld)) return;
             AlertShow result = new AlertShow().showAlertConf("Вы уверены что хотите изменить дату?\n Все созданные активности сбросятся!");
             if (result.getConf().getButtonData() == ButtonType.NO.getButtonData()) {
-                startDate.setValue(startDateOld);
-                endDate.setValue(endDateOld);
+                startDate.setValue(LocalDate.parse(startDateOld));
+                endDate.setValue(LocalDate.parse(endDateOld));
             } else {
                 table.getItems().clear();
             }
             System.out.println(result.getConf().getButtonData());
         }
-        startDateOld = startDate.getValue();
-        endDateOld = endDate.getValue();
+        startDateOld = startDate.getValue().toString();
+        endDateOld = endDate.getValue().toString();
 
     }
 
     @FXML
     void selectStartDate(ActionEvent event) {
+        startTime.getItems().clear();
         fillStartTime();
-        editDate();
+        editDate(true);
     }
 
     private void fillStartTime() {
@@ -282,8 +276,9 @@ public class CreateEventController extends Controller {
 
     @FXML
     void selectEndDate(ActionEvent event) {
+        endTime.getItems().clear();
         fillEndTime();
-        editDate();
+        editDate(false);
     }
 
     private void fillEndTime() {
@@ -312,18 +307,18 @@ public class CreateEventController extends Controller {
 
     void editActivity() {
         newEvent.getActivity().remove(table.getSelectionModel().getSelectedItem());
-        new CreateActivityController(user, newEvent,table.getSelectionModel().getSelectedItem()).loadScene((Stage) startTime.getScene().getWindow(), "Создание активности");
+        new CreateActivityController(user, newEvent, table.getSelectionModel().getSelectedItem()).loadScene((Stage) startTime.getScene().getWindow(), "Создание активности");
     }
 
     @FXML
     void save(ActionEvent event) {
-        if(!validator.containsErrors() && !validatorDateTime.containsErrors()){
+        if (!validator.containsErrors() && !validatorDateTime.containsErrors()) {
             fillEvent();
-            new EventDAO().create(newEvent);
+            eventDAO.create(newEvent);
             new WindowOrg(user).loadScene((Stage) table.getScene().getWindow(), "Окно организатора");
         } else {
             AlertShow.showAlert("info", "Ошибка", validator.createStringBinding().get() +
-                    "\n"+
+                    "\n" +
                     validatorDateTime.createStringBinding().get());
         }
     }

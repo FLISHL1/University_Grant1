@@ -40,6 +40,8 @@ public class ModeratorsAndJuryController extends Controller {
     private Text helloText;
     @FXML
     private Text helloName;
+    @FXML
+    private Text countRow;
     private Organizer user;
 
     public ModeratorsAndJuryController(Organizer user){
@@ -58,14 +60,13 @@ public class ModeratorsAndJuryController extends Controller {
         update();
     }
     private void update(){
-        icon.setImage(user.getPhoto().getImage());
         init(icon, helloText, helloName, user);
-
         JuryDAO juryDAO = new JuryDAO();
         ModeratorDAO moderatorDAO = new ModeratorDAO();
         List<User> userList = new ArrayList<>();
         userList.addAll(juryDAO.getAll());
         userList.addAll(moderatorDAO.getAll());
+        countRow.setText(Integer.toString(userList.size()));
         FilteredList<User> filteredList = new FilteredList<>(FXCollections.observableList(userList), p -> true);
         searchName.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredList.setPredicate(user -> {

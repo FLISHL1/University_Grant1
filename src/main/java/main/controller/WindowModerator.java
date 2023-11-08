@@ -66,19 +66,24 @@ public class WindowModerator extends Controller {
 
     @FXML
     void moderatorAcctivity(ActionEvent event) {
-
+        new ModeratorActivity(user).loadScene((Stage) table.getScene().getWindow(), "Активности модератора");
     }
     @FXML
     void addApplication(ActionEvent event) {
-        AlertShow alertShow = new AlertShow();
-        alertShow.showAlertConf("Отправить заявку на мероприятие?:\n" + table.getSelectionModel().getSelectedItem().getName());
-        if (alertShow.getConf() == ButtonType.YES) {
-            ApplicationDAO applicationDAO = new ApplicationDAO();
-            Confirmation newConfirmation = new Confirmation();
-            newConfirmation.setModerator(user);
-            newConfirmation.setActivity(table.getSelectionModel().getSelectedItem());
-            newConfirmation.setStatus("new");
-            applicationDAO.create(newConfirmation);
+        if(table.getSelectionModel().getSelectedItem().getIdModerator() == null) {
+            AlertShow alertShow = new AlertShow();
+            alertShow.showAlertConf("Отправить заявку на мероприятие?:\n" + table.getSelectionModel().getSelectedItem().getName());
+            if (alertShow.getConf() == ButtonType.YES) {
+                ApplicationDAO applicationDAO = new ApplicationDAO();
+                Confirmation newConfirmation = new Confirmation();
+                newConfirmation.setModerator(user);
+                newConfirmation.setActivity(table.getSelectionModel().getSelectedItem());
+                newConfirmation.setStatus("new");
+                applicationDAO.create(newConfirmation);
+                AlertShow.showAlert("info", "Информация", "Заявка отправлена");
+            }
+        } else {
+            AlertShow.showAlert("info", "Информация", "Данное мероприятие уже занято");
         }
     }
 
@@ -106,7 +111,7 @@ public class WindowModerator extends Controller {
                 }
                 ActivityDAO activityDAO = new ActivityDAO();
                 activityDAO.openSession();
-                activity1 = activityDAO.merge(activity1);
+                activityDAO.refresh(activity1);
                 if (activity1.getEvent().getDirection().getId().equals(newValue.getId())) {
                     return true;
                 }

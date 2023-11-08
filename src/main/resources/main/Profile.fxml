@@ -143,6 +143,11 @@
                   <Font name="Comic Sans MS" size="15.0" />
                </font>
             </RadioButton>
+            <Button fx:id="btnExit" layoutX="999.0" layoutY="21.0" mnemonicParsing="false" onAction="#exit" prefHeight="62.0" prefWidth="193.0" style="-fx-background-color: rgb(153, 255, 255); -fx-background-radius: 5px; -fx-alignment: center;" text="Выход" visible="false">
+               <font>
+                  <Font name="Comic Sans MS" size="20.0" />
+               </font>
+            </Button>
             </children>
         </AnchorPane>
         <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">

@@ -20,6 +20,7 @@ import main.logic.Event;
 import main.logic.dao.ActivityDAO;
 import main.logic.dao.EventDAO;
 import main.logic.User.Organizer;
+import org.hibernate.Hibernate;
 
 import java.io.IOException;
 import java.net.URL;
@@ -44,6 +45,7 @@ public class WindowOrg extends Controller {
     private ActivityDAO activityDAO;
     @FXML
     private TableView<Event> table;
+    private boolean firstInit = false;
     private String tableStyle = ("-fx-selection-bar: red;" +
             "-fx-selection-bar-non-focused: salmon;");
 
@@ -164,42 +166,58 @@ public class WindowOrg extends Controller {
         table.setItems(sortedData);
 //        table.addEventHandler(MouseEvent.MOUSE_CLICKED, this::clickedTable);
         table.setRowFactory(t -> clickedTable());
+        firstInit = true;
     }
 
 
     private TableRow<Event> clickedTable() {
         activityDAO = new ActivityDAO();
-        TableRow<Event> row = new TableRow<>();
-        Event event = table.getSelectionModel().getSelectedItem();
-        eventDAO.openSession();
-        eventDAO.refresh(event);
-        Activity activity = null;
-        for (Activity activity1: event.getActivity()){
-            activity1 = activityDAO.merge(activity1);
-            if (!activity1.getApplications().isEmpty()){
-                row.setStyle("-fx-background-color: rgba(0, 0, 204, 0.7);");
-                activity = activity1;
-                break;
+        TableRow<Event> row = new TableRow<Event>() {
+            @Override
+            protected void updateItem(Event event, boolean b) {
+                super.updateItem(event, b);
+                if (event == null) return;
+                eventDAO.openSession();
+
+                if (!Hibernate.isInitialized(event.getActivity()))
+                    eventDAO.refresh(event);
+
+                Activity activity = null;
+                activityDAO.openSession();
+                for (Activity activity1 : event.getActivity()) {
+                    if (!Hibernate.isInitialized(activity1))
+                        activityDAO.refresh(activity1);
+                    if (!activity1.getApplications().isEmpty()) {
+                        System.out.println(activity1.getName());
+                        this.setStyle("-fx-background-color: rgba(0, 0, 204, 0.7);");
+                        activity = activity1;
+                        break;
+                    } else {
+                        this.setStyle("");
+                    }
+                }
+                activityDAO.closeSession();
+                if (activity != null) {
+                    ContextMenu rowMenu = new ContextMenu();
+                    MenuItem application = new MenuItem("Подтвердить участие");
+                    application.setOnAction(event1 -> {
+                        new ApplyActivity(event).render();
+                    });
+                    rowMenu.getItems().add(application);
+                    contextMenuProperty().bind(
+                            Bindings.when(emptyProperty())
+                                    .then((ContextMenu) null)
+                                    .otherwise(rowMenu));
+                }
+                eventDAO.closeSession();
             }
-        }
-        if (activity != null){
-            ContextMenu rowMenu = new ContextMenu();
-            MenuItem application = new MenuItem("Подтвердить участие");
-            application.setOnAction(event1 -> {
-                new ApplyActivity(table.getSelectionModel().getSelectedItem()).render();
-            });
-            rowMenu.getItems().add(application);
-            row.contextMenuProperty().bind(
-                    Bindings.when(row.emptyProperty())
-                            .then((ContextMenu) null)
-                            .otherwise(rowMenu));
-        }
+        };
+
         row.setOnMouseClicked(event1 -> {
             if (event1.getClickCount() >= 2 && !row.isEmpty()) {
                 new CreateEventController(user, table.getSelectionModel().getSelectedItem()).loadScene((Stage) mainPain.getScene().getWindow(), "EventInfo");
             }
         });
-        eventDAO.closeSession();
         return row;
 
     }

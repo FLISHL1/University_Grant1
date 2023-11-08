@@ -17,10 +17,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import main.attentionWindow.AlertShow;
 import main.logic.Activity;
 import main.logic.Confirmation;
 import main.logic.Event;
 import main.logic.User.Moderation;
+import main.logic.dao.ActivityDAO;
+import main.logic.dao.ApplicationDAO;
 
 import java.io.IOException;
 import java.net.URL;
@@ -39,7 +42,8 @@ public class ApplyActivity extends Application implements Initializable {
     private TableView<Moderation> table;
 
     private Event event;
-    public ApplyActivity(Event event){
+
+    public ApplyActivity(Event event) {
         this.event = event;
     }
 
@@ -71,17 +75,26 @@ public class ApplyActivity extends Application implements Initializable {
             }
         });
     }
+
     @FXML
     void save(ActionEvent event) {
-
+        ActivityDAO activityDAO = new ActivityDAO();
+        choiceActivity.getValue().setIdModerator(table.getSelectionModel().getSelectedItem().getId());
+        choiceActivity.getValue().getApplications().clear();
+        activityDAO.update(choiceActivity.getValue());
+        AlertShow.showAlert("info", "Информирование", "Для актинвости \"" + choiceActivity.getValue().getName() + "\" подтвержден модератор:\n" + table.getSelectionModel().getSelectedItem().getName());
+        ((Stage) saveBtn.getScene().getWindow()).close();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         choiceActivity.getItems().addAll(event.getActivity());
         ArrayList<Moderation> moderations = new ArrayList<>();
-        for (Activity activity: event.getActivity()){
-            for (Confirmation confirmation : activity.getApplications()){
+        ActivityDAO activityDAO = new ActivityDAO();
+        activityDAO.openSession();
+        for (Activity activity : event.getActivity()) {
+            activityDAO.refresh(activity);
+            for (Confirmation confirmation : activity.getApplications()) {
                 moderations.add(confirmation.getModerator());
             }
         }
@@ -90,8 +103,8 @@ public class ApplyActivity extends Application implements Initializable {
             filteredList.setPredicate(moderation -> {
                 for (Confirmation confirmation : newValue.getApplications())
                     if (confirmation.getModerator().getId().equals(moderation.getId())) {
-                    return true;
-                }
+                        return true;
+                    }
                 return false;
             });
         });
@@ -112,5 +125,6 @@ public class ApplyActivity extends Application implements Initializable {
         phoneColumn.setCellValueFactory(new PropertyValueFactory<Moderation, String>("phone"));
 //        phoneColumn.setStyle(columnStyle);
         table.getColumns().add(phoneColumn);
+        choiceActivity.setValue(event.getActivity().get(0));
     }
 }

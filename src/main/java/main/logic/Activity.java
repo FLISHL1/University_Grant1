@@ -22,7 +22,7 @@ public class Activity {
     @Column(name = "id_moderator")
     private Integer idModerator;
 
-    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_activity")
     private List<Confirmation> confirmations;
 
@@ -76,5 +76,13 @@ public class Activity {
 
     public void setApplications(List<Confirmation> confirmations) {
         this.confirmations = confirmations;
+    }
+
+    public Integer getIdModerator() {
+        return idModerator;
+    }
+
+    public void setIdModerator(Integer idModerator) {
+        this.idModerator = idModerator;
     }
 }

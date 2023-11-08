@@ -89,7 +89,7 @@ public class CreateActivityController extends Controller {
 
             activityDAO = new ActivityDAO();
             activityDAO.openSession();
-            newActivity = activityDAO.merge(newActivity);
+            activityDAO.refresh(newActivity);
 
             dateTime.setValue(newActivity.getStartTime());
             inputName.setText(newActivity.getName());
