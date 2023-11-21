@@ -45,6 +45,9 @@ public class WindowOrg extends Controller {
     private ActivityDAO activityDAO;
     @FXML
     private TableView<Event> table;
+
+    private String sDate;
+    private String sDirection;
     private boolean firstInit = false;
     private String tableStyle = ("-fx-selection-bar: red;" +
             "-fx-selection-bar-non-focused: salmon;");
@@ -109,33 +112,11 @@ public class WindowOrg extends Controller {
         List<Event> events = eventDAO.getAll();
         FilteredList<Event> filteredList = new FilteredList<>(FXCollections.observableList(events), p -> true);
         searchDirection.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredList.setPredicate(event -> {
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-
-                String lowerCaseFilter = newValue.toLowerCase();
-
-                if (event.getDirection().getName().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                }
-                return false;
-            });
+            filteredList.setPredicate(this::sort);
         });
 
         searchDate.valueProperty().addListener((observable, oldValue, newValue) -> {
-            filteredList.setPredicate(event -> {
-                if (newValue == null || newValue.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")).isEmpty()) {
-                    return true;
-                }
-
-                String formatDate = newValue.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-
-                if (event.getDateStart().toLowerCase().contains(formatDate)) {
-                    return true;
-                }
-                return false;
-            });
+            filteredList.setPredicate(this::sort);
         });
 
         table.setStyle(tableStyle);
@@ -170,6 +151,36 @@ public class WindowOrg extends Controller {
     }
 
 
+    private boolean sort(Event event){
+        if (sortDate(event) && sortDirection(event)){
+            return true;
+        }
+        return false;
+    }
+    private boolean sortDirection(Event event){
+        sDirection = searchDirection.getText().toLowerCase();
+        if (sDirection == null || sDirection.isEmpty()) {
+            return true;
+        }
+
+
+        if (event.getDirection().getName().toLowerCase().contains(sDirection)) {
+            return true;
+        }
+        return false;
+    }
+    private boolean sortDate(Event event){
+        sDate = searchDate.getValue().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        if (sDate == null || sDate.isEmpty()) {
+            return true;
+        }
+
+
+        if (event.getDateStart().toLowerCase().contains(sDate)) {
+            return true;
+        }
+        return false;
+    }
     private TableRow<Event> clickedTable() {
         activityDAO = new ActivityDAO();
         TableRow<Event> row = new TableRow<Event>() {
