@@ -194,7 +194,6 @@ public class WindowOrg extends Controller {
                     if (!Hibernate.isInitialized(activity1))
                         activityDAO.refresh(activity1);
                     if (!activity1.getApplications().isEmpty()) {
-                        System.out.println(activity1.getName());
                         this.setStyle("-fx-background-color: rgba(0, 0, 204, 0.7);");
                         activity = activity1;
                         break;

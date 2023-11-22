@@ -226,7 +226,6 @@ public class RegUser extends Controller {
         newUser.setPhone(phone.getText());
         newUser.setEmail(email.getText());
         newUser.setPassword(password.getText());
-        System.out.println(genderMen.isSelected());
         newUser.setSex(genderMen.isSelected() ? genderMen.getText() : genderWoman.getText());
     }
 

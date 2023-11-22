@@ -123,8 +123,6 @@ public class KanBanController extends Controller {
         init(icon, helloText, helloName, user);
 
         ArrayList<Activity> activities = new ArrayList<>(event.getActivity());
-        System.out.println((activities.size())/2+1);
-        System.out.println(activities.size());
 //      tableLeft
         tableLeft.setItems(FXCollections.observableList(activities));
         tableLeft.setStyle(tableStyle);

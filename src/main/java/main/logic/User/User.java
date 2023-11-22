@@ -37,7 +37,6 @@ public class User {
 
             try {
                 name = user.getString("name");
-                System.out.println(name);
                 email = user.getString("email");
                 phone = user.getString("phone");
 //                countryCode = user.getInt("country");

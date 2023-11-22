@@ -217,7 +217,6 @@ public class RegUserNew  extends Controller {
                 newJury = new Jury();
                 newJury.setIdNumber(newUser.getId());
                 newJury = (Jury) fillUser(newJury);
-                System.out.println(newJury.getId());
                 new JuryDAO().createReg(newJury);
                 AlertShow.showAlert("warning", "Жюри успешно создан с id: " + newJury.getId());
             } else {

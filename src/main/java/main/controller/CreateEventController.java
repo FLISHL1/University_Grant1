@@ -186,7 +186,7 @@ public class CreateEventController extends Controller {
                 .dependsOn("startTime", startTime.valueProperty())
                 .dependsOn("endTime", endTime.valueProperty())
                 .withMethod(c -> {
-                    if (startDate.getValue() != null && endDate.getValue() != null && endTime.getItems() != null) {
+                    if (startDate.getValue() != null && endDate.getValue() != null && endTime.getValue() != null) {
                         if (startDate.getValue().isEqual(endDate.getValue()) && endTime.getValue().isBefore(startTime.getValue())) {
                             c.error("Время конца не может быть раньше времени начала");
                         }
@@ -290,7 +290,6 @@ public class CreateEventController extends Controller {
             } else {
                 table.getItems().clear();
             }
-            System.out.println(result.getConf().getButtonData());
         }
         if (startDate.getValue() != null) startDateOld = startDate.getValue().toString();
         if (endDate.getValue() != null) endDateOld = endDate.getValue().toString();

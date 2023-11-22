@@ -134,10 +134,26 @@ public class CreateActivityController extends Controller {
 
 
 //        ComboBox Time
-        LocalDateTime date = newEvent.getDateStartToDate();
-        while (!date.equals(newEvent.getDateEndToDate())) {
-            dateTime.getItems().add(date);
-            date = date.plusMinutes(5);
+        if (newEvent.getActivity() == null || newEvent.getActivity().isEmpty()) {
+            LocalDateTime date = newEvent.getDateStartToDate();
+            while (!date.equals(newEvent.getDateEndToDate())) {
+                dateTime.getItems().add(date);
+                date = date.plusMinutes(5);
+            }
+        } else {
+
+            LocalDateTime mDate = LocalDateTime.MAX;
+            LocalDateTime date = newEvent.getDateStartToDate();
+            for (Activity activity: newEvent.getActivity()){
+                if (activity.getStartTime().isAfter(date)){
+                    date = activity.getStartTime();
+                }
+            }
+            date = date.plusMinutes(105);
+            while (!date.isAfter(newEvent.getDateEndToDate())) {
+                dateTime.getItems().add(date);
+                date = date.plusMinutes(90);
+            }
         }
 //       Validator
         validator = new Validator();
@@ -180,7 +196,6 @@ public class CreateActivityController extends Controller {
         row.setOnMouseClicked(click -> {
             if (click.getClickCount() >= 2 && !row.isEmpty()) {
                 List<Integer> idUsers = tableSelected.getItems().stream().map(User::getId).collect(Collectors.toList());
-                System.out.println(idUsers.toString());
                 if (!idUsers.contains(table.getSelectionModel().getSelectedItem().getId()))
                     tableSelected.getItems().add(table.getSelectionModel().getSelectedItem());
             }
@@ -224,11 +239,7 @@ public class CreateActivityController extends Controller {
         newActivity.setName(inputName.getText());
         newActivity.setStartTime(dateTime.getValue());
         newActivity.setJuries(tableSelected.getItems());
-//        if (Hibernate.isInitialized(newActivity)){
-//            newEvent.getActivity().
-//            activityDAO.update(newActivity);
-//        }
-        System.out.println(newActivity.getStartTime());
+
         back(event);
     }
 }

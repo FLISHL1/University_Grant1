@@ -23,7 +23,6 @@ public abstract class Controller implements Initializable {
         if (helloText != null) {
             String hello = "";
             int hour = new Date().getHours();
-            System.out.println(hour);
             if (hour >= 5 && hour < 12) hello = "Доброе утро!";
             else if (hour >= 12 && hour < 16) hello = "Добрый день!";
             else if (hour >= 16) hello = "Доброе вечер!";
