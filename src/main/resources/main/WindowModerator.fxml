@@ -44,8 +44,18 @@
                   <Font name="Comic Sans MS" size="15.0" />
                </font>
             </Button>
-            <ComboBox fx:id="choiceEvent" layoutX="145.0" layoutY="83.0" prefHeight="26.0" prefWidth="287.0" promptText="Поиск по мероприятию" />
-            <ComboBox fx:id="choiceDirection" layoutX="773.0" layoutY="82.0" prefHeight="26.0" prefWidth="287.0" promptText="Поиск по направлению" />
+            <ComboBox fx:id="choiceEvent" layoutX="145.0" layoutY="83.0" prefHeight="26.0" prefWidth="287.0" />
+            <ComboBox fx:id="choiceDirection" layoutX="773.0" layoutY="82.0" prefHeight="26.0" prefWidth="287.0" />
+            <Text fx:id="helloText1" layoutX="236.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Мероприятие">
+               <font>
+                  <Font name="Comic Sans MS" size="16.0" />
+               </font>
+            </Text>
+            <Text fx:id="helloText11" layoutX="865.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Направление">
+               <font>
+                  <Font name="Comic Sans MS" size="16.0" />
+               </font>
+            </Text>
             </children>
         </AnchorPane>
         <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">

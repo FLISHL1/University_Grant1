@@ -48,8 +48,8 @@ public class ModeratorsAndJuryController extends Controller {
     public ModeratorsAndJuryController(Organizer user){
         this.user = user;
     }
-    private String tableStyle = ("-fx-selection-bar: red;" +
-            "-fx-selection-bar-non-focused: salmon;");
+    private String tableStyle = ("-fx-selection-bar: rgb(0, 0, 204);" +
+            "-fx-selection-bar-non-focused: rgba(0, 0, 204, 0.3);");
 
     private String columnStyle = ("-fx-alignment: CENTER; " +
             "-fx-background-color: rgba(255, 255, 255, 0.5);" +
@@ -112,6 +112,7 @@ public class ModeratorsAndJuryController extends Controller {
         TableColumn<User, ImageView> logoColumn = new TableColumn<User, ImageView>("Фото");
         logoColumn.setCellValueFactory(new PropertyValueFactory<User, ImageView>("photo"));
         logoColumn.setStyle(columnStyle);
+        logoColumn.setMaxWidth(152);
         table.getColumns().add(logoColumn);
 
         TableColumn<User, String> nameColumn = new TableColumn<User, String>("ФИО");

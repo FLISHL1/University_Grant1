@@ -20,17 +20,18 @@ import javafx.stage.Stage;
 import main.attentionWindow.AlertShow;
 import main.logic.Direction;
 import main.logic.Event;
+import main.logic.User.Participant;
+import main.logic.User.User;
 import main.logic.dao.EventDAO;
 
 import java.io.IOException;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class MainWinNoAuthController extends Application implements Initializable {
+public class WindowPart extends Controller {
 
     public AnchorPane mainPain;
     @FXML
@@ -40,7 +41,8 @@ public class MainWinNoAuthController extends Application implements Initializabl
     private TextField searchDirection;
     @FXML
     private Text helloText;
-
+    @FXML
+    private Text helloName;
     @FXML
     private TableView<Event> table;
     private String tableStyle = ("-fx-selection-bar: rgb(0, 0, 204);" +
@@ -56,45 +58,13 @@ public class MainWinNoAuthController extends Application implements Initializabl
 
     private String sDate;
 
-    @Override
-    public void start(Stage stage) {
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/MainPage.fxml"));
-        loader.setController(new MainWinNoAuthController());
-        loader.setControllerFactory(param -> new MainWinNoAuthController());
-        Scene scene = null;
-        try {
-            scene = new Scene(loader.load());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        stage.setTitle("MainWindow");
-        stage.setResizable(false);
-//        primaryStage.setAlwaysOnTop(true);
-        stage.setScene(scene);
-        stage.show();
+    private User user;
+    public WindowPart (User user){
+        this.user = user;
     }
-
-    public void render() {
-        new JFXPanel();
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                start(new Stage());
-            }
-        });
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        String hello = "";
-        int hour = new Date().getHours();
-        if (hour >= 5 && hour < 12) hello = "Доброе утро!";
-        else if (hour >= 12 && hour < 17) hello = "Добрый день!";
-        else if (hour >= 17 && hour < 24) hello = "Добрый вечер!";
-        else if (hour < 5) hello = "Доброй ночи!";
-        helloText.setText(hello);
+        init(null, helloText, helloName, user);
         EventDAO eventDAO = null;
         try {
             eventDAO = new EventDAO();
@@ -186,30 +156,11 @@ public class MainWinNoAuthController extends Application implements Initializabl
 
     @FXML
     private void login(MouseEvent event) {
-        new AuthController().loadScene((Stage) mainPain.getScene().getWindow(), "Login");
-        stoped();
+        new ProfileController(user).loadScene((Stage) mainPain.getScene().getWindow(), "Login");
     }
 
-    public void stoped() {
-        try {
-            this.stop();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void loadScene(Stage stage, String title) {
-        FXMLLoader loader = new FXMLLoader(MainWinNoAuthController.class.getResource("/main/MainPage.fxml"));
-        loader.setController(this);
-        loader.setControllerFactory(param -> this);
-        Scene scene = null;
-        try {
-            scene = new Scene(loader.load());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        stage.setTitle(title);
-        stage.setScene(scene);
+    public void loadScene(Stage stage) {
+        super.loadSceneWithController("WindowPart.fxml", stage, user instanceof Participant? "Главное окон участника":"Главное окон жюри");
     }
 
 

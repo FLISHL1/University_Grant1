@@ -63,8 +63,8 @@ public class UserList extends Controller {
         this.user = user;
     }
 
-    private String tableStyle = ("-fx-selection-bar: red;" +
-            "-fx-selection-bar-non-focused: salmon;");
+    private String tableStyle = ("-fx-selection-bar: rgb(0, 0, 204);" +
+            "-fx-selection-bar-non-focused: rgba(0, 0, 204, 0.3);");
 
     private String columnStyle = ("-fx-alignment: CENTER; " +
             "-fx-background-color: rgba(255, 255, 255, 0.5);" +
@@ -102,16 +102,19 @@ public class UserList extends Controller {
         TableColumn<Participant, ImageView> logoColumn = new TableColumn<Participant, ImageView>("Фото");
         logoColumn.setCellValueFactory(new PropertyValueFactory<Participant, ImageView>("photo"));
         logoColumn.setStyle(columnStyle);
+        logoColumn.setMaxWidth(152);
         table.getColumns().add(logoColumn);
 
         TableColumn<Participant, String> nameColumn = new TableColumn<Participant, String>("ФИО");
         nameColumn.setCellValueFactory(new PropertyValueFactory<Participant, String>("name"));
         nameColumn.setStyle(columnStyle);
+        nameColumn.setMaxWidth(314);
         table.getColumns().add(nameColumn);
 
         TableColumn<Participant, String> emailColumn = new TableColumn<Participant, String>("E-mail");
         emailColumn.setCellValueFactory(new PropertyValueFactory<Participant, String>("email"));
         emailColumn.setStyle(columnStyle);
+        emailColumn.setMaxWidth(263);
         table.getColumns().add(emailColumn);
 
 

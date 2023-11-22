@@ -31,7 +31,7 @@ public class AlertShow {
             }
         });
     }
-    public static void showAlert(String type, String title, String message){
+    public static void showAlert(String type, String message){
                 Alert.AlertType typeAlert = switch (type){
                     case "info" -> Alert.AlertType.INFORMATION;
                     case "error" -> Alert.AlertType.ERROR;
@@ -40,7 +40,6 @@ public class AlertShow {
                     default -> throw new IllegalStateException("Unexpected value: " + type);
                 };
                 Alert alert = new Alert(typeAlert);
-                alert.setTitle(title);
                 alert.setContentText(message);
                 DialogPane dialogPane = alert.getDialogPane();
 

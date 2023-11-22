@@ -82,7 +82,7 @@ public class ApplyActivity extends Application implements Initializable {
         choiceActivity.getValue().setIdModerator(table.getSelectionModel().getSelectedItem().getId());
         choiceActivity.getValue().getApplications().clear();
         activityDAO.update(choiceActivity.getValue());
-        AlertShow.showAlert("info", "Информирование", "Для актинвости \"" + choiceActivity.getValue().getName() + "\" подтвержден модератор:\n" + table.getSelectionModel().getSelectedItem().getName());
+        AlertShow.showAlert("info", "Для актинвости \"" + choiceActivity.getValue().getName() + "\" подтвержден модератор:\n" + table.getSelectionModel().getSelectedItem().getName());
         ((Stage) saveBtn.getScene().getWindow()).close();
     }
 

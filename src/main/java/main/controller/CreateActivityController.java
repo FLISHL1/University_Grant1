@@ -16,6 +16,7 @@ import main.logic.Event;
 import main.logic.User.Jury;
 import main.logic.User.Organizer;
 import main.logic.User.Jury;
+import main.logic.User.User;
 import main.logic.dao.ActivityDAO;
 import main.logic.dao.JuryDAO;
 import net.synedra.validatorfx.Validator;
@@ -24,8 +25,8 @@ import org.hibernate.LazyInitializationException;
 
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class CreateActivityController extends Controller {
     @FXML
@@ -57,9 +58,8 @@ public class CreateActivityController extends Controller {
     private Event newEvent;
     private Validator validator;
     private ActivityDAO activityDAO;
-    private String tableStyle =
-            ("-fx-selection-bar: red;" +
-                    "-fx-selection-bar-non-focused: salmon;");
+    private String tableStyle = ("-fx-selection-bar: rgb(0, 0, 204);" +
+            "-fx-selection-bar-non-focused: rgba(0, 0, 204, 0.3);");
 
     private String columnStyle =
             ("-fx-alignment: CENTER; " +
@@ -179,7 +179,9 @@ public class CreateActivityController extends Controller {
         TableRow<Jury> row = new TableRow<>();
         row.setOnMouseClicked(click -> {
             if (click.getClickCount() >= 2 && !row.isEmpty()) {
-                if (!tableSelected.getItems().contains(table.getSelectionModel().getSelectedItem()))
+                List<Integer> idUsers = tableSelected.getItems().stream().map(User::getId).collect(Collectors.toList());
+                System.out.println(idUsers.toString());
+                if (!idUsers.contains(table.getSelectionModel().getSelectedItem().getId()))
                     tableSelected.getItems().add(table.getSelectionModel().getSelectedItem());
             }
         });

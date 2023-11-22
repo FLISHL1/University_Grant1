@@ -199,7 +199,7 @@ public class RegUserNew  extends Controller {
         user.setCountry((Country) country.getValue());
         user.setPhone(phone.getText());
         user.setEmail(email.getText());
-        user.setPassword(PasswordHashing.HashPassword(password.getText()));
+        user.setPassword(password.getText());
         user.setSex(genderMen.isSelected()?genderMen.getText().toLowerCase():genderWoman.getText().toLowerCase());
         if (user instanceof Jury)
                 ((Jury) user).setDirection(directionValue);
@@ -219,18 +219,18 @@ public class RegUserNew  extends Controller {
                 newJury = (Jury) fillUser(newJury);
                 System.out.println(newJury.getId());
                 new JuryDAO().createReg(newJury);
-                AlertShow.showAlert("info", "Информирование", "Жюри успешно создан с id: " + newJury.getId());
+                AlertShow.showAlert("warning", "Жюри успешно создан с id: " + newJury.getId());
             } else {
                 newModeration = new Moderation();
                 newModeration.setIdNumber(newUser.getId());
                 newModeration = (Moderation) fillUser(newModeration);
                 new ModeratorDAO().createReg(newModeration);
-                AlertShow.showAlert("info", "Информирование", "Жюри успешно создан с id: " + newModeration.getId());
+                AlertShow.showAlert("warning", "Жюри успешно создан с id: " + newModeration.getId());
 
             }
             new ModeratorsAndJuryController((Organizer) user).loadScene((Stage) name.getScene().getWindow(), "Жюри\\Модераторы");
         } else {
-            AlertShow.showAlert("warning", "Внимание", validator.createStringBinding().get());
+            AlertShow.showAlert("warning", validator.createStringBinding().get());
         }
     }
     public void profile(MouseEvent event) {

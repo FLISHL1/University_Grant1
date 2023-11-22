@@ -37,7 +37,7 @@ public class Event {
     @JoinColumn(name = "direction")
     private Direction direction;
 
-    @OneToMany( fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.REMOVE, org.hibernate.annotations.CascadeType.PERSIST})
     @JoinColumn(name = "id_events")
     private List<Activity> activity = new ArrayList<>();

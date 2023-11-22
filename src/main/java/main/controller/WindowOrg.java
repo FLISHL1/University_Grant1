@@ -49,8 +49,8 @@ public class WindowOrg extends Controller {
     private String sDate;
     private String sDirection;
     private boolean firstInit = false;
-    private String tableStyle = ("-fx-selection-bar: red;" +
-            "-fx-selection-bar-non-focused: salmon;");
+    private String tableStyle = ("-fx-selection-bar: rgb(0, 0, 204);" +
+            "-fx-selection-bar-non-focused: rgba(0, 0, 204, 0.3);");
 
     private String columnStyle = ("-fx-alignment: CENTER; " +
             "-fx-background-color: rgba(255, 255, 255, 0.5);" +
@@ -129,6 +129,7 @@ public class WindowOrg extends Controller {
         TableColumn<Event, String> nameColumn = new TableColumn<Event, String>("Название");
         nameColumn.setCellValueFactory(new PropertyValueFactory<Event, String>("name"));
         nameColumn.setStyle(columnStyle);
+        nameColumn.setMaxWidth(650);
         table.getColumns().add(nameColumn);
 
         TableColumn<Event, String> dateColumn = new TableColumn<Event, String>("Дата");
@@ -151,36 +152,30 @@ public class WindowOrg extends Controller {
     }
 
 
-    private boolean sort(Event event){
-        if (sortDate(event) && sortDirection(event)){
+    private boolean sort(Event event) {
+        return sortDate(event) && sortDirection(event);
+    }
+
+    private boolean sortDirection(Event event) {
+        if (searchDirection.getText() == null || searchDirection.getText().isEmpty()) {
             return true;
         }
-        return false;
-    }
-    private boolean sortDirection(Event event){
+
         sDirection = searchDirection.getText().toLowerCase();
-        if (sDirection == null || sDirection.isEmpty()) {
-            return true;
-        }
 
-
-        if (event.getDirection().getName().toLowerCase().contains(sDirection)) {
-            return true;
-        }
-        return false;
+        return event.getDirection().getName().toLowerCase().contains(sDirection);
     }
-    private boolean sortDate(Event event){
+
+    private boolean sortDate(Event event) {
+        if (searchDate.getValue() == null || searchDate.getValue().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")).isEmpty()) {
+            return true;
+        }
+
         sDate = searchDate.getValue().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-        if (sDate == null || sDate.isEmpty()) {
-            return true;
-        }
 
-
-        if (event.getDateStart().toLowerCase().contains(sDate)) {
-            return true;
-        }
-        return false;
+        return event.getDateStart().toLowerCase().contains(sDate);
     }
+
     private TableRow<Event> clickedTable() {
         activityDAO = new ActivityDAO();
         TableRow<Event> row = new TableRow<Event>() {

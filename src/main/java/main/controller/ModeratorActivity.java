@@ -67,8 +67,8 @@ public class ModeratorActivity extends Controller {
 
     private Moderation user;
 
-    private String tableStyle = ("-fx-selection-bar: red;" +
-            "-fx-selection-bar-non-focused: salmon;");
+    private String tableStyle = ("-fx-selection-bar: rgb(0, 0, 204);" +
+            "-fx-selection-bar-non-focused: rgba(0, 0, 204, 0.3);");
 
     private String columnStyle = ("-fx-alignment: CENTER; " +
             "-fx-background-color: rgba(255, 255, 255, 0.5);" +

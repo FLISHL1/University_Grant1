@@ -37,7 +37,7 @@ public class UserDAO extends AbstractDao<User>{
             transaction.begin();
             
             user = getById(id);
-            if (!PasswordHashing.checkPass(password, user.getPassword())){
+            if (!password.equals(user.getPassword())){
                 user = null;
             }
             

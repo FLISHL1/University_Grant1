@@ -23,6 +23,7 @@ import javafx.event.ActionEvent;
 import java.net.URL;
 import java.sql.Date;
 import java.util.ResourceBundle;
+
 public class RegUser extends Controller {
     @FXML
     private TextField name;
@@ -43,7 +44,7 @@ public class RegUser extends Controller {
     @FXML
     private ImageView edit_photo;
     @FXML
-    private ChoiceBox country;
+    private ComboBox<Country> country;
     @FXML
     private RadioButton genderMen;
     @FXML
@@ -70,20 +71,20 @@ public class RegUser extends Controller {
     private ParticipantDAO participantDAO;
     Validator validator;
 
-    public RegUser(){
+    public RegUser() {
         participantDAO = new ParticipantDAO();
         validator = new Validator();
         user = null;
     }
 
-    public RegUser(User user){
+    public RegUser(User user) {
         participantDAO = new ParticipantDAO();
         validator = new Validator();
         this.user = user;
     }
 
-    private void checkUser(){
-        if (user  == null){
+    private void checkUser() {
+        if (user == null) {
             profile.setOnMouseClicked(this::login);
             participants.setVisible(false);
             jury.setVisible(false);
@@ -94,6 +95,7 @@ public class RegUser extends Controller {
         }
 
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         checkUser();
@@ -109,16 +111,15 @@ public class RegUser extends Controller {
                 .dependsOn("rePasswordV", rePasswordV.textProperty())
                 .withMethod(c -> {
                     String rePasswd;
-                    if (visiblePassword.isSelected()){
+                    if (visiblePassword.isSelected()) {
                         rePasswd = rePasswordV.getText();
-                    }
-                    else {
+                    } else {
                         rePasswd = rePassword.getText();
                     }
-                    if (!rePasswd.equals(c.get("password"))){
+                    if (!rePasswd.equals(c.get("password"))) {
                         c.error("Пароли должны совпадать");
                     }
-                    if (rePasswd.isEmpty()){
+                    if (rePasswd.isEmpty()) {
                         c.error("Повторите пароль!");
                     }
                 }).decorates(rePassword)
@@ -128,9 +129,9 @@ public class RegUser extends Controller {
         validator.createCheck()
                 .dependsOn("password", password.textProperty())
                 .withMethod(c -> {
-                    if (password.getText().isEmpty()){
+                    if (password.getText().isEmpty()) {
                         c.error("Необходимо ввести пароль");
-                    } else if (!password.getText().matches("(?=.*[0-9])(?=.*\\W)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{6,}")){
+                    } else if (!password.getText().matches("(?=.*[0-9])(?=.*\\W)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{6,}")) {
                         c.error("Не менее 6 символов \n Заглавные и строчные буквы \n Не менее одного спецсимвола \n Не менее одной цифры");
                     }
                 }).decorates(password)
@@ -138,30 +139,31 @@ public class RegUser extends Controller {
 
         validator.createCheck()
                 .dependsOn("email", email.textProperty())
-                .withMethod(c ->{
+                .withMethod(c -> {
                     String email = c.get("email");
-                    if (email.isEmpty()){
+                    if (email.isEmpty()) {
                         c.error("Необходимо ввести электронную почту");
-                    } else if(!email.matches(".+@.+\\..+")){
+                    } else if (!email.matches(".+@.+\\..+")) {
                         c.error("Не верный формат почты");
                     }
                 }).decorates(email)
                 .immediate();
         validator.createCheck()
                 .dependsOn("phone", phone.textProperty())
-                .withMethod(c ->{
+                .withMethod(c -> {
                     String phone = c.get("phone");
-                    if (phone.isEmpty()){
+                    if (phone.isEmpty()) {
                         c.error("Необходимо ввести номер телефона (8(999)-999-99-99)");
-                    } else if(!phone.matches("[+]?(8|7)\\([0-9]{3}\\)-[0-9]{3}-[0-9]{2}-[0-9]{2}")) {
+                    } else if (!phone.matches("[+]?(8|7)\\([0-9]{3}\\)-[0-9]{3}-[0-9]{2}-[0-9]{2}")) {
                         c.error("Не верный формат номера телефона (8(999)-999-99-99)");
-                    }}).decorates(phone)
+                    }
+                }).decorates(phone)
                 .immediate();
 
         validator.createCheck()
                 .dependsOn("country", country.valueProperty())
-                .withMethod(c ->{
-                    if(country.getValue() == null){
+                .withMethod(c -> {
+                    if (country.getValue() == null) {
                         c.error("Укажите страну!");
                     }
                 }).decorates(country)
@@ -169,8 +171,8 @@ public class RegUser extends Controller {
 
         validator.createCheck()
                 .dependsOn("date", birthDay.valueProperty())
-                .withMethod(c ->{
-                    if(birthDay.getValue() == null){
+                .withMethod(c -> {
+                    if (birthDay.getValue() == null) {
                         c.error("Укажите дату рождения!");
                     }
                 }).decorates(birthDay)
@@ -178,9 +180,9 @@ public class RegUser extends Controller {
 
         validator.createCheck()
                 .dependsOn("name", name.textProperty())
-                .withMethod(c ->{
+                .withMethod(c -> {
                     String name = c.get("name");
-                    if (name.isEmpty()){
+                    if (name.isEmpty()) {
                         c.error("Заполните ФИО");
                     }
 
@@ -189,14 +191,12 @@ public class RegUser extends Controller {
     }
 
 
-
-
     @FXML
-    private void visiblePassword(ActionEvent event){
-        if (visiblePassword.isSelected()){
+    private void visiblePassword(ActionEvent event) {
+        if (visiblePassword.isSelected()) {
             rePasswordV.setText(rePassword.getText());
             rePasswordV.setVisible(true);
-        } else{
+        } else {
             rePassword.setText(rePasswordV.getText());
             rePasswordV.setVisible(false);
         }
@@ -204,38 +204,40 @@ public class RegUser extends Controller {
     }
 
     @FXML
-    private void save(ActionEvent event){
-        if (!validator.containsErrors()){
+    private void save(ActionEvent event) {
+        if (!validator.containsErrors()) {
             fillUser();
             participantDAO.update(newUser);
+            AlertShow.showAlert("info", "Пользовтель создан");
             login(null);
         } else {
-            AlertShow.showAlert("info", "Не правильно ввели данные",  validator.createStringBinding().get());
+            AlertShow.showAlert("warning", validator.createStringBinding().get());
         }
     }
+
     @FXML
-    private void exit(ActionEvent event){
+    private void exit(ActionEvent event) {
     }
 
-    private void fillUser(){
+    private void fillUser() {
         newUser.setBirthDay(Date.valueOf(birthDay.getValue()));
         newUser.setName(name.getText());
         newUser.setCountry((Country) country.getValue());
         newUser.setPhone(phone.getText());
         newUser.setEmail(email.getText());
-        newUser.setPassword(PasswordHashing.HashPassword(password.getText()));
+        newUser.setPassword(password.getText());
         System.out.println(genderMen.isSelected());
-        newUser.setSex(genderMen.isSelected()?genderMen.getText():genderWoman.getText());
+        newUser.setSex(genderMen.isSelected() ? genderMen.getText() : genderWoman.getText());
     }
 
-    public void loadScene(Stage stage, String title){
+    public void loadScene(Stage stage, String title) {
         super.loadSceneWithController("Profile.fxml", stage, title);
     }
 
     @FXML
     private void login(MouseEvent mouseEvent) {
-        if (newUser.getName() == null)  participantDAO.delete(newUser);
-        if (user instanceof Organizer) new ProfileController(user).loadScene((Stage) profile.getScene().getWindow(), "Профиль");
+        if (newUser.getName() == null) participantDAO.delete(newUser);
+        if (user instanceof Organizer) new UserList(user).loadScene((Stage) profile.getScene().getWindow(), "Профиль");
         else new AuthController().loadScene((Stage) profile.getScene().getWindow(), "Профиль");
     }
 
@@ -245,17 +247,23 @@ public class RegUser extends Controller {
             participantDAO.delete(newUser);
             new MainWinNoAuthController().loadScene((Stage) profile.getScene().getWindow(), "Главное окно");
         } else {
+            participantDAO.delete(newUser);
             new WindowOrg((Organizer) user).loadScene((Stage) password.getScene().getWindow(), "Главное окно");
         }
     }
+
     @FXML
-    private void participants(MouseEvent event){
-        if (participants.isVisible()) new UserList(user).loadScene((Stage) profile.getScene().getWindow(), "Список пользователей");
+    private void participants(MouseEvent event) {
+        participantDAO.delete(newUser);
+        if (participants.isVisible())
+            new UserList(user).loadScene((Stage) profile.getScene().getWindow(), "Список пользователей");
     }
 
     @FXML
-    private void jury(MouseEvent event){
-        if (jury.isVisible()) new ModeratorsAndJuryController((Organizer) user).loadScene((Stage) profile.getScene().getWindow(), "Модератор\\Жюри");
+    private void jury(MouseEvent event) {
+        participantDAO.delete(newUser);
+        if (jury.isVisible())
+            new ModeratorsAndJuryController((Organizer) user).loadScene((Stage) profile.getScene().getWindow(), "Модератор\\Жюри");
     }
 
 }

@@ -37,12 +37,7 @@
                </font>
             </Text>
             <ChoiceBox fx:id="searchEvent" layoutX="152.0" layoutY="84.0" prefWidth="150.0" />
-            <Text layoutX="165.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="по мероприятию" wrappingWidth="124.189453125">
-               <font>
-                  <Font name="Comic Sans MS" size="15.0" />
-               </font>
-            </Text>
-            <TextField fx:id="searchName" layoutX="846.0" layoutY="80.0" prefHeight="31.0" prefWidth="215.0" promptText="Поиск по ФИО" style="-fx-background-color: #99ffff; -fx-background-radius: 15;">
+            <TextField fx:id="searchName" layoutX="846.0" layoutY="80.0" prefHeight="31.0" prefWidth="215.0" promptText="Иванов Иван Иванович" style="-fx-background-color: #99ffff; -fx-background-radius: 15;">
                <font>
                   <Font name="Comic Sans MS" size="14.0" />
                </font>
@@ -52,6 +47,16 @@
                   <Image url="@image/add.png" />
                </image>
             </ImageView>
+            <Text fx:id="helloText1" layoutX="936.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ФИО">
+               <font>
+                  <Font name="Comic Sans MS" size="16.0" />
+               </font>
+            </Text>
+            <Text fx:id="helloText11" layoutX="175.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Мероприятие">
+               <font>
+                  <Font name="Comic Sans MS" size="16.0" />
+               </font>
+            </Text>
             </children>
         </AnchorPane>
         <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">

@@ -1,5 +1,6 @@
 package main.controller;
 
+import com.opencsv.CSVWriter;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,16 +17,23 @@ import main.logic.Direction;
 import main.logic.Event;
 import main.logic.User.Organizer;
 import main.logic.User.User;
+import main.logic.dao.ActivityDAO;
 import main.logic.dao.CityDAO;
 import main.logic.dao.DirectionDAO;
 import main.logic.dao.EventDAO;
 
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import net.synedra.validatorfx.Validator;
@@ -72,8 +80,8 @@ public class CreateEventController extends Controller {
     private City cityValue;
     private Validator validator;
     private Validator validatorDateTime;
-    private String tableStyle = ("-fx-selection-bar: red;" +
-            "-fx-selection-bar-non-focused: salmon;");
+    private String tableStyle = ("-fx-selection-bar: rgb(0, 0, 204);" +
+            "-fx-selection-bar-non-focused: rgba(0, 0, 204, 0.3);");
 
     private String columnStyle = ("-fx-alignment: CENTER; " +
             "-fx-background-color: rgba(255, 255, 255, 0.5);" +
@@ -132,10 +140,9 @@ public class CreateEventController extends Controller {
             startTime.setValue(newEvent.getDateStartToDate().toLocalTime());
             endDate.setValue(newEvent.getDateEndToDate().toLocalDate());
             endTime.setValue(newEvent.getDateEndToDate().toLocalTime());
-            System.out.println(newEvent.getCity().getName());
-            city.setValue(newEvent.getCity());
+            if (newEvent.getCity() != null) city.setValue(newEvent.getCity());
             cityValue = city.getValue();
-            direction.setValue(newEvent.getDirection());
+            if (newEvent.getDirection() != null) direction.setValue(newEvent.getDirection());
             directionValue = direction.getValue();
             eventDAO.closeSession();
             startDateOld = startDate.getValue().toString();
@@ -238,7 +245,38 @@ public class CreateEventController extends Controller {
 
     @FXML
     void createCSV(ActionEvent event) {
+        // first create file object for file placed at location
+        // specified by filepath
+        File file = new File("Event.csv");
+        try {
 
+            // create FileWriter object with file as parameter
+            FileWriter outputfile = new FileWriter(file);
+
+            // create CSVWriter object filewriter object as parameter
+            CSVWriter writer = new CSVWriter(outputfile);
+
+            // adding header to csv
+            String[] header = { "Name", "Start Time", "Moderator", "Jury" };
+            writer.writeNext(header);
+
+            // add data to csv
+            for (Activity activity: newEvent.getActivity()){
+                ActivityDAO activityDAO = new ActivityDAO();
+                activityDAO.openSession();
+                activityDAO.refresh(activity);
+                String[] data1 = { activity.getName(), activity.getStartTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")), String.valueOf(activity.getIdModerator()), Arrays.toString(new List[]{activity.getJuries()}) };
+                writer.writeNext(data1);
+                activityDAO.closeSession();
+            }
+            // closing writer connection
+            writer.close();
+            AlertShow.showAlert("info", "Файл csv создан");
+        }
+        catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     private void editDate(Boolean startD) {
@@ -254,8 +292,8 @@ public class CreateEventController extends Controller {
             }
             System.out.println(result.getConf().getButtonData());
         }
-        startDateOld = startDate.getValue().toString();
-        endDateOld = endDate.getValue().toString();
+        if (startDate.getValue() != null) startDateOld = startDate.getValue().toString();
+        if (endDate.getValue() != null) endDateOld = endDate.getValue().toString();
 
     }
 
@@ -315,9 +353,10 @@ public class CreateEventController extends Controller {
         if (!validator.containsErrors() && !validatorDateTime.containsErrors()) {
             fillEvent();
             eventDAO.create(newEvent);
+            AlertShow.showAlert("info", "Мероприятие '" + newEvent.getName() + "' созданно");
             new WindowOrg(user).loadScene((Stage) table.getScene().getWindow(), "Окно организатора");
         } else {
-            AlertShow.showAlert("info", "Ошибка", validator.createStringBinding().get() +
+            AlertShow.showAlert("error", validator.createStringBinding().get() +
                     "\n" +
                     validatorDateTime.createStringBinding().get());
         }
@@ -329,7 +368,7 @@ public class CreateEventController extends Controller {
             fillEvent();
             new CreateActivityController(user, newEvent).loadScene((Stage) startTime.getScene().getWindow(), "Создание активности");
         } else {
-            AlertShow.showAlert("info", "Ошибка", validatorDateTime.createStringBinding().get());
+            AlertShow.showAlert("error", validatorDateTime.createStringBinding().get());
         }
     }
 

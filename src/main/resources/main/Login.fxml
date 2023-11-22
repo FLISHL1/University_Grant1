@@ -10,26 +10,26 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #99ffff;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #99ffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <AnchorPane layoutX="60.0" prefHeight="800.0" prefWidth="1220.0" style="-fx-background-color: #ffffff;" AnchorPane.rightAnchor="0.0">
          <children>
-            <TextField fx:id="login" layoutX="420.0" layoutY="244.0" prefHeight="40.0" prefWidth="380.0" promptText="Логин">
+            <TextField fx:id="login" layoutX="420.0" layoutY="244.0" prefHeight="40.0" prefWidth="380.0" promptText="100">
                <font>
                   <Font name="Comic Sans MS" size="20.0" />
                </font>
             </TextField>
-            <PasswordField fx:id="password" layoutX="420.0" layoutY="318.0" prefHeight="40.0" prefWidth="380.0" promptText="Пароль">
+            <PasswordField fx:id="password" layoutX="418.0" layoutY="339.0" prefHeight="40.0" prefWidth="380.0" promptText="Stud123!">
                <font>
                   <Font name="Comic Sans MS" size="20.0" />
                </font>
             </PasswordField>
-            <CheckBox fx:id="remember" layoutX="442.0" layoutY="407.0" mnemonicParsing="false" text="Запомни меня">
+            <CheckBox fx:id="remember" layoutX="440.0" layoutY="428.0" mnemonicParsing="false" text="Запомни меня">
                <font>
                   <Font name="Comic Sans MS" size="15.0" />
                </font>
             </CheckBox>
-            <CheckBox fx:id="visiblePassword" layoutX="640.0" layoutY="407.0" mnemonicParsing="false" onAction="#visiblePassword" text="Показать пароль">
+            <CheckBox fx:id="visiblePassword" layoutX="638.0" layoutY="428.0" mnemonicParsing="false" onAction="#visiblePassword" text="Показать пароль">
                <font>
                   <Font name="Comic Sans MS" size="15.0" />
                </font>
@@ -39,37 +39,47 @@
                   <Font size="24.0" />
                </font>
             </Text>
-             <TextField fx:id="fieldSim" layoutX="679.0" layoutY="484.0" prefHeight="32.0" prefWidth="153.0" promptText="Введите символы">
+             <TextField fx:id="fieldSim" layoutX="677.0" layoutY="505.0" prefHeight="32.0" prefWidth="153.0" promptText="Введите символы">
                  <font>
                      <Font name="Comic Sans MS" size="15.0" />
                  </font>
              </TextField>
-            <Button fx:id="enter" layoutX="533.0" layoutY="549.0" mnemonicParsing="false" onAction="#login" onMousePressed="#styleLogin" onMouseReleased="#styleLogin1" prefHeight="46.0" prefWidth="174.0" style="-fx-background-color: #0000cc; -fx-background-radius: 15;" text="Войти" textFill="WHITE">
+            <Button fx:id="enter" layoutX="531.0" layoutY="570.0" mnemonicParsing="false" onAction="#login" onMousePressed="#styleLogin" onMouseReleased="#styleLogin1" prefHeight="46.0" prefWidth="174.0" style="-fx-background-color: #0000cc; -fx-background-radius: 15;" text="Войти" textFill="WHITE">
                <font>
                   <Font name="Comic Sans MS" size="22.0" />
                </font>
             </Button>
-            <ImageView fx:id="captcha" fitHeight="60.0" fitWidth="200.0" layoutX="420.0" layoutY="470.0" pickOnBounds="true" preserveRatio="true" />
-             <Text layoutX="392.0" layoutY="656.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Если у Вас нет аккаунта нажмите сюда">
+            <ImageView fx:id="captcha" fitHeight="60.0" fitWidth="200.0" layoutX="418.0" layoutY="491.0" pickOnBounds="true" preserveRatio="true" />
+             <Text layoutX="390.0" layoutY="677.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Если у Вас нет аккаунта нажмите сюда">
                  <font>
                      <Font name="Comic Sans MS" size="15.0" />
                  </font>
              </Text>
-             <Text fx:id="signUp" fill="#0000cc" layoutX="684.0" layoutY="655.0" onMouseClicked="#registration" strokeType="OUTSIDE" strokeWidth="0.0" text="Зарегистрироваться">
+             <Text fx:id="signUp" fill="#0000cc" layoutX="682.0" layoutY="676.0" onMouseClicked="#registration" strokeType="OUTSIDE" strokeWidth="0.0" text="Зарегистрироваться">
                  <font>
                      <Font name="Comic Sans MS" size="15.0" />
                  </font>
              </Text>
-             <ImageView fx:id="update" fitHeight="32.0" fitWidth="40.0" layoutX="633.0" layoutY="484.0" onMouseClicked="#reloadCaptcha" pickOnBounds="true" preserveRatio="true">
+             <ImageView fx:id="update" fitHeight="32.0" fitWidth="40.0" layoutX="631.0" layoutY="505.0" onMouseClicked="#reloadCaptcha" pickOnBounds="true" preserveRatio="true">
                  <image>
                      <Image url="@image/reload-02%20(1).png" />
                  </image>
              </ImageView>
-            <TextField fx:id="passwordV" layoutX="420.0" layoutY="318.0" prefHeight="40.0" prefWidth="380.0" promptText="Пароль" visible="false">
+            <TextField fx:id="passwordV" layoutX="418.0" layoutY="339.0" prefHeight="40.0" prefWidth="380.0" promptText="Пароль" visible="false">
                <font>
                   <Font name="Comic Sans MS" size="20.0" />
                </font>
             </TextField>
+            <Text fx:id="helloText1" layoutX="580.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Логин">
+               <font>
+                  <Font name="Comic Sans MS" size="20.0" />
+               </font>
+            </Text>
+            <Text fx:id="helloText11" layoutX="573.0" layoutY="333.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Пароль">
+               <font>
+                  <Font name="Comic Sans MS" size="20.0" />
+               </font>
+            </Text>
          </children>
         </AnchorPane>
         <ImageView fx:id="logo" fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">

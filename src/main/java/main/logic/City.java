@@ -20,29 +20,6 @@ public class City {
 
     }
 
-    /*    public City(ResultSet city) {
-
-            try {
-                name = city.getString("name");
-                id = city.getInt("id");
-                country = city.getInt("id_country");
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-
-        }*/
-/*    public static ArrayList<City> getAllCity(){
-        ResultSet resultSet = SqlSender.getAllCity();
-        ArrayList<City> cites = new ArrayList<>();
-        try {
-            while (resultSet.next()){
-                cites.add(new City(resultSet));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return cites;
-    }*/
     public String getName(){
         return name;
     }

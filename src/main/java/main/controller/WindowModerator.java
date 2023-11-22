@@ -51,8 +51,8 @@ public class WindowModerator extends Controller {
     private TableView<Activity> table;
 
     private Moderation user;
-    private String tableStyle = ("-fx-selection-bar: red;" +
-            "-fx-selection-bar-non-focused: salmon;");
+    private String tableStyle = ("-fx-selection-bar: rgb(0, 0, 204);" +
+            "-fx-selection-bar-non-focused: rgba(0, 0, 204, 0.3);");
 
     private String columnStyle = ("-fx-alignment: CENTER; " +
             "-fx-background-color: rgba(255, 255, 255, 0.5);" +
@@ -68,9 +68,10 @@ public class WindowModerator extends Controller {
     void moderatorAcctivity(ActionEvent event) {
         new ModeratorActivity(user).loadScene((Stage) table.getScene().getWindow(), "Активности модератора");
     }
+
     @FXML
     void addApplication(ActionEvent event) {
-        if(table.getSelectionModel().getSelectedItem().getIdModerator() == null) {
+        if (table.getSelectionModel().getSelectedItem().getIdModerator() == null) {
             AlertShow alertShow = new AlertShow();
             alertShow.showAlertConf("Отправить заявку на мероприятие?:\n" + table.getSelectionModel().getSelectedItem().getName());
             if (alertShow.getConf() == ButtonType.YES) {
@@ -80,10 +81,10 @@ public class WindowModerator extends Controller {
                 newConfirmation.setActivity(table.getSelectionModel().getSelectedItem());
                 newConfirmation.setStatus("new");
                 applicationDAO.create(newConfirmation);
-                AlertShow.showAlert("info", "Информация", "Заявка отправлена");
+                AlertShow.showAlert("info", "Заявка отправлена");
             }
         } else {
-            AlertShow.showAlert("info", "Информация", "Данное мероприятие уже занято");
+            AlertShow.showAlert("info", "Данное мероприятие уже занято");
         }
     }
 
@@ -105,31 +106,11 @@ public class WindowModerator extends Controller {
         List<Activity> activity = new ActivityDAO().getAll();
         FilteredList<Activity> filteredList = new FilteredList<>(FXCollections.observableList(activity), p -> true);
         choiceDirection.valueProperty().addListener((observable, oldValue, newValue) -> {
-            filteredList.setPredicate(activity1 -> {
-                if (newValue == null) {
-                    return true;
-                }
-                ActivityDAO activityDAO = new ActivityDAO();
-                activityDAO.openSession();
-                activityDAO.refresh(activity1);
-                if (activity1.getEvent().getDirection().getId().equals(newValue.getId())) {
-                    return true;
-                }
-                return false;
-            });
+            filteredList.setPredicate(activity1 -> sort(activity1));
         });
 
         choiceEvent.valueProperty().addListener((observable, oldValue, newValue) -> {
-            filteredList.setPredicate(activity1 -> {
-                if (newValue == null) {
-                    return true;
-                }
-
-                if (activity1.getEvent().getId().equals(newValue.getId())) {
-                    return true;
-                }
-                return false;
-            });
+            filteredList.setPredicate(activity1 -> sort(activity1));
         });
 
         table.setStyle(tableStyle);
@@ -137,7 +118,7 @@ public class WindowModerator extends Controller {
         TableColumn<Activity, String> nameColumn = new TableColumn<Activity, String>("Название");
         nameColumn.setCellValueFactory(new PropertyValueFactory<Activity, String>("name"));
         nameColumn.setStyle(columnStyle);
-        nameColumn.setMinWidth(714);
+        nameColumn.setMinWidth(696);
         table.getColumns().add(nameColumn);
 
         TableColumn<Activity, LocalDateTime> dateColumn = new TableColumn<Activity, LocalDateTime>("Дата и время");
@@ -158,6 +139,36 @@ public class WindowModerator extends Controller {
 
         choiceEvent.getItems().add(null);
         choiceEvent.getItems().addAll(FXCollections.observableList(new EventDAO().getAll()));
+
+    }
+    private boolean sort(Activity activity){
+        ActivityDAO activityDAO = new ActivityDAO();
+        activityDAO.openSession();
+        activityDAO.refresh(activity);
+        if (sortEvent(activity) && sortDirection(activity)) {
+            activityDAO.closeSession();
+            return true;
+        }
+        activityDAO.closeSession();
+
+        return false;
+    }
+    private boolean sortDirection(Activity activity) {
+        if (choiceDirection.getValue() == null || activity.getEvent() == null) {
+            return true;
+        }
+        return activity.getEvent().getDirection().getId().equals(choiceDirection.getValue().getId());
+    }
+
+    private boolean sortEvent(Activity activity) {
+        if (choiceEvent.getValue() == null || activity.getEvent() == null) {
+            return true;
+        }
+
+        if (activity.getEvent().getId().equals(choiceEvent.getValue().getId())) {
+            return true;
+        }
+        return false;
 
     }
 

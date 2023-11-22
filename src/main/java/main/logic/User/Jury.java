@@ -38,6 +38,7 @@ public class Jury extends User {
         return stringBuilder.toString();
     }
 
+
     public String getDirection() {
         return direction.toString();
     }

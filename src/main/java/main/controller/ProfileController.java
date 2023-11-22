@@ -11,10 +11,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.attentionWindow.AlertShow;
 import main.logic.Country;
-import main.logic.User.Moderation;
+import main.logic.User.*;
 import main.logic.dao.CountryDAO;
-import main.logic.User.Organizer;
-import main.logic.User.User;
 import main.logic.dao.UserDAO;
 import main.passwordHash.PasswordHashing;
 import net.synedra.validatorfx.Validator;
@@ -34,7 +32,7 @@ public class ProfileController extends Controller {
     public TextField name;
     public TextField phone;
     public DatePicker birthDay;
-    public ChoiceBox country;
+    public ComboBox<Country> country;
     public ImageView participants;
     public ImageView jury;
     @FXML
@@ -66,7 +64,7 @@ public class ProfileController extends Controller {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         init(icon, helloText, helloName, user);
-        if (user instanceof Moderation){
+        if (user instanceof Moderation || user instanceof Participant || user instanceof Jury){
             participants.setVisible(false);
             jury.setVisible(false);
         }
@@ -83,7 +81,7 @@ public class ProfileController extends Controller {
         }
         phone.setText(user.getPhone());
 
-        if (user.getSex().contains("м")) genderMen.setSelected(true);
+        if (user.getSex().toLowerCase().contains("м")) genderMen.setSelected(true);
         else genderWoman.setSelected(true);
 
         birthDay.setValue(Instant.ofEpochMilli(user.getBirthDay().getTime()).atZone(ZoneId.systemDefault()).toLocalDate());
@@ -190,9 +188,9 @@ public class ProfileController extends Controller {
         if (!validator.containsErrors()) {
             fillUser();
             userDAO.update(user);
-
+            AlertShow.showAlert("info", "Изменения сохранены");
         } else {
-            AlertShow.showAlert("info", "Не правильно ввели данные", validator.createStringBinding().get());
+            AlertShow.showAlert("warning", validator.createStringBinding().get());
         }
     }
     @FXML
@@ -218,6 +216,8 @@ public class ProfileController extends Controller {
             new WindowOrg((Organizer) user).loadScene((Stage) password.getScene().getWindow(), "Главное окно");
         else if (user instanceof Moderation)
             new WindowModerator((Moderation) user).loadScene((Stage) password.getScene().getWindow(), "Главное окно");
+        else if (user instanceof Participant || user instanceof Jury)
+            new WindowPart(user).loadScene((Stage) password.getScene().getWindow());
     }
 
     @FXML
